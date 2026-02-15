@@ -489,11 +489,12 @@ layout: default
 
 **OTLP Push via PeriodicExportingMetricReader**
 
-```python {all|3}
+```python {all|4-5}
 # OpenTelemetry SDK Configuration
 metric_reader = PeriodicExportingMetricReader(
     exporter=OTLPMetricExporter(endpoint="http://otel-collector:4318"),
-    export_interval_millis=100  # Push every 100ms
+    export_interval_millis=flagd.get_int("metrics_export_interval_ms")
+    # controller-manager: 100ms (realtime) | other services: 1000ms
 )
 ```
 
