@@ -205,11 +205,11 @@ graph LR
     GC -->|IPC| Audio
     CM -->|Bluetooth| Controllers
 
-    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
-    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
-    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
-    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
-    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#0e131f
+    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#000000
+    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#000000
+    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#000000
+    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#000000
+    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#000000
 ```
 
 </div>
@@ -240,11 +240,11 @@ graph LR
     CM -->|Bluetooth| Controllers
 
     style Flagd fill:#0e131f,stroke:#ffe45e,stroke-width:2px,color:#ffe45e
-    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
-    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
-    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
-    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
-    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#0e131f
+    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#000000
+    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#000000
+    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#000000
+    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#000000
+    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#000000
 ```
 
 </div>
@@ -287,11 +287,11 @@ graph LR
 
     style Dashboard fill:#fe4a49,stroke:#fe4a49,stroke-width:2px,color:#0e131f
     style Flagd fill:#0e131f,stroke:#ffe45e,stroke-width:2px,color:#ffe45e
-    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
-    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
-    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
-    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
-    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#0e131f
+    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#000000
+    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#000000
+    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#000000
+    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#000000
+    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#000000
     style OTel fill:#f39c12,stroke:#f39c12,stroke-width:2px,color:#0e131f
     style Observability fill:#95a5a6,stroke:#95a5a6,stroke-width:2px,color:#0e131f
 ```
@@ -487,7 +487,7 @@ layout: default
 
 # Learning 4: Prometheus Pull in Action
 
-<iframe src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk" width="100%" height="500" frameborder="0" class="rounded-lg shadow-lg"></iframe>
+<iframe src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
 
 <img src="https://placehold.co/1200x500/1e1e1e/e74c3c?text=Prometheus+Pull:+Low+Resolution,+High+Latency" alt="Prometheus pull metrics" class="rounded-lg shadow-lg my-4" />
 
@@ -509,7 +509,7 @@ layout: default
 
 **OTLP Push via PeriodicExportingMetricReader**
 
-```python {all|4-5}
+```python
 # OpenTelemetry SDK Configuration
 metric_reader = PeriodicExportingMetricReader(
     exporter=OTLPMetricExporter(endpoint="http://otel-collector:4318"),
@@ -520,19 +520,20 @@ metric_reader = PeriodicExportingMetricReader(
 
 <div class="my-4">
 
-```mermaid {scale:0.6}
+```mermaid {scale:1}
+%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
 graph LR
     Services[Game Services] -->|OTLP Push<br/>100ms| Collector[OTEL Collector]
     Collector -->|Remote Write| Prom[Prometheus]
 
-    style Services fill:#3498db
-    style Collector fill:#e67e22
-    style Prom fill:#e74c3c
+    style Services fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
+    style Collector fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
+    style Prom fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
 ```
 
 </div>
 
-**Improvement** — 100ms push = **150x faster** than 15s scrape. Much better, but can we go even faster?
+**Reality check** — We export at 100ms, but Prometheus remote write can only achieve ~500ms resolution due to write path limitations. Still **30x faster** than 15s scrape, but not real-time yet.
 
 <!--
 Speaker Notes (Manuel):
@@ -547,8 +548,6 @@ layout: default
 ---
 
 # Learning 5: VictoriaMetrics for Hardware
-
-**Why VictoriaMetrics?**
 
 <div class="grid grid-cols-2 gap-8 my-8">
 <div>
@@ -571,14 +570,15 @@ layout: default
 </div>
 </div>
 
-```mermaid {scale:0.6}
+```mermaid {scale:1}
+%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
 graph LR
     Services[Game Services] -->|OTLP Push<br/>100ms| Collector[OTEL Collector]
     Collector -->|OTLP Native| VM[VictoriaMetrics]
 
-    style Services fill:#3498db
-    style Collector fill:#e67e22
-    style VM fill:#27ae60
+    style Services fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
+    style Collector fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
+    style VM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
 ```
 
 **Result** — Sub-100ms resolution, native OTLP, built for hardware observability.
@@ -597,7 +597,7 @@ layout: default
 
 # Learning 5: The Three Approaches Compared
 
-<iframe src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk" width="100%" height="500" frameborder="0" class="rounded-lg shadow-lg"></iframe>
+<iframe src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
 
 <img src="https://placehold.co/1200x500/1e1e1e/808080?text=Pull+vs+Push+Prometheus+vs+Push+VictoriaMetrics" alt="Metrics comparison" class="rounded-lg shadow-lg my-4" />
 
@@ -628,9 +628,10 @@ layout: default
 <!--
 Speaker Notes (Manuel):
 - "Here's all three side by side"
-- "Prometheus pull: chunky, laggy"
-- "Push to Prometheus: much better"
-- "Push to VictoriaMetrics: this is what real-time looks like"
+- "Prometheus pull: 10 seconds. Way too slow."
+- "Push to Prometheus: We export at 100ms, but Prometheus can only write at 500ms. Its write path is the bottleneck."
+- "Push to VictoriaMetrics: Full 100ms resolution. This is what real-time looks like."
+- "The journey: 10s → 500ms → 100ms"
 -->
 
 ---
@@ -639,27 +640,9 @@ layout: default
 
 # Learning 6: These Tools Actually Work
 
-**For real-time hardware, not just web apps.**
+<iframe src="http://localhost:16686/trace/[trace-id]?uiTheme=dark" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
 
-<div class="text-center my-4">
-  <iframe
-    src="http://localhost:16686/trace/[trace-id]?uiTheme=dark"
-    width="100%"
-    height="450"
-    frameborder="0"
-    class="rounded-lg shadow-lg"
-  ></iframe>
-
-  <img
-    src="https://placehold.co/1200x450/1e1e1e/808080?text=Jaeger+Trace:+Game+Loop+with+Controller+Events"
-    alt="Jaeger trace view"
-    class="rounded-lg shadow-lg my-4"
-  />
-</div>
-
-**What you see in traces:**
-- Controller poll (2ms) → Motion processing (5ms) → Death detection (3ms) → LED feedback (4ms)
-- **When lag happened at the conference:** "We can now see exactly where it came from. It's Bluetooth."
+<img src="https://placehold.co/1200x400/1e1e1e/808080?text=Jaeger+Trace:+Game+Loop+with+Controller+Events" alt="Jaeger trace view" class="rounded-lg shadow-lg my-4" />
 
 <!--
 Speaker Notes (Manuel - 11:30-13:00):
@@ -692,7 +675,7 @@ layout: two-cols
   <iframe
     src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk"
     width="100%"
-    height="500"
+    height="400"
     frameborder="0"
     class="rounded-lg shadow-lg"
   ></iframe>
@@ -753,7 +736,7 @@ layout: two-cols
   <iframe
     src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk&viewPanel=victoriametrics-panel"
     width="100%"
-    height="500"
+    height="400"
     frameborder="0"
     class="rounded-lg shadow-lg"
   ></iframe>
