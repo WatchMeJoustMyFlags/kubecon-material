@@ -68,38 +68,47 @@ Speaker Notes (Manuel leads - 2:30):
 
 ---
 layout: default
-zoom: 80%
 ---
 
 # Original Architecture (IPC-Based)
 
-**Before we added observability, this was the architecture:**
+<div class="grid grid-cols-2">
+<div>
 
-```mermaid {scale:0.6}
+**Before observability:**
+
+- Process-based (multiprocessing)
+- 30 Hz game loop (33ms frames)
+- IPC via queues/shared memory
+- 4 Python processes
+
+**The problem:** OpenTelemetry needs network calls for context propagation
+
+</div>
+<div class="-mt-8">
+
+```mermaid {scale:0.85}
 graph TD
-    subgraph "Process-Based IPC Architecture"
-        Menu[Menu Service<br/>Python Process]
-        GC[Game Coordinator<br/>Python Process]
-        CM[Controller Manager<br/>Python Process]
-        Audio[Audio Service<br/>Python Process]
-    end
+    Menu[Menu]
+    GC[Game Coordinator]
+    CM[Controller Manager]
+    Audio[Audio]
+    Controllers[18 Controllers<br/>@ 30Hz]
 
-    Menu -->|pipes/queues| GC
-    GC -->|pipes/queues| CM
-    GC -->|pipes/queues| Audio
-    CM -->|Bluetooth| Controllers[18 Controllers<br/>@ 60Hz]
+    Menu -->|IPC| GC
+    GC --> CM
+    GC --> Audio
+    CM -->|Bluetooth| Controllers
 
-    style Menu fill:#2c3e50
-    style GC fill:#2c3e50
-    style CM fill:#2c3e50
-    style Audio fill:#2c3e50
+    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
+    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
+    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
+    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
+    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#0e131f
 ```
 
-**Key Characteristics:**
-- **Process-based communication:** IPC via pipes and message queues
-- **60Hz game loop:** 16ms frame budget per update
-- **4 separate services:** Menu, Game Coordinator, Controller Manager, Audio
-- **No network calls:** Everything local, no distributed tracing context
+</div>
+</div>
 
 <!--
 Speaker Notes (Manuel - 2:30-5:00):
