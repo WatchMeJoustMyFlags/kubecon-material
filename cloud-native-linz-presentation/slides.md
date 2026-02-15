@@ -485,7 +485,27 @@ Speaker Notes (Manuel - 9:00-10:00):
 layout: default
 ---
 
-# Learning 5: Push Metrics to the Rescue
+# Learning 4: Prometheus Pull in Action
+
+<iframe src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk" width="100%" height="500" frameborder="0" class="rounded-lg shadow-lg"></iframe>
+
+<img src="https://placehold.co/1200x500/1e1e1e/e74c3c?text=Prometheus+Pull:+Low+Resolution,+High+Latency" alt="Prometheus pull metrics" class="rounded-lg shadow-lg my-4" />
+
+**What you see** — chunky, low-resolution data with significant gaps. By the time you see an issue, it's already over.
+
+<!--
+Speaker Notes (Manuel):
+- "This is what Prometheus pull looks like in practice"
+- "See those gaps? That's 15 seconds of game state we'll never see"
+- "We tuned it down to 1 second, which helped, but still felt laggy"
+- "That's when we remembered—push metrics exist"
+-->
+
+---
+layout: default
+---
+
+# Learning 5: Push Metrics with Prometheus
 
 **OTLP Push via PeriodicExportingMetricReader**
 
@@ -500,28 +520,117 @@ metric_reader = PeriodicExportingMetricReader(
 
 <div class="my-4">
 
-```mermaid {scale:0.5}
+```mermaid {scale:0.6}
 graph LR
     Services[Game Services] -->|OTLP Push<br/>100ms| Collector[OTEL Collector]
     Collector -->|Remote Write| Prom[Prometheus]
-    Collector -->|OTLP| VM[VictoriaMetrics]
 
     style Services fill:#3498db
     style Collector fill:#e67e22
     style Prom fill:#e74c3c
-    style VM fill:#27ae60
 ```
 
 </div>
 
-**Result:** 100ms export = **150x faster** than 15s scrape interval
+**Improvement** — 100ms push = **150x faster** than 15s scrape. Much better, but can we go even faster?
 
 <!--
-Speaker Notes (Manuel - 10:00-11:30):
+Speaker Notes (Manuel):
 - "We'd both been doing pull-based metrics for so long we almost forgot"
-- "Push-based metrics via OTLP"
-- "PeriodicExportingMetricReader with 100ms interval"
+- "Push-based metrics via OTLP with 100ms interval"
 - "150x faster feedback than default Prometheus scrape"
+- "Much better, but we wondered—can we go even faster?"
+-->
+
+---
+layout: default
+---
+
+# Learning 5: VictoriaMetrics for Hardware
+
+**Why VictoriaMetrics?**
+
+<div class="grid grid-cols-2 gap-8 my-8">
+<div>
+
+### Prometheus Limitations
+- Built for web app monitoring
+- Remote write adds latency
+- Limited ingestion rate
+- Storage not optimized for high-frequency data
+
+</div>
+<div>
+
+### VictoriaMetrics Benefits
+- **Native OTLP support** (no conversion)
+- **10x higher ingestion rate**
+- **Better compression** for time-series
+- **Optimized for IoT/hardware** use cases
+
+</div>
+</div>
+
+```mermaid {scale:0.6}
+graph LR
+    Services[Game Services] -->|OTLP Push<br/>100ms| Collector[OTEL Collector]
+    Collector -->|OTLP Native| VM[VictoriaMetrics]
+
+    style Services fill:#3498db
+    style Collector fill:#e67e22
+    style VM fill:#27ae60
+```
+
+**Result** — Sub-100ms resolution, native OTLP, built for hardware observability.
+
+<!--
+Speaker Notes (Manuel):
+- "Prometheus is great, but it's built for web apps"
+- "VictoriaMetrics is designed for high-frequency IoT and hardware data"
+- "Native OTLP support means no conversion overhead"
+- "We went from 15 seconds to sub-100 milliseconds"
+-->
+
+---
+layout: default
+---
+
+# Learning 5: The Three Approaches Compared
+
+<iframe src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk" width="100%" height="500" frameborder="0" class="rounded-lg shadow-lg"></iframe>
+
+<img src="https://placehold.co/1200x500/1e1e1e/808080?text=Pull+vs+Push+Prometheus+vs+Push+VictoriaMetrics" alt="Metrics comparison" class="rounded-lg shadow-lg my-4" />
+
+<div class="grid grid-cols-3 gap-4 mt-4 text-sm">
+<div>
+
+**Prometheus Pull**
+- ~10s resolution
+- ~6 samples/min
+
+</div>
+<div>
+
+**Push → Prometheus**
+- ~500ms resolution
+- ~120 samples/min
+
+</div>
+<div>
+
+**Push → VictoriaMetrics**
+- <100ms resolution
+- ~600+ samples/min
+
+</div>
+</div>
+
+<!--
+Speaker Notes (Manuel):
+- "Here's all three side by side"
+- "Prometheus pull: chunky, laggy"
+- "Push to Prometheus: much better"
+- "Push to VictoriaMetrics: this is what real-time looks like"
 -->
 
 ---
