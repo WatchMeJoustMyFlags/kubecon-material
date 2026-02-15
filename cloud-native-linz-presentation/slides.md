@@ -480,11 +480,11 @@ metric_reader = PeriodicExportingMetricReader(
 %%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
 graph LR
     Services[Game Services] -->|OTLP Push<br/>100ms| Collector[OTEL Collector]
-    Collector -->|Remote Write| Prom[Prometheus]
+    Collector -->|Remote Write<br/>~500ms| Prom[Prometheus]
 
     style Services fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
     style Collector fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
-    style Prom fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
+    style Prom fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
 ```
 
 </div>
@@ -530,11 +530,11 @@ layout: default
 %%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
 graph LR
     Services[Game Services] -->|OTLP Push<br/>100ms| Collector[OTEL Collector]
-    Collector -->|OTLP Native| VM[VictoriaMetrics]
+    Collector -->|OTLP Native<br/><100ms| VM[VictoriaMetrics]
 
     style Services fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
     style Collector fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
-    style VM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
+    style VM fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
 ```
 
 **Result** — Sub-100ms resolution, native OTLP, built for hardware observability.
@@ -545,49 +545,6 @@ Speaker Notes (Manuel):
 - "VictoriaMetrics is designed for high-frequency IoT and hardware data"
 - "Native OTLP support means no conversion overhead"
 - "We went from 15 seconds to sub-100 milliseconds"
--->
-
----
-layout: default
----
-
-# Learning 5: The Three Approaches Compared
-
-<iframe src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
-
-<img src="https://placehold.co/1200x500/1e1e1e/808080?text=Pull+vs+Push+Prometheus+vs+Push+VictoriaMetrics" alt="Metrics comparison" class="rounded-lg shadow-lg my-4" />
-
-<div class="grid grid-cols-3 gap-4 mt-4 text-sm">
-<div>
-
-**Prometheus Pull**
-- ~10s resolution
-- ~6 samples/min
-
-</div>
-<div>
-
-**Push → Prometheus**
-- ~500ms resolution
-- ~120 samples/min
-
-</div>
-<div>
-
-**Push → VictoriaMetrics**
-- <100ms resolution
-- ~600+ samples/min
-
-</div>
-</div>
-
-<!--
-Speaker Notes (Manuel):
-- "Here's all three side by side"
-- "Prometheus pull: 10 seconds. Way too slow."
-- "Push to Prometheus: We export at 100ms, but Prometheus can only write at 500ms. Its write path is the bottleneck."
-- "Push to VictoriaMetrics: Full 100ms resolution. This is what real-time looks like."
-- "The journey: 10s → 500ms → 100ms"
 -->
 
 ---
