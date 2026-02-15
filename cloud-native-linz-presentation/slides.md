@@ -442,7 +442,7 @@ processors:
 
 <div v-click="3">
 
-**Combined effect** — 100ms exports + 1000-item batching gives subsecond observability without overwhelming backends
+**100ms exports** + **1000-item batching** gives subsecond observability without overwhelming backends
 
 </div>
 
