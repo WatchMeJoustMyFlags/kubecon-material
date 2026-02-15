@@ -310,38 +310,49 @@ layout: default
 
 # Learning 2: The Raspberry Pi Can Handle It
 
-<div class="text-center my-4">
-  <iframe
-    src="http://himbeere.local/grafana/d/joustmania-host-metrics/joustmania-host-metrics-raspberry-pi?orgId=1&refresh=5s&kiosk"
-    width="100%"
-    height="400"
-    frameborder="0"
-    class="rounded-lg shadow-lg"
-  ></iframe>
-
-  <img
-    src="https://placehold.co/1200x400/1e1e1e/808080?text=Pi+Resource+Dashboard:+CPU+%7C+Memory+%7C+Temperature"
-    alt="Host metrics dashboard"
-    class="rounded-lg shadow-lg my-4"
-  />
-</div>
-
-**Key Stats:**
-- **CPU Usage:** ~45% under full load (18 controllers @ 60Hz)
-- **Memory:** ~850 MB / 8 GB
-- **Temperature:** 65°C (well within limits)
-
-**"The Pi didn't even break a sweat."**
-
-_(Though we did cap retention at 7 days)_
+<iframe src="http://himbeere.local/grafana/d/joustmania-host-metrics/joustmania-host-metrics-raspberry-pi?orgId=1&refresh=5s&kiosk" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
 
 <!--
-Speaker Notes (Simon - 6:30-8:00):
+Speaker Notes (Simon - 6:30-7:15):
 - "The Pi didn't even break a sweat"
 - Show dashboard with CPU, memory, temperature
 - "Running OpenTelemetry Collector, Prometheus, Grafana, Jaeger"
 - "All on a Raspberry Pi 4"
-- Manuel adds: "Though we did cap retention at 7 days"
+-->
+
+---
+layout: default
+---
+
+# Learning 2: Pi Performance
+
+<div class="grid grid-cols-2 gap-12 my-8">
+<div>
+
+**Raspberry Pi 5 Specs:**
+- Quad-core ARM Cortex-A76 @ 2.4GHz
+- 8GB LPDDR4X RAM
+- ~$80 USD
+
+</div>
+<div>
+
+**Observed Performance:**
+- CPU: ~45% under full load
+- Memory: ~850 MB / 8 GB (10%)
+- Temp: 65°C (with fan cooling)
+- 18 controllers @ 60Hz
+
+</div>
+</div>
+
+**The Pi runs both the game AND the full observability stack.**<br>
+We didn't think this was possible initially — though you could also send telemetry to external services.
+
+<!--
+Speaker Notes (Manuel - 7:15-8:00):
+- "The Pi didn't even break a sweat"
+- "Though we did cap retention at 7 days"
 -->
 
 ---
