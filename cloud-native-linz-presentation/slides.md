@@ -126,20 +126,32 @@ class: text-center
 
 # What If We Actually Observed This Thing?
 
-<div class="flex justify-center gap-8 my-8">
-  <div>
-    <img src="https://avatars.sched.co/e/f6/22629648/avatar.jpg?ff4" alt="Simon Schrottner" class="h-32 w-32 rounded-full mx-auto" />
-    <p class="mt-2"><strong>Simon Schrottner</strong><br/>Dynatrace</p>
+<div class="grid grid-cols-3 gap-x-16 gap-y-8 items-end justify-items-center my-12 px-12">
+  <div class="flex flex-col items-center gap-2">
+    <img src="/images/opentelemetry.png" alt="OpenTelemetry" class="h-14" />
+    <span class="text-sm text-gray-400">Telemetry Collection</span>
   </div>
-  <div>
-    <img src="https://avatars.sched.co/3/41/24047766/avatar.jpg?b33" alt="Manuel Timelthaler" class="h-32 w-32 rounded-full mx-auto" />
-    <p class="mt-2"><strong>Manuel Timelthaler</strong><br/>Tractive</p>
+  <div class="flex flex-col items-center gap-2">
+    <img src="/images/prometheus.png" alt="Prometheus" class="h-20" />
+    <span class="text-sm text-gray-400">Metrics Storage</span>
+  </div>
+  <div class="flex flex-col items-center gap-2">
+    <img src="/images/jaeger.png" alt="Jaeger" class="h-20" />
+    <span class="text-sm text-gray-400">Distributed Tracing</span>
+  </div>
+  <div class="flex flex-col items-center gap-2">
+    <img src="/images/grafana.svg" alt="Grafana" class="h-20" />
+    <span class="text-sm text-gray-400">Visualization</span>
+  </div>
+  <div class="flex flex-col items-center gap-2">
+    <img src="/images/loki.png" alt="Loki" class="h-20" />
+    <span class="text-sm text-gray-400">Log Aggregation</span>
+  </div>
+  <div class="flex flex-col items-center gap-2">
+    <img src="/images/openfeature.svg" alt="OpenFeature" class="h-14 w-auto" />
+    <span class="text-sm text-gray-400">Feature Flags</span>
   </div>
 </div>
-
-**Our CNCF Tools Stack:**
-
-OpenTelemetry · Prometheus · VictoriaMetrics · Grafana · Jaeger · OpenFeature · flagd
 
 <div class="text-2xl mt-8 text-amber-300">
 "What could possibly go wrong?"
