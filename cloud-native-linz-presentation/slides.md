@@ -415,7 +415,7 @@ layout: default
 
 <div v-click="1">
 
-**Level 1: Application → Collector**
+### Level 1: Application → Collector
 
 ```python {2-4|all}
 init_metrics(
@@ -429,7 +429,7 @@ init_metrics(
 
 <div v-click="2">
 
-**Level 2: Collector → Backends**
+### Level 2: Collector → Backends
 
 ```yaml {2-4|all}
 processors:
