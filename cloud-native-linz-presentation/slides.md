@@ -413,30 +413,38 @@ layout: default
 
 # Learning 3: Two Batching Strategies
 
-```python {all|2-3|4|5-6|all}
-# 1. OTel Metrics: Export interval from flagd (per-service targeting)
+<div v-click="1">
+
+**Level 1: Application → Collector**
+
+```python {2-4|all}
 init_metrics(
     service_name="controller-manager",
     export_interval_ms=flagd.get_int("metrics_export_interval_ms")
-    # controller-manager: 100ms (realtime needs)
-    # other services: 1000ms (normal observability)
+    # controller-manager: 100ms (realtime) | other services: 1000ms
 )
 ```
 
-```yaml {all|3-5|8-10|all}
-# 2. OTel Collector: Batch before forwarding to backends
+</div>
+
+<div v-click="2">
+
+**Level 2: Collector → Backends**
+
+```yaml {2-4|all}
 processors:
   batch/fast:
     timeout: 100ms          # Send batch every 100ms
-    send_batch_size: 1000   # Or when reaching 1000 data points
-
-service:
-  pipelines:
-    metrics:
-      processors: [batch/fast]  # Apply fast batching to metrics
+    send_batch_size: 1000   # Or when 1000 data points collected
 ```
 
-**Result:** Two-level batching reduces network overhead and backend write pressure
+</div>
+
+<div v-click="3" class="text-center mt-8 text-xl text-amber-300">
+
+**100ms export intervals** + **1000-item batching** = subsecond observability without overwhelming backends
+
+</div>
 
 ---
 layout: default
