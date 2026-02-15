@@ -411,6 +411,34 @@ Speaker Notes (Simon - 8:30-9:00):
 layout: default
 ---
 
+# Learning 3: The Code
+
+**Two batching strategies that kept volume manageable:**
+
+```python
+# 1. OTel Metrics: Export every 1 second instead of real-time
+init_metrics(
+    service_name="controller-manager",
+    export_interval_ms=1000  # Batch 1000 events into one export
+)
+```
+
+```python
+# 2. LED Updates: Batch all 18 controllers at 20Hz
+if current_time - last_led_update >= 0.05:  # Every 50ms
+    # Update all LEDs in one batch instead of per-controller
+    updated_count = await update_all_leds()
+
+    metrics.led_batch_updates_total.inc()
+    metrics.led_controllers_updated_per_batch.observe(updated_count)
+```
+
+**Result:** 1,080 msg/sec → ~60 metric exports/sec, 18 LED updates/sec → 20 batched operations/sec
+
+---
+layout: default
+---
+
 # Learning 4: Prometheus is Too Slow
 
 **The Mismatch:**
