@@ -553,9 +553,7 @@ layout: default
 
 # Learning 6: These Tools Actually Work
 
-<iframe src="http://localhost:16686/trace/[trace-id]?uiTheme=dark" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
-
-<img src="https://placehold.co/1200x400/1e1e1e/808080?text=Jaeger+Trace:+Game+Loop+with+Controller+Events" alt="Jaeger trace view" class="rounded-lg shadow-lg my-4" />
+<iframe src="http://himbeere.local/jaeger/" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
 
 <!--
 Speaker Notes (Manuel - 11:30-13:00):
@@ -567,16 +565,11 @@ Speaker Notes (Manuel - 11:30-13:00):
 
 ---
 layout: section
-class: text-center
 ---
 
-# Live Demo
+# Live Demo: Real-time observability in action
 
-**"Let's break something in real-time"**
-
-18 mock controllers running right now
-
-We'll change the game frequency and watch metrics respond
+We'll change the game frequency via feature flags and watch metrics respond across all three approaches — from 10-second pull intervals to sub-100ms VictoriaMetrics resolution.
 
 ---
 layout: two-cols
