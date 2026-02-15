@@ -624,7 +624,7 @@ layout: two-cols
 
 <div>
   <iframe
-    src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk&viewPanel=victoriametrics-panel"
+    src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk"
     width="100%"
     height="400"
     frameborder="0"
@@ -670,7 +670,7 @@ layout: two-cols
   <div>
     <h3 class="text-sm mb-2">CPU Usage</h3>
     <iframe
-      src="http://himbeere.local/grafana/d/host-metrics/host-metrics?orgId=1&refresh=5s&kiosk&viewPanel=cpu-panel"
+      src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk"
       width="100%"
       height="200"
       frameborder="0"
@@ -681,7 +681,7 @@ layout: two-cols
   <div>
     <h3 class="text-sm mb-2">Controller Poll Latency (Jaeger)</h3>
     <iframe
-      src="http://localhost:16686/trace/[trace-id]?uiTheme=dark"
+      src="http://himbeere.local/jaeger/"
       width="100%"
       height="200"
       frameborder="0"
@@ -721,15 +721,39 @@ layout: default
 
 # 4 Key Takeaways
 
-<div class="space-y-6 text-lg">
+<div class="grid grid-cols-2 gap-6 max-w-5xl mx-auto">
 
-1. **CNCF observability tools work for games, IoT, embedded systems—anything real-time.** Not just web apps.
+<div class="p-6 bg-gray-800/50 rounded-lg border border-gray-700">
+  <div class="text-4xl font-bold text-teal-400 mb-3">1</div>
+  <div class="text-base leading-relaxed">
+    <strong>CNCF observability tools work for games, IoT, embedded systems—anything real-time.</strong>
+    <div class="mt-2 text-sm opacity-80">Not just web apps.</div>
+  </div>
+</div>
 
-2. **But they're optimized for web apps.** Default configs assume 15-second scrapes, not 60Hz game loops.
+<div class="p-6 bg-gray-800/50 rounded-lg border border-gray-700">
+  <div class="text-4xl font-bold text-teal-400 mb-3">2</div>
+  <div class="text-base leading-relaxed">
+    <strong>But they're optimized for web apps.</strong>
+    <div class="mt-2 text-sm opacity-80">Default configs assume 15-second scrapes, not 60Hz game loops.</div>
+  </div>
+</div>
 
-3. **With tuning**—scrape intervals, push vs pull, storage backends—**you can get subsecond observability on an $80 computer.**
+<div class="p-6 bg-gray-800/50 rounded-lg border border-gray-700">
+  <div class="text-4xl font-bold text-teal-400 mb-3">3</div>
+  <div class="text-base leading-relaxed">
+    <strong>With tuning, you can get subsecond observability on an $80 computer.</strong>
+    <div class="mt-2 text-sm opacity-80">Scrape intervals, push vs pull, storage backends.</div>
+  </div>
+</div>
 
-4. **The tools exist. The patterns exist.** What's missing is the documented path.
+<div class="p-6 bg-gray-800/50 rounded-lg border border-gray-700">
+  <div class="text-4xl font-bold text-teal-400 mb-3">4</div>
+  <div class="text-base leading-relaxed">
+    <strong>The tools exist. The patterns exist.</strong>
+    <div class="mt-2 text-sm opacity-80">What's missing is the documented path.</div>
+  </div>
+</div>
 
 </div>
 
