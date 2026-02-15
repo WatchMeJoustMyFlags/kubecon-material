@@ -440,9 +440,9 @@ processors:
 
 </div>
 
-<div v-click="3" class="text-center mt-8 text-xl text-amber-300">
+<div v-click="3">
 
-**100ms export intervals** + **1000-item batching** = subsecond observability without overwhelming backends
+**Combined effect** — 100ms exports + 1000-item batching gives subsecond observability without overwhelming backends
 
 </div>
 
