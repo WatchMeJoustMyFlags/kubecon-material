@@ -14,8 +14,22 @@ class: text-center
 # 18 Bluetooth Controllers Walk Into a Bar
 ## Observability & Runtime Configuration with CNCF Tools
 
-**Simon Schrottner**, Senior Software Engineer, Dynatrace<br>
-**Manuel Timelthaler**, Software Architect, Tractive
+<div class="grid grid-cols-2 px-4 mx-auto mt-12 text-left">
+<div class="flex items-center gap-2">
+  <img src="https://avatars.sched.co/e/f6/22629648/avatar.jpg?ff4" alt="Simon Schrottner" class="h-20 w-20 rounded-full flex-shrink-0" />
+  <div class="leading-tight">
+    <p class="!text-xl font-bold !mt-0 !mb-0">Simon Schrottner</p>
+    <p class="!text-lg !mt-0 !mb-0">Senior Software Engineer, Dynatrace</p>
+  </div>
+</div>
+<div class="flex items-center gap-2">
+  <img src="https://avatars.sched.co/3/41/24047766/avatar.jpg?b33" alt="Manuel Timelthaler" class="h-20 w-20 rounded-full flex-shrink-0" />
+  <div class="leading-tight">
+    <p class="!text-xl font-bold !mt-0 !mb-0">Manuel Timelthaler</p>
+    <p class="!text-lg !mt-0 !mb-0">Software Architect, Tractive</p>
+  </div>
+</div>
+</div>
 
 <div class="abs-br m-6 flex gap-2">
   Cloud Native Linz, February 2026
