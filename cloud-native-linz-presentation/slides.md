@@ -413,9 +413,7 @@ layout: default
 
 # Learning 3: The Code
 
-**Two batching strategies that kept volume manageable:**
-
-```python
+```python {all|2-3|4|5-6|all}
 # 1. OTel Metrics: Export interval from flagd (per-service targeting)
 init_metrics(
     service_name="controller-manager",
@@ -425,7 +423,7 @@ init_metrics(
 )
 ```
 
-```yaml
+```yaml {all|3-5|8-10|all}
 # 2. OTel Collector: Batch before forwarding to backends
 processors:
   batch/fast:
