@@ -938,10 +938,4 @@ layout: section
 
 **What questions do you have?**
 
-<div style="position: absolute; bottom: 20px; right: 20px; width: 300px; background: rgba(20, 20, 20, 0.8); border: 2px solid #44ffd2; border-radius: 8px; padding: 12px; font-size: 0.5em;">
-  <div style="font-weight: bold; margin-bottom: 6px; color: #44ffd2;">How We Wired an $80 Raspberry Pi 5 with OpenTelemetry</div>
-  <div style="font-size: 0.9em; color: #aaa;">Simon Wirtz (Dynatrace) & Manuel Timelthaler (Tractive)</div>
-  <div style="margin-top: 8px; text-align: center;">
-    <img src="/images/joustmania-qr.svg" alt="QR Code" width="80" />
-  </div>
-</div>
+<img src="/images/title-slide-thumb.png" alt="Title Slide" width="350" style="position: absolute; bottom: 20px; right: 20px; border: 2px solid #44ffd2; border-radius: 4px;" />
