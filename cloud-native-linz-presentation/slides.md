@@ -96,8 +96,8 @@ graph TD
     Controllers[18+ Controllers<br/>@ 30Hz]
 
     Menu -->|IPC| GC
-    GC --> CM
-    GC --> Audio
+    GC -->|IPC| CM
+    GC -->|IPC| Audio
     CM -->|Bluetooth| Controllers
 
     style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
@@ -183,38 +183,118 @@ layout: default
 
 **Problem:** IPC (pipes/queues) doesn't work with OpenTelemetry auto-instrumentation
 
-<div class="grid grid-cols-2 gap-4 my-4">
+<div class="grid grid-cols-3 gap-8 items-center mb-8">
 <div>
 
-**Before: IPC**
-```mermaid {scale:0.4}
-graph TD
-    A[Service A] -->|pipes| B[Service B]
-    B -->|queues| C[Service C]
-    style A fill:#e74c3c
-    style B fill:#e74c3c
-    style C fill:#e74c3c
-```
-❌ No context propagation
+### <span class="text-lg">Before</span><br>Process-Based IPC
 
 </div>
+<div class="col-span-2">
+
+```mermaid {scale:0.7}
+%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
+graph LR
+    Menu[Menu]
+    GC[Game Coordinator]
+    CM[Controller Manager]
+    Audio[Audio]
+    Controllers[Controllers]
+
+    Menu -->|IPC| GC
+    GC -->|IPC| CM
+    GC -->|IPC| Audio
+    CM -->|Bluetooth| Controllers
+
+    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
+    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
+    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
+    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
+    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#0e131f
+```
+
+</div>
+</div>
+
+<div class="grid grid-cols-3 gap-8 items-center">
 <div>
 
-**After: gRPC**
-```mermaid {scale:0.4}
-graph TD
-    A[Service A] -->|gRPC| B[Service B]
-    B -->|gRPC| C[Service C]
-    style A fill:#27ae60
-    style B fill:#27ae60
-    style C fill:#27ae60
+### <span class="text-lg">After</span><br>gRPC Microservices
+
+</div>
+<div class="col-span-2">
+
+```mermaid {scale:0.7}
+%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
+graph LR
+    Flagd[flagd]
+    Menu[Menu]
+    GC[Game Coordinator]
+    CM[Controller Manager]
+    Audio[Audio]
+    Controllers[Controllers]
+
+    Flagd -.->|gRPC| GC
+    Menu -->|gRPC| GC
+    GC -->|gRPC| CM
+    GC -->|gRPC| Audio
+    CM -->|Bluetooth| Controllers
+
+    style Flagd fill:#0e131f,stroke:#ffe45e,stroke-width:2px,color:#ffe45e
+    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
+    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
+    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
+    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
+    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#0e131f
 ```
-✅ Auto-instrumentation works
 
 </div>
 </div>
 
-**Result:** Context propagation for free, distributed tracing across services
+---
+layout: default
+---
+
+# Learning 1: The Full Picture
+
+**gRPC microservices enabled the observability stack**<br>
+W3C trace context flows through calls, enabling distributed tracing
+
+```mermaid {scale:0.75}
+%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
+graph LR
+    Dashboard[Dashboard<br/>:8080]
+    Flagd[flagd<br/>:8013]
+    Menu[Menu<br/>:50054]
+    GC[Game Coordinator<br/>:50053]
+    CM[Controller Manager<br/>:50052]
+    Audio[Audio<br/>:50056]
+    Controllers[Controllers]
+    OTel[OTel Collector<br/>:4317]
+    Observability[Grafana<br/>Jaeger<br/>Prometheus<br/>Loki]
+
+    Dashboard -->|gRPC| Menu
+    Menu -->|gRPC| GC
+    GC -->|gRPC| CM
+    GC -->|gRPC| Audio
+    Flagd -.->|gRPC| GC
+    CM -->|Bluetooth| Controllers
+
+    Menu -.->|OTLP| OTel
+    GC -.->|OTLP| OTel
+    CM -.->|OTLP| OTel
+    Audio -.->|OTLP| OTel
+    OTel -->|metrics<br/>traces<br/>logs| Observability
+
+    style Dashboard fill:#fe4a49,stroke:#fe4a49,stroke-width:2px,color:#0e131f
+    style Flagd fill:#0e131f,stroke:#ffe45e,stroke-width:2px,color:#ffe45e
+    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
+    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
+    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
+    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
+    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#0e131f
+    style OTel fill:#f39c12,stroke:#f39c12,stroke-width:2px,color:#0e131f
+    style Observability fill:#95a5a6,stroke:#95a5a6,stroke-width:2px,color:#0e131f
+```
 
 <!--
 Speaker Notes (Simon - 5:00-6:30):
