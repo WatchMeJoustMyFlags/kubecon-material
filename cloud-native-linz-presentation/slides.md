@@ -416,24 +416,29 @@ layout: default
 **Two batching strategies that kept volume manageable:**
 
 ```python
-# 1. OTel Metrics: Export every 1 second instead of real-time
+# 1. OTel Metrics: Export interval from flagd (per-service targeting)
 init_metrics(
     service_name="controller-manager",
-    export_interval_ms=1000  # Batch 1000 events into one export
+    export_interval_ms=flagd.get_int("metrics_export_interval_ms")
+    # controller-manager: 100ms (realtime needs)
+    # other services: 1000ms (normal observability)
 )
 ```
 
-```python
-# 2. LED Updates: Batch all 18 controllers at 20Hz
-if current_time - last_led_update >= 0.05:  # Every 50ms
-    # Update all LEDs in one batch instead of per-controller
-    updated_count = await update_all_leds()
+```yaml
+# 2. OTel Collector: Batch before forwarding to backends
+processors:
+  batch/fast:
+    timeout: 100ms          # Send batch every 100ms
+    send_batch_size: 1000   # Or when reaching 1000 data points
 
-    metrics.led_batch_updates_total.inc()
-    metrics.led_controllers_updated_per_batch.observe(updated_count)
+service:
+  pipelines:
+    metrics:
+      processors: [batch/fast]  # Apply fast batching to metrics
 ```
 
-**Result:** 1,080 msg/sec → ~60 metric exports/sec, 18 LED updates/sec → 20 batched operations/sec
+**Result:** Two-level batching reduces network overhead and backend write pressure
 
 ---
 layout: default
