@@ -432,47 +432,28 @@ layout: default
 <div class="my-8 font-mono text-sm">
 
 ```
-Prometheus Scrape:  |--------15s--------|--------15s--------|--------15s--------|
-                    ↓                    ↓                    ↓
+Prometheus Scrape:  |----10s----|----10s----|----10s----|
+                    ↓           ↓           ↓
 
-Game Events:        ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-                    ↑ Frame drop here? Won't see it for 15 seconds!
+Game Events:        ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+                    ↑ Frame drop? Won't see it for 10 seconds!
 ```
 
 </div>
 
 **Problem:**
-- **Prometheus default:** 15-second scrape interval
+- **Pull interval:** 10 seconds (we tuned from 60s default)
 - **Game loop:** 60Hz (16ms per frame)
-- **By the time you see a scrape, the game is over**
+- **Result:** 600 frames between each data point
 
 **We needed something faster.**
 
 <!--
 Speaker Notes (Manuel - 9:00-10:00):
-- "15-second scrapes... with 15s scrapes, we'd miss entire matches"
+- "Prometheus default is 60 seconds, we tuned it down to 10 seconds"
+- "But even at 10 seconds, we'd miss entire matches"
 - "Game runs at 60Hz - that's 16 milliseconds per frame"
-- "By the time Prometheus scraped, 900 frames had already happened"
-- "We needed something faster"
--->
-
----
-layout: default
----
-
-# Learning 4: Prometheus Pull in Action
-
-<iframe src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
-
-<img src="https://placehold.co/1200x500/1e1e1e/e74c3c?text=Prometheus+Pull:+Low+Resolution,+High+Latency" alt="Prometheus pull metrics" class="rounded-lg shadow-lg my-4" />
-
-**What you see** — chunky, low-resolution data with significant gaps. By the time you see an issue, it's already over.
-
-<!--
-Speaker Notes (Manuel):
-- "This is what Prometheus pull looks like in practice"
-- "See those gaps? That's 15 seconds of game state we'll never see"
-- "We tuned it down to 1 second, which helped, but still felt laggy"
+- "10 seconds = 600 frames of game state we'll never see"
 - "That's when we remembered—push metrics exist"
 -->
 
