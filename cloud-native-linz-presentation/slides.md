@@ -310,7 +310,12 @@ layout: default
 
 # Learning 2: The Raspberry Pi Can Handle It
 
-<iframe src="http://himbeere.local/grafana/d/joustmania-host-metrics/joustmania-host-metrics-raspberry-pi?orgId=1&refresh=5s&kiosk" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
+<iframe 
+    src="http://himbeere.local/grafana/d/joustmania-host-metrics/joustmania-host-metrics-raspberry-pi?orgId=1&refresh=5s&kiosk" 
+    width="100%" 
+    height="400" 
+    frameborder="0" 
+    class="rounded-lg shadow-lg"></iframe>
 
 <!--
 Speaker Notes (Simon - 6:30-7:15):
@@ -329,7 +334,7 @@ layout: default
 <div class="grid grid-cols-2 gap-12 my-8">
 <div>
 
-**Raspberry Pi 5 Specs:**
+### Raspberry Pi 5 Specs
 - Quad-core ARM Cortex-A76 @ 2.4GHz
 - 8GB LPDDR4X RAM
 - ~$80 USD
@@ -337,7 +342,7 @@ layout: default
 </div>
 <div>
 
-**Observed Performance:**
+### Observed Performance
 - CPU: ~45% under full load
 - Memory: ~850 MB / 8 GB (10%)
 - Temp: 65°C (with fan cooling)
@@ -346,8 +351,7 @@ layout: default
 </div>
 </div>
 
-**The Pi runs both the game AND the full observability stack.**<br>
-We didn't think this was possible initially — though you could also send telemetry to external services.
+**The Pi runs both the game AND the full observability stack** — we didn't think this was possible initially, though you could also send telemetry to external services.
 
 <!--
 Speaker Notes (Manuel - 7:15-8:00):
@@ -361,33 +365,32 @@ layout: default
 
 # Learning 3: Cardinality Low, Volume High
 
-<div class="text-center my-4">
-  <iframe
-    src="http://himbeere.local/grafana/d/service-health-overview/service-health-overview?orgId=1&refresh=5s&kiosk"
-    width="100%"
-    height="400"
-    frameborder="0"
-    class="rounded-lg shadow-lg"
-  ></iframe>
+<iframe src="http://himbeere.local/grafana/d/joustmania-system-overview/joustmania-system-overview?orgId=1&refresh=5s&kiosk" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
 
-  <img
-    src="https://placehold.co/1200x400/1e1e1e/808080?text=gRPC+Request+Rate+by+Service"
-    alt="Service health dashboard"
-    class="rounded-lg shadow-lg my-4"
-  />
-</div>
+<!--
+Speaker Notes (Simon - 8:00-8:30):
+- "Cardinality surprisingly low, volume surprisingly high"
+- Show dashboard with message rates
+-->
 
-<div class="grid grid-cols-2 gap-8 text-lg">
+---
+layout: default
+---
+
+# Learning 3: Volume Over Cardinality
+
+<div class="grid grid-cols-2 gap-12 my-8">
 <div>
 
-✅ **Cardinality: Low**
+### ✅ Cardinality: Low
 - Only 20-30 unique metric names
 - Manageable label combinations
+- Not the bottleneck
 
 </div>
 <div>
 
-⚠️ **Volume: High**
+### ⚠️ Volume: High
 - 18 controllers @ 60Hz
 - ~1,080 messages/second
 - **Solution: Batching & aggregation**
@@ -395,9 +398,10 @@ layout: default
 </div>
 </div>
 
+**Batching at the source prevented cardinality explosion** — aggregating controller events before exporting kept metric counts low while handling high message volume.
+
 <!--
-Speaker Notes (Simon - 8:00-9:00):
-- "Cardinality surprisingly low, volume surprisingly high"
+Speaker Notes (Simon - 8:30-9:00):
 - "Only tracking 20-30 different metrics"
 - "But 18 controllers at 60Hz means over 1,000 messages per second"
 - "Batching and aggregation at the source saved us"
