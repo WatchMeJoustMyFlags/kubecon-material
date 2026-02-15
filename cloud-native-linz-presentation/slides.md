@@ -938,4 +938,4 @@ layout: section
 
 **What questions do you have?**
 
-<img src="/images/title-slide-thumb.png" alt="Title Slide" width="350" style="position: absolute; bottom: 20px; right: 20px; border: 2px solid #44ffd2; border-radius: 4px;" />
+<img src="/images/title-slide-thumb.png" alt="Title Slide" width="420" style="position: absolute; bottom: 20px; right: 20px; border: 2px solid #44ffd2; border-radius: 4px;" />
