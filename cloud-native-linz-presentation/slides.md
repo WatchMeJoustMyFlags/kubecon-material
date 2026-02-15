@@ -12,7 +12,7 @@ class: text-center
 ---
 
 # 18 Bluetooth Controllers Walk Into a Bar
-## Observability & Runtime Configuration with CNCF Tools
+## Real-time observability using CNCF tools
 
 <div class="grid grid-cols-2 px-4 mx-auto mt-12 text-left">
 <div class="flex items-center gap-2">
