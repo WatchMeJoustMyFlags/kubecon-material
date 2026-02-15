@@ -365,20 +365,6 @@ layout: default
 
 # Learning 3: Cardinality Low, Volume High
 
-<iframe src="http://himbeere.local/grafana/d/joustmania-system-overview/joustmania-system-overview?orgId=1&refresh=5s&kiosk" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
-
-<!--
-Speaker Notes (Simon - 8:00-8:30):
-- "Cardinality surprisingly low, volume surprisingly high"
-- Show dashboard with message rates
--->
-
----
-layout: default
----
-
-# Learning 3: Volume Over Cardinality
-
 <div class="grid grid-cols-2 gap-12 my-8">
 <div>
 
@@ -401,7 +387,8 @@ layout: default
 **Batching at the source prevented cardinality explosion** — aggregating controller events before exporting kept metric counts low while handling high message volume.
 
 <!--
-Speaker Notes (Simon - 8:30-9:00):
+Speaker Notes (Simon - 8:00-9:00):
+- "Cardinality surprisingly low, volume surprisingly high"
 - "Only tracking 20-30 different metrics"
 - "But 18 controllers at 60Hz means over 1,000 messages per second"
 - "Batching and aggregation at the source saved us"
@@ -413,11 +400,9 @@ layout: default
 
 # Learning 3: Two Batching Strategies
 
-<div v-click="1">
-
 ### Level 1: Application → Collector
 
-```python {2-4|all}
+```python
 init_metrics(
     service_name="controller-manager",
     export_interval_ms=flagd.get_int("metrics_export_interval_ms")
@@ -425,26 +410,16 @@ init_metrics(
 )
 ```
 
-</div>
-
-<div v-click="2">
-
 ### Level 2: Collector → Backends
 
-```yaml {2-4|all}
+```yaml
 processors:
   batch/fast:
     timeout: 100ms          # Send batch every 100ms
     send_batch_size: 1000   # Or when 1000 data points collected
 ```
 
-</div>
-
-<div v-click="3">
-
 **100ms exports** + **1000-item batching** gives subsecond observability without overwhelming backends
-
-</div>
 
 ---
 layout: default
