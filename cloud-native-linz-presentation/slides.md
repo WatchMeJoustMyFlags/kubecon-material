@@ -93,7 +93,7 @@ graph TD
     GC[Game Coordinator]
     CM[Controller Manager]
     Audio[Audio]
-    Controllers[18 Controllers<br/>@ 30Hz]
+    Controllers[18+ Controllers<br/>@ 30Hz]
 
     Menu -->|IPC| GC
     GC --> CM
@@ -136,7 +136,7 @@ class: text-center
     <span class="text-sm text-gray-400">Metrics Storage</span>
   </div>
   <div class="flex flex-col items-center gap-2">
-    <img src="/images/jaeger.png" alt="Jaeger" class="h-20" />
+    <img src="/images/jaeger-reverse.png" alt="Jaeger" class="h-20" />
     <span class="text-sm text-gray-400">Distributed Tracing</span>
   </div>
   <div class="flex flex-col items-center gap-2">
@@ -154,7 +154,7 @@ class: text-center
 </div>
 
 <div class="text-2xl mt-8 text-amber-300">
-"What could possibly go wrong?"
+What could possibly go wrong?
 </div>
 
 <!--
