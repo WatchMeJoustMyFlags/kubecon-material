@@ -577,20 +577,14 @@ layout: two-cols
 
 # Push Metrics Comparison - Part 1
 
-<div class="text-center">
+<div class="h-full">
   <iframe
     src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk"
     width="100%"
-    height="400"
+    height="500"
     frameborder="0"
     class="rounded-lg shadow-lg"
   ></iframe>
-
-  <img
-    src="https://placehold.co/800x500/1e1e1e/808080?text=3+Graphs:+Prom+Pull+%7C+Prom+Push+%7C+VictoriaMetrics"
-    alt="Metrics pipeline comparison"
-    class="rounded-lg shadow-lg my-4"
-  />
 </div>
 
 **Three pipelines, same metric:**
@@ -610,16 +604,6 @@ layout: two-cols
     frameborder="0"
     class="rounded-lg shadow-lg border-2 border-gray-600"
   ></iframe>
-
-  <div class="text-center p-8 bg-gray-800 rounded-lg shadow-lg">
-    <p class="text-lg mb-4"><strong>Flag UI Placeholder</strong></p>
-    <p class="text-sm mb-6">update_frequency_hz</p>
-    <div class="bg-gray-700 p-4 rounded">
-      <p class="text-3xl font-bold mb-2">30 Hz</p>
-      <input type="range" min="30" max="100" value="30" class="w-full" />
-    </div>
-    <p class="text-xs mt-4 text-gray-400">Real-time feature flag control</p>
-  </div>
 </div>
 
 <!--
@@ -638,20 +622,14 @@ layout: two-cols
 
 # Push Metrics Comparison - Part 2
 
-<div class="text-center">
+<div class="h-full">
   <iframe
     src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk&viewPanel=victoriametrics-panel"
     width="100%"
-    height="400"
+    height="500"
     frameborder="0"
     class="rounded-lg shadow-lg"
   ></iframe>
-
-  <img
-    src="https://placehold.co/800x500/1e1e1e/27ae60?text=VictoriaMetrics:+<100ms+Resolution"
-    alt="VictoriaMetrics detail"
-    class="rounded-lg shadow-lg my-4"
-  />
 </div>
 
 **VictoriaMetrics with <100ms resolution:**
@@ -672,16 +650,6 @@ That's what you need for real-time debugging.
     frameborder="0"
     class="rounded-lg shadow-lg border-2 border-gray-600"
   ></iframe>
-
-  <div class="text-center p-8 bg-gray-800 rounded-lg shadow-lg">
-    <p class="text-lg mb-4"><strong>Flag UI Placeholder</strong></p>
-    <p class="text-sm mb-6">update_frequency_hz</p>
-    <div class="bg-gray-700 p-4 rounded">
-      <p class="text-3xl font-bold mb-2">60 Hz</p>
-      <input type="range" min="30" max="100" value="60" class="w-full" />
-    </div>
-    <p class="text-xs mt-4 text-gray-400">Real-time feature flag control</p>
-  </div>
 </div>
 
 <!--
@@ -698,34 +666,28 @@ layout: two-cols
 
 # Breaking Point
 
-<div class="space-y-2">
-  <iframe
-    src="http://himbeere.local/grafana/d/host-metrics/host-metrics?orgId=1&refresh=5s&kiosk&viewPanel=cpu-panel"
-    width="100%"
-    height="240"
-    frameborder="0"
-    class="rounded-lg shadow-lg"
-  ></iframe>
+<div class="h-full space-y-4">
+  <div>
+    <h3 class="text-sm mb-2">CPU Usage</h3>
+    <iframe
+      src="http://himbeere.local/grafana/d/host-metrics/host-metrics?orgId=1&refresh=5s&kiosk&viewPanel=cpu-panel"
+      width="100%"
+      height="220"
+      frameborder="0"
+      class="rounded-lg shadow-lg"
+    ></iframe>
+  </div>
 
-  <img
-    src="https://placehold.co/700x240/1e1e1e/e74c3c?text=CPU:+87%25+Ceiling"
-    alt="CPU usage spiking"
-    class="rounded-lg shadow-lg"
-  />
-
-  <iframe
-    src="http://localhost:16686/trace/[trace-id]?uiTheme=dark"
-    width="100%"
-    height="240"
-    frameborder="0"
-    class="rounded-lg shadow-lg"
-  ></iframe>
-
-  <img
-    src="https://placehold.co/700x240/1e1e1e/f39c12?text=Jaeger:+Controller+Poll+40ms+(was+2ms)"
-    alt="Jaeger showing latency"
-    class="rounded-lg shadow-lg"
-  />
+  <div>
+    <h3 class="text-sm mb-2">Controller Poll Latency (Jaeger)</h3>
+    <iframe
+      src="http://localhost:16686/trace/[trace-id]?uiTheme=dark"
+      width="100%"
+      height="220"
+      frameborder="0"
+      class="rounded-lg shadow-lg"
+    ></iframe>
+  </div>
 </div>
 
 ::right::
@@ -740,16 +702,6 @@ layout: two-cols
     frameborder="0"
     class="rounded-lg shadow-lg border-2 border-gray-600"
   ></iframe>
-
-  <div class="text-center p-8 bg-gray-800 rounded-lg shadow-lg">
-    <p class="text-lg mb-4"><strong>Flag UI Placeholder</strong></p>
-    <p class="text-sm mb-6">update_frequency_hz</p>
-    <div class="bg-gray-700 p-4 rounded">
-      <p class="text-3xl font-bold mb-2 text-red-400">100 Hz</p>
-      <input type="range" min="30" max="100" value="100" class="w-full" />
-    </div>
-    <p class="text-xs mt-4 text-red-400">⚠️ System at capacity</p>
-  </div>
 </div>
 
 <!--
