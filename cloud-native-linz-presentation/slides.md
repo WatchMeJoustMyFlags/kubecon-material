@@ -12,10 +12,24 @@ class: text-center
 ---
 
 # 18 Bluetooth Controllers Walk Into a Bar
-## Observability & Runtime Configuration with CNCF Tools
+## Real-time observability using CNCF tools
 
-**Simon Schrottner**, Senior Software Engineer, Dynatrace<br>
-**Manuel Timelthaler**, Software Architect, Tractive
+<div class="grid grid-cols-2 px-4 mx-auto mt-12 text-left">
+<div class="flex items-center gap-2">
+  <img src="/images/simon.jpg" alt="Simon Schrottner" class="h-20 w-20 rounded-full flex-shrink-0" />
+  <div class="leading-tight">
+    <p class="!text-xl font-bold !mt-0 !mb-0">Simon Schrottner</p>
+    <p class="!text-lg !mt-0 !mb-0">Senior Software Engineer, Dynatrace</p>
+  </div>
+</div>
+<div class="flex items-center gap-2">
+  <img src="/images/manuel.jpg" alt="Manuel Timelthaler" class="h-20 w-20 rounded-full flex-shrink-0" />
+  <div class="leading-tight">
+    <p class="!text-xl font-bold !mt-0 !mb-0">Manuel Timelthaler</p>
+    <p class="!text-lg !mt-0 !mb-0">Software Architect, Tractive</p>
+  </div>
+</div>
+</div>
 
 <div class="abs-br m-6 flex gap-2">
   Cloud Native Linz, February 2026
@@ -28,300 +42,808 @@ Speaker Notes:
 -->
 
 ---
-layout: two-cols
+layout: center
+class: text-center
 ---
 
-<img src="https://avatars.sched.co/e/f6/22629648/avatar.jpg?ff4" alt="Simon Schrottner" class="h-24 w-24 rounded-full inline-block" />
+# What is JoustMania?
 
-# Simon Schrottner{.mt-24}
+<div class="flex justify-center items-center my-8">
+    <img src="/images/joustmania-magfest.jpg" alt="JoustMania at MagFest" class="h-64 rounded-lg shadow-lg rotate-1" />
+</div>
 
-Senior Software Engineer, **Dynatrace**
+**A motion-controlled party game for up to 18+ PlayStation Move controllers**
 
-- Open source enthusiast.
-- Core contributor to **OpenFeature**, driving its growth and adoption.
-- Passionate about making modern observability accessible to everyone.
+Keep your controller still, jostle everyone else's.<br>
+_No screens, just glowing controllers and chaos._
 
-::right::
+<!--
+Speaker Notes (Manuel leads - 2:30):
+- Brief intro to JoustMania
+- "Motion-controlled party game"
+- "2 to 18+ controllers - we've had up to 20 at conventions"
+- "No screens, just glowing controllers and chaos"
+- Sets up the technical challenge ahead
+-->
 
-<img src="https://avatars.sched.co/3/41/24047766/avatar.jpg?b33" alt="Manuel Timelthaler" class="h-24 w-24 rounded-full inline-block" />
+---
+layout: default
+---
 
-# Manuel Timelthaler{.mt-24}
+# Original Architecture (IPC-Based)
 
-Software Architect, **Tractive**
+<div class="grid grid-cols-2">
+<div>
 
-- Helps teams build scalable systems and grow as engineers.
-- Over a decade of experience from front-end to cloud architecture.
-- Loves connecting people, process, and tech to build better software together.
+**Before observability:**
+
+- Process-based (multiprocessing)
+- 30 Hz game loop (33ms frames)
+- IPC via queues/shared memory
+- 4 Python processes
+
+**The problem:** OpenTelemetry needs network calls for context propagation
+
+</div>
+<div class="-mt-8">
+
+```mermaid {scale:0.85}
+graph TD
+    Menu[Menu]
+    GC[Game Coordinator]
+    CM[Controller Manager]
+    Audio[Audio]
+    Controllers[18+ Controllers<br/>@ 30Hz]
+
+    Menu -->|IPC| GC
+    GC -->|IPC| CM
+    GC -->|IPC| Audio
+    CM -->|Bluetooth| Controllers
+
+    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
+    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
+    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
+    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
+    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#0e131f
+```
+
+</div>
+</div>
+
+<!--
+Speaker Notes (Manuel - 2:30-5:00):
+- "This is how JoustMania originally worked"
+- "Process-based architecture with IPC"
+- "No network calls, just local processes talking via pipes"
+- "This sets up Learning 1 - we had to refactor this"
+- "No error messages, just glowing controllers and chaos"
+-->
 
 ---
 layout: center
 class: text-center
 ---
 
-# Let's talk about... a party game?
+# What If We Actually Observed This Thing?
 
-<div class="flex justify-center items-center">
-    <img src="https://raw.githubusercontent.com/adangert/JoustMania/refs/heads/master/logo/magfest.jpg" alt="JoustMania" class="h-48 rotate-1" />
+<div class="grid grid-cols-3 gap-x-16 gap-y-8 items-end justify-items-center my-12 px-12">
+  <div class="flex flex-col items-center gap-2">
+    <img src="/images/opentelemetry.png" alt="OpenTelemetry" class="h-14" />
+    <span class="text-sm text-gray-400">Telemetry Collection</span>
+  </div>
+  <div class="flex flex-col items-center gap-2">
+    <img src="/images/prometheus.png" alt="Prometheus" class="h-20" />
+    <span class="text-sm text-gray-400">Metrics Storage</span>
+  </div>
+  <div class="flex flex-col items-center gap-2">
+    <img src="/images/jaeger-reverse.png" alt="Jaeger" class="h-20" />
+    <span class="text-sm text-gray-400">Distributed Tracing</span>
+  </div>
+  <div class="flex flex-col items-center gap-2">
+    <img src="/images/grafana.svg" alt="Grafana" class="h-20" />
+    <span class="text-sm text-gray-400">Visualization</span>
+  </div>
+  <div class="flex flex-col items-center gap-2">
+    <img src="/images/loki.png" alt="Loki" class="h-20" />
+    <span class="text-sm text-gray-400">Log Aggregation</span>
+  </div>
+  <div class="flex flex-col items-center gap-2">
+    <img src="/images/openfeature.svg" alt="OpenFeature" class="h-14 w-auto" />
+    <span class="text-sm text-gray-400">Feature Flags</span>
+  </div>
 </div>
 
-**JoustMania:** An open-source party game where players physically jostle motion controllers.
-
-Sounds simple, right? What could possibly go wrong?
-
----
-layout: default
----
-
-# The "2 AM at a Convention" Problem
-
-You're running a booth, the game is a hit. Then, a player comes to you and says:
-
-<div class="bg-gray-800 p-4 rounded-lg text-center">
-  <p class="text-2xl text-amber-300">“My controller just... felt different this round.”</p>
+<div class="text-2xl mt-8 text-amber-300">
+What could possibly go wrong?
 </div>
 
-- Was it lag?
-- A dying battery?
-- A problem with the Bluetooth adapter?
-- The game's physics engine?
-- Or just... their imagination?
+<!--
+Speaker Notes (Manuel - ~5:00):
+- "I'm Manuel, by the way. Still don't work on hardware."
+- "We wanted to see if CNCF observability tools could handle this"
+- "OpenTelemetry, Prometheus, Grafana, Jaeger, OpenFeature"
+- "What could possibly go wrong?"
+- Transition: "We learned 6 things..."
+-->
 
-**How do you debug a *feeling* in a distributed system of physical devices?**
+---
+layout: section
+class: text-center
+---
+
+# The Journey: 6 Learnings
+
+What we discovered bringing CNCF tools to a real-time game
 
 ---
 layout: default
-zoom: 75%
 ---
 
-# Our Distributed System
+# Learning 1: Had to Refactor to Microservices
 
-This isn't your typical microservice architecture.
+**Problem:** IPC (pipes/queues) doesn't work with OpenTelemetry auto-instrumentation
 
-```mermaid {scale:0.5}
-graph TD
-    subgraph Players
-        P1[🎮 Player 1]
-        P2[🎮 Player 2]
-        P_N[... 16 more ...]
-    end
+<div class="grid grid-cols-3 gap-8 items-center mb-8">
+<div>
 
-    subgraph Game Server
-        B1[📶 BT Adapter 1]
-        B2[📶 BT Adapter 2]
-        B3[📶 BT Adapter 3]
-        APP[🚀 JoustMania App]
-    end
+### <span class="text-lg">Before</span><br>Process-Based IPC
 
-    subgraph Display
-        D[📺 Projector/TV]
-    end
+</div>
+<div class="col-span-2">
 
-    P1 --> B1
-    P2 --> B1
-    P_N --> B3
-    B1 & B2 & B3 --> APP
-    APP --> D
+```mermaid {scale:0.7}
+%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
+graph LR
+    Menu[Menu]
+    GC[Game Coordinator]
+    CM[Controller Manager]
+    Audio[Audio]
+    Controllers[Controllers]
+
+    Menu -->|IPC| GC
+    GC -->|IPC| CM
+    GC -->|IPC| Audio
+    CM -->|Bluetooth| Controllers
+
+    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#000000
+    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#000000
+    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#000000
+    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#000000
+    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#000000
 ```
 
-**Challenges:**
-- **18 concurrent devices:** Each with its own battery, sensor, and connection quality.
-- **High-frequency data:** Sensors report at 100 Hz. `18 * 100 = 1800` events/second.
-- **High cardinality:** Every controller is a unique data source. `player_id`, `controller_id`, `session_id`...
-- **"Noisy" environment:** Bluetooth is notoriously fickle, especially in a crowded convention hall.
+</div>
+</div>
 
----
-layout: default
----
+<div class="grid grid-cols-3 gap-8 items-center">
+<div>
 
-# Challenge 1: The Data Deluge
+### <span class="text-lg">After</span><br>gRPC Microservices
 
-How do you sample data without overwhelming your telemetry backend (and your wallet)?
+</div>
+<div class="col-span-2">
 
-`18 controllers * 100 samples/sec * 3600 sec/hr = 6,480,000` data points per hour.
+```mermaid {scale:0.7}
+%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
+graph LR
+    Flagd[flagd]
+    Menu[Menu]
+    GC[Game Coordinator]
+    CM[Controller Manager]
+    Audio[Audio]
+    Controllers[Controllers]
 
-- We can't just log everything.
-- We can't just sample randomly, or we'll miss the important stuff.
-- We need **intelligent, context-aware sampling.**
+    Flagd -.->|gRPC| GC
+    Menu -->|gRPC| GC
+    GC -->|gRPC| CM
+    GC -->|gRPC| Audio
+    CM -->|Bluetooth| Controllers
 
-What if we could sample more when the battery is low, or when a player is in a critical "joust"?
-
----
-layout: default
----
-
-# Challenge 2: Correlating Everything
-
-A player's action isn't a single event. It's a chain reaction.
-
-```mermaid {scale:0.35}
-sequenceDiagram
-    participant C as 🎮 Controller
-    participant GS as 🚀 Game Server
-    participant OT as ✨ OpenTelemetry
-
-    C->>GS: Hardware Event (e.g., ACCEL_X > 5.0)
-    Note over C,GS: Bluetooth Transmission
-    GS->>OT: Start Trace ("PlayerAction")
-    OT-->>GS: Returns Trace Context
-    GS->>GS: Process Input (Update Player State)
-    GS->>GS: Run Physics Simulation
-    GS->>GS: Detect "Joust" Collision
-    GS->>OT: Add Event: "Collision Detected"
-    GS->>GS: Calculate Outcome
-    GS->>GS: Update Game State
-    GS->>OT: End Trace
+    style Flagd fill:#0e131f,stroke:#ffe45e,stroke-width:2px,color:#ffe45e
+    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#000000
+    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#000000
+    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#000000
+    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#000000
+    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#000000
 ```
 
-**The Goal:** We need to link the initial hardware event to the final game logic outcome. We need distributed tracing for the physical world.
+</div>
+</div>
+
+---
+layout: default
+---
+
+# Learning 1: The Full Picture
+
+**gRPC microservices enabled the observability stack**<br>
+W3C trace context flows through calls, enabling distributed tracing
+
+```mermaid {scale:0.75}
+%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
+graph LR
+    Dashboard[Dashboard<br/>:8080]
+    Flagd[flagd<br/>:8013]
+    Menu[Menu<br/>:50054]
+    GC[Game Coordinator<br/>:50053]
+    CM[Controller Manager<br/>:50052]
+    Audio[Audio<br/>:50056]
+    Controllers[Controllers]
+    OTel[OTel Collector<br/>:4317]
+    Observability[Grafana<br/>Jaeger<br/>Prometheus<br/>Loki]
+
+    Dashboard -->|gRPC| Menu
+    Menu -->|gRPC| GC
+    GC -->|gRPC| CM
+    GC -->|gRPC| Audio
+    Flagd -.->|gRPC| GC
+    CM -->|Bluetooth| Controllers
+
+    Menu -.->|OTLP| OTel
+    GC -.->|OTLP| OTel
+    CM -.->|OTLP| OTel
+    Audio -.->|OTLP| OTel
+    OTel -->|metrics<br/>traces<br/>logs| Observability
+
+    style Dashboard fill:#fe4a49,stroke:#fe4a49,stroke-width:2px,color:#0e131f
+    style Flagd fill:#0e131f,stroke:#ffe45e,stroke-width:2px,color:#ffe45e
+    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#000000
+    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#000000
+    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#000000
+    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#000000
+    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#000000
+    style OTel fill:#f39c12,stroke:#f39c12,stroke-width:2px,color:#0e131f
+    style Observability fill:#95a5a6,stroke:#95a5a6,stroke-width:2px,color:#0e131f
+```
+
+<!--
+Speaker Notes (Simon - 5:00-6:30):
+- "We figured we'd just add OTel and call it a day. Not even close."
+- "IPC doesn't propagate trace context"
+- "Had to refactor to gRPC microservices"
+- "Once we did that, auto-instrumentation just worked"
+-->
+
+---
+layout: default
+---
+
+# Learning 2: The Raspberry Pi Can Handle It
+
+<iframe 
+    src="http://himbeere.local/grafana/d/joustmania-host-metrics/joustmania-host-metrics-raspberry-pi?orgId=1&refresh=5s&kiosk" 
+    width="100%" 
+    height="400" 
+    frameborder="0" 
+    class="rounded-lg shadow-lg"></iframe>
+
+<!--
+Speaker Notes (Simon - 6:30-7:15):
+- "The Pi didn't even break a sweat"
+- Show dashboard with CPU, memory, temperature
+- "Running OpenTelemetry Collector, Prometheus, Grafana, Jaeger"
+- "All on a Raspberry Pi 4"
+-->
+
+---
+layout: default
+---
+
+# Learning 2: Pi Performance
+
+<div class="grid grid-cols-2 gap-12 my-8">
+<div>
+
+### Raspberry Pi 5 Specs
+- Quad-core ARM Cortex-A76 @ 2.4GHz
+- 8GB LPDDR4X RAM
+- ~$80 USD
+
+</div>
+<div>
+
+### Observed Performance
+- CPU: ~45% under full load
+- Memory: ~850 MB / 8 GB (10%)
+- Temp: 65°C (with fan cooling)
+- 18 controllers @ 60Hz
+
+</div>
+</div>
+
+**The Pi runs both the game AND the full observability stack** — we didn't think this was possible initially, though you could also send telemetry to external services.
+
+<!--
+Speaker Notes (Manuel - 7:15-8:00):
+- "The Pi didn't even break a sweat"
+- "Though we did cap retention at 7 days"
+-->
+
+---
+layout: default
+---
+
+# Learning 3: Cardinality Low, Volume High
+
+<div class="grid grid-cols-2 gap-12 my-8">
+<div>
+
+### ✅ Cardinality: Low
+- Only 20-30 unique metric names
+- Manageable label combinations
+- Not the bottleneck
+
+</div>
+<div>
+
+### ⚠️ Volume: High
+- 18 controllers @ 60Hz
+- ~1,080 messages/second
+- **Solution: Batching & aggregation**
+
+</div>
+</div>
+
+**Batching at the source prevented cardinality explosion** — aggregating controller events before exporting kept metric counts low while handling high message volume.
+
+<!--
+Speaker Notes (Simon - 8:00-9:00):
+- "Cardinality surprisingly low, volume surprisingly high"
+- "Only tracking 20-30 different metrics"
+- "But 18 controllers at 60Hz means over 1,000 messages per second"
+- "Batching and aggregation at the source saved us"
+-->
+
+---
+layout: default
+---
+
+# Learning 3: Two Batching Strategies
+
+### Level 1: Application → Collector
+
+```python
+init_metrics(
+    service_name="controller-manager",
+    export_interval_ms=flagd.get_int("metrics_export_interval_ms")
+    # controller-manager: 100ms (realtime) | other services: 1000ms
+)
+```
+
+### Level 2: Collector → Backends
+
+```yaml
+processors:
+  batch/fast:
+    timeout: 100ms          # Send batch every 100ms
+    send_batch_size: 1000   # Or when 1000 data points collected
+```
+
+**100ms exports** + **1000-item batching** gives subsecond observability without overwhelming backends
+
+---
+layout: default
+---
+
+# Learning 4: Prometheus is Too Slow
+
+**The Mismatch:**
+
+<div class="my-8 font-mono text-sm">
+
+```
+Prometheus Scrape:  |----10s----|----10s----|----10s----|
+                    ↓           ↓           ↓
+
+Game Events:        ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+                    ↑ Frame drop? Won't see it for 10 seconds!
+```
+
+</div>
+
+**Problem:**
+- **Pull interval:** 10 seconds (we tuned from 60s default)
+- **Game loop:** 60Hz (16ms per frame)
+- **Result:** 600 frames between each data point
+
+**We needed something faster.**
+
+<!--
+Speaker Notes (Manuel - 9:00-10:00):
+- "Prometheus default is 60 seconds, we tuned it down to 10 seconds"
+- "But even at 10 seconds, we'd miss entire matches"
+- "Game runs at 60Hz - that's 16 milliseconds per frame"
+- "10 seconds = 600 frames of game state we'll never see"
+- "That's when we remembered—push metrics exist"
+-->
+
+---
+layout: default
+---
+
+# Learning 5: Push Metrics with Prometheus
+
+**OTLP Push via PeriodicExportingMetricReader**
+
+```python
+# OpenTelemetry SDK Configuration
+metric_reader = PeriodicExportingMetricReader(
+    exporter=OTLPMetricExporter(endpoint="http://otel-collector:4318"),
+    export_interval_millis=flagd.get_int("metrics_export_interval_ms")
+    # controller-manager: 100ms (realtime) | other services: 1000ms
+)
+```
+
+<div class="my-4">
+
+```mermaid {scale:1}
+%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
+graph LR
+    Services[Game Services] -->|OTLP Push<br/>100ms| Collector[OTEL Collector]
+    Collector -->|Remote Write<br/>~500ms| Prom[Prometheus]
+
+    style Services fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
+    style Collector fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
+    style Prom fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
+```
+
+</div>
+
+**Reality check** — We export at 100ms, but Prometheus remote write can only achieve ~500ms resolution due to write path limitations. Still **30x faster** than 15s scrape, but not real-time yet.
+
+<!--
+Speaker Notes (Manuel):
+- "We'd both been doing pull-based metrics for so long we almost forgot"
+- "Push-based metrics via OTLP with 100ms interval"
+- "150x faster feedback than default Prometheus scrape"
+- "Much better, but we wondered—can we go even faster?"
+-->
+
+---
+layout: default
+---
+
+# Learning 5: VictoriaMetrics for Hardware
+
+<div class="grid grid-cols-2 gap-8 my-8">
+<div>
+
+### Prometheus Limitations
+- Built for web app monitoring
+- Remote write adds latency
+- Limited ingestion rate
+- Storage not optimized for high-frequency data
+
+</div>
+<div>
+
+### VictoriaMetrics Benefits
+- **Native OTLP support** (no conversion)
+- **10x higher ingestion rate**
+- **Better compression** for time-series
+- **Optimized for IoT/hardware** use cases
+
+</div>
+</div>
+
+```mermaid {scale:1}
+%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
+graph LR
+    Services[Game Services] -->|OTLP Push<br/>100ms| Collector[OTEL Collector]
+    Collector -->|OTLP Native<br/><100ms| VM[VictoriaMetrics]
+
+    style Services fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
+    style Collector fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
+    style VM fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
+```
+
+**Result** — Sub-100ms resolution, native OTLP, built for hardware observability.
+
+<!--
+Speaker Notes (Manuel):
+- "Prometheus is great, but it's built for web apps"
+- "VictoriaMetrics is designed for high-frequency IoT and hardware data"
+- "Native OTLP support means no conversion overhead"
+- "We went from 15 seconds to sub-100 milliseconds"
+-->
+
+---
+layout: default
+---
+
+# Learning 6: These Tools Actually Work
+
+<iframe src="http://himbeere.local/jaeger/" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
+
+<!--
+Speaker Notes (Manuel - 11:30-13:00):
+- "These tools actually work for real-time hardware"
+- "This is a Jaeger trace of a game loop"
+- "You can see each step: controller poll, motion processing, collision detection"
+- Simon adds: "And when that lag happened at the conference? We can now see exactly where it came from. It's Bluetooth."
+-->
 
 ---
 layout: section
 ---
 
-# Our Solution: The CNCF Toolbox
+# Live Demo: Real-time observability in action
 
-Let's apply battle-tested cloud-native tools to this unconventional problem.
-
-- **OpenFeature** for runtime configuration and dynamic control.
-- **OpenTelemetry** for observability, tracing, and intelligent sampling.
+We'll change the game frequency via feature flags and watch metrics respond across all three approaches — from 10-second pull intervals to sub-100ms VictoriaMetrics resolution.
 
 ---
-layout: default
+layout: two-cols
 ---
 
-# OpenFeature: More Than Just A/B Testing
+# Push Metrics Comparison - Part 1
 
-We use feature flags to dynamically change the game's behavior at runtime, without redeploying.
-
-A flag isn't just `true` or `false`. It can be a string, a number, or even structured JSON.
-
-```yaml [flags.yaml (synced from GitHub)]{all|1-13|14-20}
-joust-sensitivity:
-  variants:
-    low: 0.8
-    normal: 1.0
-    high: 1.2
-  defaultVariant: normal
-  contextual:
-    - when:
-        playerSkill: "newbie"
-      variant: low
-    - when:
-        batteryLevel: "critical"
-      variant: high # Compensate for potential sensor lag?
-
-telemetry-sampling-rate:
-  variants:
-    off: 0
-    debug: 100 # Sample everything
-    normal: 10 # Sample 10% of events
-  defaultVariant: normal
-```
-
----
-layout: default
----
-
-# Flags Driven by Real-World Context
-
-We use a **custom OpenFeature provider** that enriches the evaluation context with real-time data.
-
-```typescript
-// Placeholder: How we evaluate a flag
-const featureFlags = openFeatureClient.forContext({
-  // Static context
-  playerId: 'player-4',
-  playerSkill: 'pro',
-
-  // Dynamic context from the game!
-  batteryLevel: getBatteryPercent('C4:B3:A1:D5:32:F1'), // "healthy"
-  systemLoad: getCpuUsage(), // "high"
-});
-
-const samplingRate = featureFlags.getNumberValue('telemetry-sampling-rate', 10);
-const joustSensitivity = featureFlags.getNumberValue('joust-sensitivity', 1.0);
-
-// Now, use these values to change game logic...
-if (Math.random() < (samplingRate / 100)) {
-  // send telemetry data
-}
-```
-
-This allows us to create powerful, emergent behavior.
-
----
-layout: default
----
-
-# OpenTelemetry: Proving the Game is "Rigged"
-
-With tracing, we can finally answer the age-old question: *Is this game fair?*
-
-A player complains about a lost joust. We can pull up the trace.
-
-<div class="bg-gray-800 p-4 rounded-lg text-xs">
-**Trace ID: `a1b2c3d4`**
-- **`player-action`**: `[span | duration: 150ms]`
-  - `controller-event`: `{accel_x: 9.8, timestamp: ...}`
-  - `game-logic`: `{is_collision: true, opponent: 'player-7'}`
-  - `attribute`: `{opponent_battery: 95%}`
-  - `attribute`: `{player_battery: 21%}`
-  - `event`: `JoustOutcome: Loss`
-  - **`analysis_result`**: `{flag_evaluation: {joust-sensitivity: 1.2}, reason: 'batteryLevel was critical'}`
+<div>
+  <iframe
+    src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk"
+    width="100%"
+    height="400"
+    frameborder="0"
+    class="rounded-lg shadow-lg"
+  ></iframe>
 </div>
 
-**Aha!** The player's battery was low, a feature flag kicked in to increase sensitivity, which may have made their movements *too* sensitive. It's not rigged, it's *context-aware*!
+**Three pipelines, same metric:**
+1. Prometheus Pull (10s, ~6 samples/min)
+2. OTEL→Prometheus (500ms, ~120 samples/min)
+3. OTEL→VictoriaMetrics (<100ms, ~600 samples/min)
+
+::right::
+
+# Flag Controls
+
+<div class="flex items-center justify-center">
+  <iframe
+    src="http://localhost:8080/flags-ui"
+    width="350"
+    height="400"
+    frameborder="0"
+    class="rounded-lg shadow-lg border-2 border-gray-600"
+  ></iframe>
+</div>
+
+<!--
+Speaker Notes (Manuel/Simon - 13:00-15:30):
+- Manuel: "This dashboard shows game loop frequency—right now we're at 30Hz"
+- Simon: "Increasing to 60Hz" (changes flag)
+- Manuel: "And... there it goes. Look at the jump..."
+- Manuel narrates the differences in each graph
+- "Notice how Prometheus pull barely shows the change"
+- "But VictoriaMetrics? You can see the exact moment"
+-->
+
+---
+layout: two-cols
+---
+
+# Push Metrics Comparison - Part 2
+
+<div>
+  <iframe
+    src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk"
+    width="100%"
+    height="400"
+    frameborder="0"
+    class="rounded-lg shadow-lg"
+  ></iframe>
+</div>
+
+**VictoriaMetrics with <100ms resolution:**
+
+You can see **individual game loop iterations**
+
+That's what you need for real-time debugging.
+
+::right::
+
+# Flag Controls
+
+<div class="flex items-center justify-center">
+  <iframe
+    src="http://localhost:8080/flags-ui"
+    width="350"
+    height="400"
+    frameborder="0"
+    class="rounded-lg shadow-lg border-2 border-gray-600"
+  ></iframe>
+</div>
+
+<!--
+Speaker Notes (Manuel - 15:30-17:00):
+- "Look at VictoriaMetrics closely"
+- "You can see individual game loop iterations"
+- "That's what you need for real-time debugging"
+- "This is the difference between knowing and guessing"
+-->
+
+---
+layout: two-cols
+---
+
+# Breaking Point
+
+<div class="space-y-4">
+  <div>
+    <h3 class="text-sm mb-2">CPU Usage</h3>
+    <iframe
+      src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk"
+      width="100%"
+      height="200"
+      frameborder="0"
+      class="rounded-lg shadow-lg"
+    ></iframe>
+  </div>
+
+  <div>
+    <h3 class="text-sm mb-2">Controller Poll Latency (Jaeger)</h3>
+    <iframe
+      src="http://himbeere.local/jaeger/"
+      width="100%"
+      height="200"
+      frameborder="0"
+      class="rounded-lg shadow-lg"
+    ></iframe>
+  </div>
+</div>
+
+::right::
+
+# Flag Controls
+
+<div class="flex items-center justify-center">
+  <iframe
+    src="http://localhost:8080/flags-ui"
+    width="350"
+    height="400"
+    frameborder="0"
+    class="rounded-lg shadow-lg border-2 border-gray-600"
+  ></iframe>
+</div>
+
+<!--
+Speaker Notes (Simon/Manuel - 17:00-19:00):
+- Simon: "Should I crank it all the way up?"
+- Manuel: "Do it."
+- Simon: Adjusts flag to 100Hz
+- Manuel: "Aaand there's our CPU ceiling. 87%. Frame drops starting to appear."
+- "Look at the Jaeger trace - controller poll time just jumped from 2ms to 40ms"
+- Simon: "Rolling back... Done. Performance restored."
+- "No restart. No deploy. Just OpenFeature."
+-->
+
+---
+layout: default
+---
+
+# 4 Key Takeaways
+
+<div class="grid grid-cols-2 gap-6 max-w-5xl mx-auto">
+
+<div class="p-6 bg-gray-800/50 rounded-lg border border-gray-700">
+  <div class="text-4xl font-bold text-teal-400 mb-3">1</div>
+  <div class="text-base leading-relaxed">
+    <strong>CNCF observability tools work for games, IoT, embedded systems—anything real-time.</strong>
+    <div class="mt-2 text-sm opacity-80">Not just web apps.</div>
+  </div>
+</div>
+
+<div class="p-6 bg-gray-800/50 rounded-lg border border-gray-700">
+  <div class="text-4xl font-bold text-teal-400 mb-3">2</div>
+  <div class="text-base leading-relaxed">
+    <strong>But they're optimized for web apps.</strong>
+    <div class="mt-2 text-sm opacity-80">Default configs assume 15-second scrapes, not 60Hz game loops.</div>
+  </div>
+</div>
+
+<div class="p-6 bg-gray-800/50 rounded-lg border border-gray-700">
+  <div class="text-4xl font-bold text-teal-400 mb-3">3</div>
+  <div class="text-base leading-relaxed">
+    <strong>With tuning, you can get subsecond observability on an $80 computer.</strong>
+    <div class="mt-2 text-sm opacity-80">Scrape intervals, push vs pull, storage backends.</div>
+  </div>
+</div>
+
+<div class="p-6 bg-gray-800/50 rounded-lg border border-gray-700">
+  <div class="text-4xl font-bold text-teal-400 mb-3">4</div>
+  <div class="text-base leading-relaxed">
+    <strong>The tools exist. The patterns exist.</strong>
+    <div class="mt-2 text-sm opacity-80">What's missing is the documented path.</div>
+  </div>
+</div>
+
+</div>
+
+<!--
+Speaker Notes (Simon - 19:00-21:00):
+- "CNCF observability tools are not just for web apps"
+- "They work for games, IoT, embedded systems, traffic management—anything real-time"
+- "But they're optimized for web apps - 15-second scrape intervals, not 60Hz game loops"
+- "With tuning, you can get subsecond observability on an $80 computer"
+- "The tools exist. The patterns exist. What's missing is the documented path"
+-->
+
+---
+layout: center
+class: text-center
+---
+
+# Where's the Real-Time Systems Demo?
+
+<div class="my-8 flex gap-4 justify-center">
+  <img src="/images/otel-demo-1.png" alt="OTel Demo Frontend" width="200" class="rounded shadow" />
+  <img src="/images/otel-demo-2.png" alt="OTel Demo Cart" width="200" class="rounded shadow" />
+</div>
+
+**E-commerce frontend. Payment gateway. Recommendation engine.**
+
+Great for microservices—but where's the robotics? The game engines? The industrial IoT?
+
+<div class="text-xl mt-8">
+<strong class="text-amber-300">The call to action:</strong> Try these tools on real-time systems. Document what works. Share tuning tricks. Contribute examples.
+</div>
+
+<!--
+Speaker Notes (Simon - 21:00-22:00):
+- "Look at the official OpenTelemetry demo. It's all web services"
+- "E-commerce frontend, payment gateway, recommendation engine"
+- "Great for learning cloud-native observability if you're deploying microservices"
+- "But where's the robotics demo? The game engine? The industrial IoT sensor network?"
+- Manuel: "That's the gap we're trying to fill"
+- Simon: "Exactly. So this is our call to action"
+- "If you're working on real-time systems, embedded hardware, anything with tight latency requirements—try these tools"
+- "Document what works. Share the tuning tricks. Contribute examples back to the community"
+-->
+
+---
+layout: center
+class: text-center
+---
+
+# JoustMania is Open Source
+
+**Fork it. Break it. Make it better.**
+
+<div class="text-lg mt-8 opacity-80">
+P.S. If you solved subsecond Prometheus pull without VictoriaMetrics, tell us.
+</div>
+
+<div class="mt-8">
+  <img src="/images/joustmania-qr.svg" alt="QR Code" width="200" class="inline-block" />
+</div>
+
+<div class="text-sm mt-4">
+  <a href="https://github.com/WatchMeJoustMyFlags/JoustMania" class="text-blue-400">github.com/WatchMeJoustMyFlags/JoustMania</a>
+</div>
+
+<!--
+Speaker Notes (Simon - 22:00-22:30):
+- "Everything we showed you today is open source"
+- "The game, the configs, the dashboards, the Grafana setup with VictoriaMetrics"
+- "Even the mock controller service if you want to simulate 18 players without buying 18 PlayStation Move controllers from eBay"
+- "Fork it. Break it. Make it better."
+- Manuel: "And if you figured out how to get subsecond Prometheus pull metrics without switching to VictoriaMetrics, please tell us"
+-->
 
 ---
 layout: section
 ---
 
-# Live Demo (~5 mins)
+# Real-time observability using CNCF tools
 
-**Our Plan:**
-1.  We'll start a **live game** with two players.
-2.  You'll see the **live telemetry** stream on the screen as they play.
-3.  We'll analyze the data using **prepared screenshots** to show you exactly what to look for. (This way, the demo gods can't hurt us).
-4.  We will have a fallback video, just in case.
+<!--
+Speaker Notes (Manuel/Simon - 22:00-22:30):
+- Manuel: "We started this talk with a problem: Simon didn't know why the game crashed"
+- Simon: "Now? We know exactly why. And when. And which controller caused it"
+- Manuel: "The point isn't that we solved every observability problem for real-time systems. We didn't"
+- Manuel: "The point is that we can. The tools are ready. The foundation is solid"
+- Simon: "What's needed is more people trying unconventional use cases"
+- Simon: "So if you're building something real-time, something hardware-adjacent, something that doesn't fit the 'standard' observability mold—use these tools anyway. Then come tell us what broke"
+-->
 
-Let's see it in action!
-
----
-layout: default
----
-
-# Live Telemetry (Screenshot)
-
-Here's an example of the data we're capturing.
-
-<div class="flex justify-center items-center my-4">
-  <img src="https://placehold.co/800x400/1F2937/FFFFFF?text=Real-Time+Controller+Telemetry+Graph" alt="Telemetry Dashboard Screenshot" class="h-48 rounded-lg" />
-</div>
-
-**What you're seeing:**
-- **Blue Line:** Controller 1's accelerometer data. Notice the spike during a "joust".
-- **Green Line:** Controller 2's data. Much smoother.
-- **Annotations:** The vertical lines mark game events, like `Collision` or `Player_Win`, which are correlated with our trace data.
-- **Top Right:** Key stats like battery level and connection RSSI.
-
----
-layout: default
----
-
-# Why This Matters for the Ecosystem
-
-Most OpenTelemetry and OpenFeature examples focus on web apps and microservices.
-
-**But the principles are universal:**
-- **Decouple configuration from code:** (`OpenFeature`)
-- **Understand your system's behavior:** (`OpenTelemetry`)
-
-This talk shows that these CNCF tools are powerful enough for:
-- **Gaming:** Real-time performance tuning and cheat detection.
-- **IoT & Edge:** Managing fleets of devices in the field.
-- **Physical Systems:** Debugging interactions between hardware and software.
-
-If it works for 18 hyperactive Bluetooth controllers, it can probably work for your system, too.
 
 ---
 layout: cover
@@ -330,17 +852,74 @@ class: text-center
 
 # Thank You!
 
+<div class="grid grid-cols-2 gap-8 max-w-2xl mx-auto mt-8">
 <div>
 
-**Simon Schrottner**<br>
-@aepfli · github.com/aepfli
+**Simon Schrottner**
 
-**Manuel Timelthaler**<br>
-github.com/Lorti
+<div class="text-sm mt-2 opacity-80">
 
-**Project Repo & Slides**<br>
-[github.com/WatchMeJoustMyFlags/cloud-native-linz](https://github.com/WatchMeJoustMyFlags/cloud-native-linz)
+Senior Software Engineer, Dynatrace
 
 </div>
 
-## Questions?
+<div class="text-sm mt-2">
+
+[@aepfli](https://github.com/aepfli) · [github.com/aepfli](https://github.com/aepfli)
+
+</div>
+
+</div>
+<div>
+
+**Manuel Timelthaler**
+
+<div class="text-sm mt-2 opacity-80">
+
+Software Architect, Tractive
+
+</div>
+
+<div class="text-sm mt-2">
+
+[github.com/Lorti](https://github.com/Lorti)
+
+</div>
+
+</div>
+</div>
+
+<div class="text-4xl mt-16 font-bold">
+Questions? 🎮
+</div>
+
+<!--
+Speaker Notes (Both - 22:30-23:00):
+- Thank the audience
+- Open for questions
+- Direct people to GitHub for code
+-->
+
+
+---
+layout: section
+---
+
+# Questions & Discussion
+
+**Quick recap of the journey:**
+- 10s (Prometheus pull) → 500ms (push to Prom) → <100ms (push to VictoriaMetrics)
+- From web app defaults to real-time hardware observability
+- Everything is open source: [github.com/WatchMeJoustMyFlags/JoustMania](https://github.com/WatchMeJoustMyFlags/JoustMania) 
+
+**Topics we covered:**
+- Microservices refactoring for OpenTelemetry
+- Raspberry Pi 5 handling full observability stack
+- Volume management with batching strategies
+- Push metrics vs pull metrics
+- VictoriaMetrics for high-frequency data
+- Distributed tracing for hardware debugging
+
+**What questions do you have?**
+
+[//]: # (<img src="/images/title-slide-thumb.png" alt="Title Slide" width="480" style="position: absolute; bottom: 20px; right: 20px; border: 2px solid #44ffd2; border-radius: 4px;" />)
