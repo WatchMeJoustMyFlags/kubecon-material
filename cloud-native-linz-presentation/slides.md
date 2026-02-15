@@ -411,7 +411,7 @@ Speaker Notes (Simon - 8:30-9:00):
 layout: default
 ---
 
-# Learning 3: The Code
+# Learning 3: Two Batching Strategies
 
 ```python {all|2-3|4|5-6|all}
 # 1. OTel Metrics: Export interval from flagd (per-service targeting)
