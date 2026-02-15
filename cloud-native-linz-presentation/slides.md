@@ -771,23 +771,23 @@ layout: default
 
 <div class="space-y-6 text-lg">
 
-**1. CNCF tools work for games, IoT, embedded systems—not just web apps**
+1. **CNCF observability tools work for games, IoT, embedded systems—anything real-time.** Not just web apps.
 
-**2. But they're optimized for web apps (default configs don't fit)**
+2. **But they're optimized for web apps.** Default configs assume 15-second scrapes, not 60Hz game loops.
 
-**3. With tuning, you can get subsecond observability on an $80 computer**
+3. **With tuning**—scrape intervals, push vs pull, storage backends—**you can get subsecond observability on an $80 computer.**
 
-**4. The tools exist. The patterns exist. What's missing is the documented path.**
+4. **The tools exist. The patterns exist.** What's missing is the documented path.
 
 </div>
 
 <!--
-Speaker Notes (Manuel - 19:00-21:00):
-- Walk through each takeaway
-- "These tools work for real-time systems"
-- "But you need to tune them - defaults are for web apps"
-- "We got subsecond observability on a Raspberry Pi"
-- "The community needs more examples like this"
+Speaker Notes (Simon - 19:00-21:00):
+- "CNCF observability tools are not just for web apps"
+- "They work for games, IoT, embedded systems, traffic management—anything real-time"
+- "But they're optimized for web apps - 15-second scrape intervals, not 60Hz game loops"
+- "With tuning, you can get subsecond observability on an $80 computer"
+- "The tools exist. The patterns exist. What's missing is the documented path"
 -->
 
 ---
@@ -797,22 +797,29 @@ class: text-center
 
 # Where's the Real-Time Systems Demo?
 
-<div class="my-8">
-  <img src="https://placehold.co/800x400/1e1e1e/808080?text=OpenTelemetry+Demo:+All+Web+Services" alt="OTel Demo" class="rounded-lg shadow-lg inline-block" />
+<div class="my-8 flex gap-4 justify-center">
+  <img src="/images/otel-demo-1.png" alt="OTel Demo Frontend" width="200" class="rounded shadow" />
+  <img src="/images/otel-demo-2.png" alt="OTel Demo Cart" width="200" class="rounded shadow" />
 </div>
 
-**Where's the game engine demo? The embedded systems? The IoT sensor networks? The edge computing?**
+**E-commerce frontend. Payment gateway. Recommendation engine.**
 
-<div class="text-xl mt-8 text-amber-300">
-Let's document what works, share tuning tricks, contribute examples.
+Great for microservices—but where's the robotics? The game engines? The industrial IoT?
+
+<div class="text-xl mt-8">
+<strong class="text-amber-300">The call to action:</strong> Try these tools on real-time systems. Document what works. Share tuning tricks. Contribute examples.
 </div>
 
 <!--
-Speaker Notes (Manuel - 21:00-22:00):
-- "Look at the OpenTelemetry demo - all web services"
-- "Where's the game engine? The robotics? The real-time systems?"
-- "We need more examples outside of web apps"
-- "Let's document what works and share it"
+Speaker Notes (Simon - 21:00-22:00):
+- "Look at the official OpenTelemetry demo. It's all web services"
+- "E-commerce frontend, payment gateway, recommendation engine"
+- "Great for learning cloud-native observability if you're deploying microservices"
+- "But where's the robotics demo? The game engine? The industrial IoT sensor network?"
+- Manuel: "That's the gap we're trying to fill"
+- Simon: "Exactly. So this is our call to action"
+- "If you're working on real-time systems, embedded hardware, anything with tight latency requirements—try these tools"
+- "Document what works. Share the tuning tricks. Contribute examples back to the community"
 -->
 
 ---
@@ -822,29 +829,45 @@ class: text-center
 
 # JoustMania is Open Source
 
-<div class="my-8 text-6xl">
-📦 🎮 🚀
-</div>
+**Fork it. Break it. Make it better.**
 
-**Everything we showed you today is open source**
-
-Fork it. Break it. Make it better.
-
-<div class="text-xl mt-8">
-  <a href="https://github.com/adangert/JoustMania" class="text-blue-400">github.com/adangert/JoustMania</a>
+<div class="text-lg mt-8 opacity-80">
+P.S. If you solved subsecond Prometheus pull without VictoriaMetrics, tell us.
 </div>
 
 <div class="mt-8">
-  <img src="https://placehold.co/200x200/ffffff/000000?text=QR+Code" alt="QR Code" class="inline-block rounded" />
-  <p class="text-sm mt-2">Scan for GitHub repo</p>
+  <img src="/images/joustmania-qr.svg" alt="QR Code" width="200" class="inline-block" />
+</div>
+
+<div class="text-sm mt-4">
+  <a href="https://github.com/WatchMeJoustMyFlags/JoustMania" class="text-blue-400">github.com/WatchMeJoustMyFlags/JoustMania</a>
 </div>
 
 <!--
-Speaker Notes (Manuel - 22:00-22:30):
-- "Everything is open source"
-- "Fork it, break it, make it better"
-- "We'd love to see what you build"
+Speaker Notes (Simon - 22:00-22:30):
+- "Everything we showed you today is open source"
+- "The game, the configs, the dashboards, the Grafana setup with VictoriaMetrics"
+- "Even the mock controller service if you want to simulate 18 players without buying 18 PlayStation Move controllers from eBay"
+- "Fork it. Break it. Make it better."
+- Manuel: "And if you figured out how to get subsecond Prometheus pull metrics without switching to VictoriaMetrics, please tell us"
 -->
+
+---
+layout: section
+---
+
+# One Last Thing
+
+<!--
+Speaker Notes (Manuel/Simon - 22:00-22:30):
+- Manuel: "We started this talk with a problem: Simon didn't know why the game crashed"
+- Simon: "Now? We know exactly why. And when. And which controller caused it"
+- Manuel: "The point isn't that we solved every observability problem for real-time systems. We didn't"
+- Manuel: "The point is that we can. The tools are ready. The foundation is solid"
+- Simon: "What's needed is more people trying unconventional use cases"
+- Simon: "So if you're building something real-time, something hardware-adjacent, something that doesn't fit the 'standard' observability mold—use these tools anyway. Then come tell us what broke"
+-->
+
 
 ---
 layout: cover
@@ -893,197 +916,32 @@ Speaker Notes (Both - 22:30-23:00):
 - Direct people to GitHub for code
 -->
 
+
 ---
 layout: section
-class: text-center
 ---
 
-# Bonus Slides
+# Questions & Discussion
 
-Technical Deep-Dives
+**Quick recap of the journey:**
+- 10s (Prometheus pull) → 500ms (push to Prom) → <100ms (push to VictoriaMetrics)
+- From web app defaults to real-time hardware observability
+- Everything is open source: [github.com/WatchMeJoustMyFlags/JoustMania](https://github.com/WatchMeJoustMyFlags/JoustMania) 
 
-_(If time permits)_
+**Topics we covered:**
+- Microservices refactoring for OpenTelemetry
+- Raspberry Pi 5 handling full observability stack
+- Volume management with batching strategies
+- Push metrics vs pull metrics
+- VictoriaMetrics for high-frequency data
+- Distributed tracing for hardware debugging
 
----
-layout: default
----
+**What questions do you have?**
 
-# Bonus: Cardinality Lifecycle Management
-
-**Pattern: Clean up metrics when controllers disconnect**
-
-```python {all|8-12}
-class ControllerMetrics:
-    def __init__(self, controller_id: str):
-        self.controller_id = controller_id
-        self.acceleration = meter.create_histogram(
-            name="controller.acceleration",
-            unit="g",
-        )
-
-    def cleanup(self):
-        """Remove metrics when controller disconnects"""
-        # OpenTelemetry doesn't have built-in cleanup yet
-        # So we use a TTL pattern with labels
-        self.acceleration.record(
-            0,
-            attributes={"controller_id": self.controller_id, "disconnected": "true"}
-        )
-```
-
-**Key Insight:** Label lifecycle matters in high-churn environments
-
-<!--
-Bonus content for technical audiences interested in cardinality management
--->
-
----
-layout: default
-zoom: 85%
----
-
-# Bonus: Manual gRPC Tracing
-
-**When auto-instrumentation isn't enough**
-
-```python {all|5-8|10-14|16-19}
-from opentelemetry import trace
-from opentelemetry.propagate import inject
-
-def call_game_service(request):
-    # Create a new span
-    tracer = trace.get_tracer(__name__)
-    with tracer.start_as_current_span("call_game_service") as span:
-        span.set_attribute("game.mode", request.mode)
-
-        # Inject trace context into gRPC metadata
-        metadata = {}
-        inject(metadata)  # W3C Trace Context
-        grpc_metadata = [(k, v) for k, v in metadata.items()]
-
-        # Make the gRPC call with propagated context
-        response = game_stub.UpdateGameState(
-            request,
-            metadata=grpc_metadata
-        )
-
-        return response
-```
-
-**Result:** Context propagation across all microservices
-
-<!--
-Bonus content showing how we manually instrumented gRPC calls
--->
-
----
-layout: default
----
-
-# Bonus: OpenFeature + flagd Architecture
-
-**Runtime configuration without redeploy**
-
-```mermaid {scale:0.55}
-graph LR
-    subgraph "Game Services"
-        G1[Game Loop]
-        G2[Controller Manager]
-        G3[Audio Service]
-    end
-
-    subgraph "Feature Flag Infrastructure"
-        FD[flagd<br/>Flag Evaluation Engine]
-        FS[Flag Source<br/>flags.yaml in Git]
-    end
-
-    G1 --> FD
-    G2 --> FD
-    G3 --> FD
-    FS -->|sync| FD
-
-    style FD fill:#f39c12
-    style FS fill:#3498db
-```
-
-**Key Benefits:**
-- **No restarts** required for config changes
-- **Context-aware** flags (battery level, system load, player skill)
-- **Git-backed** source of truth for all flags
-
-<!--
-Bonus content about OpenFeature architecture
--->
-
----
-layout: default
----
-
-# Bonus: Test-Friendly Observability
-
-**Pattern: Lazy initialization for clean tests**
-
-```python {all|3-6|8-11}
-class GameService:
-    def __init__(self):
-        # Don't initialize telemetry in __init__
-        # Let it be lazy-loaded on first use
-        self._meter = None
-        self._tracer = None
-
-    @property
-    def meter(self):
-        if self._meter is None:
-            self._meter = get_meter(__name__)
-        return self._meter
-```
-
-**Why this matters:**
-- Unit tests don't need telemetry infrastructure
-- Integration tests can inject test collectors
-- Production gets full observability
-
-**Pattern:** Lazy initialization + dependency injection
-
-<!--
-Bonus content about testing with observability
--->
-
----
-layout: default
----
-
-# Bonus: Architecture Simplification
-
-**Before vs After adding observability**
-
-<div class="grid grid-cols-2 gap-4">
-<div>
-
-**Before (IPC Hell)**
-- 4 services with IPC
-- Supervisor process for coordination
-- Custom health checking
-- Manual log aggregation
-- No correlation between events
-
+<div style="position: absolute; bottom: 20px; right: 20px; width: 300px; background: rgba(20, 20, 20, 0.8); border: 2px solid #44ffd2; border-radius: 8px; padding: 12px; font-size: 0.5em;">
+  <div style="font-weight: bold; margin-bottom: 6px; color: #44ffd2;">How We Wired an $80 Raspberry Pi 5 with OpenTelemetry</div>
+  <div style="font-size: 0.9em; color: #aaa;">Simon Wirtz (Dynatrace) & Manuel Timelthaler (Tractive)</div>
+  <div style="margin-top: 8px; text-align: center;">
+    <img src="/images/joustmania-qr.svg" alt="QR Code" width="80" />
+  </div>
 </div>
-<div>
-
-**After (gRPC + OpenTelemetry)**
-- 4 services with gRPC
-- No supervisor needed! (Kubernetes handles it)
-- Health checks via gRPC health protocol
-- Structured logs with trace IDs
-- Automatic correlation via trace context
-
-</div>
-</div>
-
-**Surprising outcome:** Adding observability simplified the architecture
-
-**We removed ~500 lines of custom coordination code**
-
-<!--
-Bonus content about how observability simplified our architecture
--->
