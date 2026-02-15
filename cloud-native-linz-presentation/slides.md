@@ -49,14 +49,13 @@ class: text-center
 # What is JoustMania?
 
 <div class="flex justify-center items-center my-8">
-    <img src="https://raw.githubusercontent.com/adangert/JoustMania/refs/heads/master/logo/magfest.jpg" alt="JoustMania at MagFest" class="h-64 rounded-lg shadow-lg" />
+    <img src="https://raw.githubusercontent.com/adangert/JoustMania/refs/heads/master/logo/magfest.jpg" alt="JoustMania at MagFest" class="h-64 rounded-lg shadow-lg rotate-1" />
 </div>
 
-**Motion-controlled party game for 2 to 18+ PlayStation Move controllers**
+**A motion-controlled party game for up to 18+ PlayStation Move controllers**
 
-Keep your controller still, jostle everyone else's.
-
-**No screens, just glowing controllers and chaos.**
+Keep your controller still, jostle everyone else's.<br>
+_No screens, just glowing controllers and chaos._
 
 <!--
 Speaker Notes (Manuel leads - 2:30):
