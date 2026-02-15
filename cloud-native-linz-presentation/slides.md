@@ -577,11 +577,11 @@ layout: two-cols
 
 # Push Metrics Comparison - Part 1
 
-<div class="h-full">
+<div>
   <iframe
     src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk"
     width="100%"
-    height="500"
+    height="400"
     frameborder="0"
     class="rounded-lg shadow-lg"
   ></iframe>
@@ -596,11 +596,11 @@ layout: two-cols
 
 # Flag Controls
 
-<div class="h-full flex items-center justify-center">
+<div class="flex items-center justify-center">
   <iframe
     src="http://localhost:8080/flags-ui"
     width="350"
-    height="550"
+    height="400"
     frameborder="0"
     class="rounded-lg shadow-lg border-2 border-gray-600"
   ></iframe>
@@ -622,11 +622,11 @@ layout: two-cols
 
 # Push Metrics Comparison - Part 2
 
-<div class="h-full">
+<div>
   <iframe
     src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk&viewPanel=victoriametrics-panel"
     width="100%"
-    height="500"
+    height="400"
     frameborder="0"
     class="rounded-lg shadow-lg"
   ></iframe>
@@ -642,11 +642,11 @@ That's what you need for real-time debugging.
 
 # Flag Controls
 
-<div class="h-full flex items-center justify-center">
+<div class="flex items-center justify-center">
   <iframe
     src="http://localhost:8080/flags-ui"
     width="350"
-    height="550"
+    height="400"
     frameborder="0"
     class="rounded-lg shadow-lg border-2 border-gray-600"
   ></iframe>
@@ -666,13 +666,13 @@ layout: two-cols
 
 # Breaking Point
 
-<div class="h-full space-y-4">
+<div class="space-y-4">
   <div>
     <h3 class="text-sm mb-2">CPU Usage</h3>
     <iframe
       src="http://himbeere.local/grafana/d/host-metrics/host-metrics?orgId=1&refresh=5s&kiosk&viewPanel=cpu-panel"
       width="100%"
-      height="220"
+      height="200"
       frameborder="0"
       class="rounded-lg shadow-lg"
     ></iframe>
@@ -683,7 +683,7 @@ layout: two-cols
     <iframe
       src="http://localhost:16686/trace/[trace-id]?uiTheme=dark"
       width="100%"
-      height="220"
+      height="200"
       frameborder="0"
       class="rounded-lg shadow-lg"
     ></iframe>
@@ -694,11 +694,11 @@ layout: two-cols
 
 # Flag Controls
 
-<div class="h-full flex items-center justify-center">
+<div class="flex items-center justify-center">
   <iframe
     src="http://localhost:8080/flags-ui"
     width="350"
-    height="550"
+    height="400"
     frameborder="0"
     class="rounded-lg shadow-lg border-2 border-gray-600"
   ></iframe>
