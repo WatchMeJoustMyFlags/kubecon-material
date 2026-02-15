@@ -856,7 +856,7 @@ Speaker Notes (Simon - 22:00-22:30):
 layout: section
 ---
 
-# One Last Thing
+# Real-time observability using CNCF tools
 
 <!--
 Speaker Notes (Manuel/Simon - 22:00-22:30):
@@ -881,31 +881,39 @@ class: text-center
 
 **Simon Schrottner**
 
+<div class="text-sm mt-2 opacity-80">
+
 Senior Software Engineer, Dynatrace
 
+</div>
+
+<div class="text-sm mt-2">
+
 [@aepfli](https://github.com/aepfli) · [github.com/aepfli](https://github.com/aepfli)
+
+</div>
 
 </div>
 <div>
 
 **Manuel Timelthaler**
 
+<div class="text-sm mt-2 opacity-80">
+
 Software Architect, Tractive
+
+</div>
+
+<div class="text-sm mt-2">
 
 [github.com/Lorti](https://github.com/Lorti)
 
 </div>
-</div>
-
-<div class="mt-12">
-
-**Project Repo & Slides**
-
-[github.com/WatchMeJoustMyFlags/kubecon-material](https://github.com/WatchMeJoustMyFlags/kubecon-material)
 
 </div>
+</div>
 
-<div class="text-2xl mt-8">
+<div class="text-4xl mt-16 font-bold">
 Questions? 🎮
 </div>
 
@@ -938,4 +946,4 @@ layout: section
 
 **What questions do you have?**
 
-<img src="/images/title-slide-thumb.png" alt="Title Slide" width="420" style="position: absolute; bottom: 20px; right: 20px; border: 2px solid #44ffd2; border-radius: 4px;" />
+[//]: # (<img src="/images/title-slide-thumb.png" alt="Title Slide" width="480" style="position: absolute; bottom: 20px; right: 20px; border: 2px solid #44ffd2; border-radius: 4px;" />)
