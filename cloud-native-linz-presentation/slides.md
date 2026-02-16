@@ -427,21 +427,62 @@ layout: default
 
 # Learning 4: Prometheus is Too Slow
 
-**The Mismatch:**
+<div class="mt-10 mb-18">
 
-<div class="my-8 font-mono text-sm">
+<div class="timeline-container">
 
-```
-Prometheus Scrape:  |----10s----|----10s----|----10s----|
-                    ↓           ↓           ↓
+  <!-- Prometheus Scrape Row -->
+  <div class="flex items-center gap-4 mb-8">
+    <div class="font-semibold w-48" style="color: var(--slidev-theme-accents-teal)">Prometheus Scrape</div>
+    <div class="flex items-center gap-0 flex-1">
+      <div class="timeline-block timeline-prom py-3 relative flex-1">
+        10s
+        <div class="absolute -bottom-8 -left-2 text-2xl" style="color: var(--slidev-theme-accents-teal)">↓</div>
+      </div>
+      <div class="timeline-block timeline-prom py-3 relative flex-1" style="border-left: 0">
+        10s
+        <div class="absolute -bottom-8 -left-2 text-2xl" style="color: var(--slidev-theme-accents-teal)">↓</div>
+      </div>
+      <div class="timeline-block timeline-prom py-3 relative flex-1" style="border-left: 0">
+        10s
+        <div class="absolute -bottom-8 -left-2 text-2xl" style="color: var(--slidev-theme-accents-teal)">↓</div>
+      </div>
+    </div>
+  </div>
 
-Game Events:        ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-                    ↑ Frame drop? Won't see it for 10 seconds!
-```
+  <!-- Game Events Row -->
+  <div class="flex items-center gap-4">
+    <div class="font-semibold w-48" style="color: var(--slidev-theme-accents-rose)">Game Events</div>
+    <div class="relative flex-1">
+      <div class="flex gap-0.5">
+        <div v-for="i in 60" :key="i" class="flex-1 h-8 timeline-events animate-pulse" :style="`animation-delay: ${i * 0.05}s`"></div>
+      </div>
+      <div class="absolute top-10 left-16 font-semibold flex items-center gap-2" style="color: var(--slidev-theme-accents-yellow)">
+        <span class="text-2xl">↑</span>
+        <span>Frame drop? Won't see it for 10 seconds!</span>
+      </div>
+    </div>
+  </div>
 
 </div>
 
-**Problem:**
+<style>
+.timeline-block {
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+  text-align: center;
+  font-weight: 600;
+}
+.timeline-prom {
+  background-color: rgba(68, 255, 210, 0.2);
+  border: 2px solid var(--slidev-theme-accents-teal);
+}
+.timeline-events {
+  background-color: var(--slidev-theme-accents-rose);
+}
+</style>
+
+</div>
+
 - **Pull interval:** 10 seconds (we tuned from 60s default)
 - **Game loop:** 60Hz (16ms per frame)
 - **Result:** 600 frames between each data point
