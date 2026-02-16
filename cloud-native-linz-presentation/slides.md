@@ -58,12 +58,12 @@ Keep your controller still, jostle everyone else's.<br>
 _No screens, just glowing controllers and chaos._
 
 <!--
-Speaker Notes (Manuel leads - 2:30):
-- Brief intro to JoustMania
-- "Motion-controlled party game"
-- "2 to 18+ controllers - we've had up to 20 at conventions"
-- "No screens, just glowing controllers and chaos"
-- Sets up the technical challenge ahead
+Speaker Notes (Manuel - 2:30-5:00):
+- "Quick context on what we're dealing with. JoustMania is a motion-controlled party game"
+- "The rules? Keep your controller perfectly still while trying to jostle everyone else's"
+- "Move too much? You're out. No screens. No UI. Just glowing controllers and chaos"
+- "Which makes debugging... interesting. Because when something breaks, there's no error message"
+- "Just 18 people staring at controllers wondering what happened"
 -->
 
 ---
@@ -112,11 +112,11 @@ graph TD
 
 <!--
 Speaker Notes (Manuel - 2:30-5:00):
-- "This is how JoustMania originally worked"
-- "Process-based architecture with IPC"
-- "No network calls, just local processes talking via pipes"
-- "This sets up Learning 1 - we had to refactor this"
-- "No error messages, just glowing controllers and chaos"
+- "So, the architecture: 18 PlayStation Move controllers, all talking Bluetooth to a Raspberry Pi 5"
+- "We've got four microservices—controller manager handling the hardware, game coordinator running the actual game logic, menu service for the lobby, and audio for sound effects"
+- "Before we added observability, we had no idea what was actually happening inside"
+- "Was it the Bluetooth stack dropping packets? The game loop running slow? Memory pressure?"
+- "We just knew that sometimes, at conferences, things would mysteriously stop working. Usually right when the most people were watching"
 -->
 
 ---
@@ -159,11 +159,9 @@ What could possibly go wrong?
 
 <!--
 Speaker Notes (Manuel - ~5:00):
-- "I'm Manuel, by the way. Still don't work on hardware."
-- "We wanted to see if CNCF observability tools could handle this"
-- "OpenTelemetry, Prometheus, Grafana, Jaeger, OpenFeature"
-- "What could possibly go wrong?"
-- Transition: "We learned 6 things..."
+- "So we did what any reasonable engineers would do. We added OpenTelemetry. And OpenFeature for runtime configuration"
+- "OpenTelemetry. Prometheus. Jaeger. Grafana. The hypothesis was simple: these tools work for web apps, they should work for real-time hardware"
+- Simon: "Because if we're going to over-engineer a party game, we're going all in"
 -->
 
 ---
@@ -298,10 +296,14 @@ graph LR
 
 <!--
 Speaker Notes (Simon - 5:00-6:30):
-- "We figured we'd just add OTel and call it a day. Not even close."
-- "IPC doesn't propagate trace context"
-- "Had to refactor to gRPC microservices"
-- "Once we did that, auto-instrumentation just worked"
+- "Learning number one: We had to refactor first"
+- "The original JoustMania used separate Python processes communicating via IPC—pipes, queues, the usual"
+- "We figured we'd just add OpenTelemetry and call it a day. Not even close"
+- "OpenTelemetry is designed for distributed systems with network calls—gRPC, HTTP, message queues. But local IPC? You're on your own"
+- "Manual context propagation, no auto-instrumentation, no service mesh benefits"
+- "So we moved to microservices with gRPC. And suddenly, automatic instrumentation just... worked"
+- "Traces across service boundaries. Context propagation for free"
+- "Turns out, sometimes you have to change your architecture to get the observability you want"
 -->
 
 ---
@@ -319,10 +321,11 @@ layout: default
 
 <!--
 Speaker Notes (Simon - 6:30-7:15):
-- "The Pi didn't even break a sweat"
-- Show dashboard with CPU, memory, temperature
-- "Running OpenTelemetry Collector, Prometheus, Grafana, Jaeger"
-- "All on a Raspberry Pi 4"
+- "Learning number two: the Raspberry Pi 5 is kind of a beast"
+- "We were genuinely worried about running the entire observability stack alongside the game. Would it melt? Would it throttle?"
+- "Look at this—[point to dashboard]. The Pi didn't even break a sweat"
+- Manuel: "Though we did cap retention at 7 days"
+- Simon: "Fair point. We're not trying to store six months of controller movement data"
 -->
 
 ---
@@ -355,9 +358,9 @@ layout: default
 We didn't think this was possible initially, though you could also send telemetry to external services.
 
 <!--
-Speaker Notes (Manuel - 7:15-8:00):
-- "The Pi didn't even break a sweat"
-- "Though we did cap retention at 7 days"
+Speaker Notes (Simon - 6:30-7:15 continued):
+- Show the detailed metrics on this slide
+- Emphasize the low resource usage despite running both game and observability stack
 -->
 
 ---
@@ -402,10 +405,13 @@ processors:
 
 <!--
 Speaker Notes (Simon - 8:00-9:00):
-- "Cardinality surprisingly low, volume surprisingly high"
-- "Only tracking 20-30 different metrics"
-- "But 18 controllers at 60Hz means over 1,000 messages per second"
-- "Batching and aggregation at the source saved us"
+- "Learning number three: cardinality is surprisingly low, but message volume is surprisingly high"
+- "Cardinality—the number of unique metric combinations—we're tracking maybe 20-30 unique metrics across all services. Pretty manageable"
+- "But the message rate? 18 controllers, streaming motion data at 60Hz, each with accelerometer, gyroscope, button states. That's [X messages per second]"
+- "Not crazy for cloud scale, but for a Pi running the game itself? That adds up fast"
+- "The solution? Batching. We don't need to know the exact position of every controller every 16 milliseconds"
+- "We need to know when things go wrong—when latency spikes, when frames drop, when someone's controller desyncs"
+- "So we aggregate at the source and push summaries, not raw telemetry"
 -->
 
 ---
@@ -486,11 +492,12 @@ layout: default
 
 <!--
 Speaker Notes (Manuel - 9:00-10:00):
-- "Prometheus default is 60 seconds, we tuned it down to 10 seconds"
-- "But even at 10 seconds, we'd miss entire matches"
-- "Game runs at 60Hz - that's 16 milliseconds per frame"
-- "10 seconds = 600 frames of game state we'll never see"
-- "That's when we remembered—push metrics exist"
+- "Learning number four: Prometheus is really, really chill about time"
+- "15-second scrape intervals by default. Which is great if you're monitoring your web server's CPU usage"
+- "But we're running a game loop at 60Hz—that's a frame every 16 milliseconds"
+- "With 15-second scrapes, we'd miss entire matches"
+- "So we tuned it down to 1 second, which helped but still felt laggy"
+- "That's when we remembered—push metrics exist. And we'd both been doing pull-based metrics for so long we almost forgot"
 -->
 
 ---
@@ -528,11 +535,10 @@ graph LR
 **Reality check** — We export at 100ms, but Prometheus remote write can only achieve ~500ms resolution due to write path limitations. Still **30x faster** than 15s scrape, but not real-time yet.
 
 <!--
-Speaker Notes (Manuel):
-- "We'd both been doing pull-based metrics for so long we almost forgot"
-- "Push-based metrics via OTLP with 100ms interval"
-- "150x faster feedback than default Prometheus scrape"
-- "Much better, but we wondered—can we go even faster?"
+Speaker Notes (Manuel - 9:00-11:30):
+- "Learning number five: push metrics to the rescue"
+- "Show of hands—how many of you are using Prometheus pull exclusively? (pause) Yeah, same. Until now"
+- "With OpenTelemetry's push model to Prometheus, we got down to 500-millisecond resolution. Better"
 -->
 
 ---
@@ -576,11 +582,9 @@ graph LR
 **Result** — Sub-100ms resolution, native OTLP, built for hardware observability.
 
 <!--
-Speaker Notes (Manuel):
-- "Prometheus is great, but it's built for web apps"
-- "VictoriaMetrics is designed for high-frequency IoT and hardware data"
-- "Native OTLP support means no conversion overhead"
-- "We went from 15 seconds to sub-100 milliseconds"
+Speaker Notes (Manuel - 9:00-11:30 continued):
+- "But then we tried VictoriaMetrics with native OTLP ingestion—no artificial caps"
+- "Sub-second observability of a game running on a tiny computer. That's what we needed"
 -->
 
 ---
@@ -593,10 +597,12 @@ layout: default
 
 <!--
 Speaker Notes (Manuel - 11:30-13:00):
-- "These tools actually work for real-time hardware"
-- "This is a Jaeger trace of a game loop"
-- "You can see each step: controller poll, motion processing, collision detection"
-- Simon adds: "And when that lag happened at the conference? We can now see exactly where it came from. It's Bluetooth."
+- "Which brings us to learning number six, and honestly my favorite: these tools actually work for real-time hardware"
+- "With some tweaking, but the bones are solid"
+- "OpenTelemetry doesn't care if you're a microservice in Kubernetes or a PlayStation Move controller in someone's living room"
+- "Look at this trace. We can see the entire game loop: controller poll, motion processing, death detection, LED feedback"
+- "All correlated across services, all timestamped, all traceable back to the source"
+- Simon: "And when that lag happened at the conference? We can now see exactly where it came from. It's Bluetooth"
 -->
 
 ---
@@ -690,11 +696,11 @@ layout: default
 
 <!--
 Speaker Notes (Simon - 19:00-21:00):
-- "CNCF observability tools are not just for web apps"
-- "They work for games, IoT, embedded systems, traffic management—anything real-time"
-- "But they're optimized for web apps - 15-second scrape intervals, not 60Hz game loops"
-- "With tuning, you can get subsecond observability on an $80 computer"
-- "The tools exist. The patterns exist. What's missing is the documented path"
+- "So, what did we actually learn from this experiment? Four big things"
+- "One: CNCF observability tools are not just for web apps. They work for games, IoT, embedded systems, traffic management—anything real-time"
+- "Two: But they're optimized for web apps. Default configs assume long-running processes with 15-second scrape intervals, not 60Hz game loops"
+- "Three: With tuning—scrape intervals, push vs pull, storage backends—you can get subsecond observability on an $80 computer"
+- "And four: The tools exist. The patterns exist. What's missing is the documented path"
 -->
 
 ---
@@ -731,14 +737,13 @@ layout: default
 
 <!--
 Speaker Notes (Simon - 21:00-22:00):
-- "Look at the official OpenTelemetry demo. It's all web services"
-- "E-commerce frontend, payment gateway, recommendation engine"
-- "Great for learning cloud-native observability if you're deploying microservices"
-- "But where's the robotics demo? The game engine? The industrial IoT sensor network?"
+- Simon (pointing at slide): "Look at the official OpenTelemetry demo. It's all web services—e-commerce frontend, payment gateway, recommendation engine"
+- "Great for learning cloud-native observability if you're deploying microservices. But where's the robotics demo? The game engine? The industrial IoT sensor network?"
 - Manuel: "That's the gap we're trying to fill"
 - Simon: "Exactly. So this is our call to action"
 - "If you're working on real-time systems, embedded hardware, anything with tight latency requirements—try these tools"
 - "Document what works. Share the tuning tricks. Contribute examples back to the community"
+- "Because right now, the technology works, but the onboarding path assumes you're deploying to Kubernetes, not controlling Bluetooth peripherals"
 -->
 
 ---
@@ -763,11 +768,10 @@ P.S. If you solved subsecond Prometheus pull without VictoriaMetrics, tell us.
 </div>
 
 <!--
-Speaker Notes (Simon - 22:00-22:30):
+Speaker Notes (Simon - 21:00-22:00 continued):
 - "Everything we showed you today is open source"
-- "The game, the configs, the dashboards, the Grafana setup with VictoriaMetrics"
-- "Even the mock controller service if you want to simulate 18 players without buying 18 PlayStation Move controllers from eBay"
-- "Fork it. Break it. Make it better."
+- "The game, the configs, the dashboards, the Grafana setup with VictoriaMetrics, even the mock controller service if you want to simulate 18 players without buying 18 PlayStation Move controllers from eBay"
+- "Fork it. Break it. Make it better"
 - Manuel: "And if you figured out how to get subsecond Prometheus pull metrics without switching to VictoriaMetrics, please tell us"
 -->
 
@@ -778,13 +782,12 @@ layout: section
 # _Real-Time_ Observability with CNCF Tools
 
 <!--
-Speaker Notes (Manuel/Simon - 22:00-22:30):
-- Manuel: "We started this talk with a problem: Simon didn't know why the game crashed"
+Speaker Notes (Both - 22:00-23:00):
+- Manuel: "One last thing. We started this talk with a problem: Simon didn't know why the game crashed"
 - Simon: "Now? We know exactly why. And when. And which controller caused it"
-- Manuel: "The point isn't that we solved every observability problem for real-time systems. We didn't"
-- Manuel: "The point is that we can. The tools are ready. The foundation is solid"
-- Simon: "What's needed is more people trying unconventional use cases"
-- Simon: "So if you're building something real-time, something hardware-adjacent, something that doesn't fit the 'standard' observability mold—use these tools anyway. Then come tell us what broke"
+- Manuel: "The point isn't that we solved every observability problem for real-time systems. We didn't. The point is that we can. The tools are ready. The foundation is solid"
+- Simon: "What's needed is more people trying unconventional use cases. So if you're building something real-time, something hardware-adjacent, something that doesn't fit the 'standard' observability mold—use these tools anyway. Then come tell us what broke"
+- Both (turning to audience): "Thank you!"
 -->
 
 
