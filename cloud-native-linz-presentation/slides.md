@@ -351,7 +351,8 @@ layout: default
 </div>
 </div>
 
-**The Pi runs both the game AND the full observability stack** — we didn't think this was possible initially, though you could also send telemetry to external services.
+**The Pi runs both the game AND the full observability stack.**<br>
+We didn't think this was possible initially, though you could also send telemetry to external services.
 
 <!--
 Speaker Notes (Manuel - 7:15-8:00):
