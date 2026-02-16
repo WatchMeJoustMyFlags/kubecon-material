@@ -608,145 +608,40 @@ layout: section
 We'll change the game frequency via feature flags and watch metrics respond across all three approaches — from 10-second pull intervals to sub-100ms VictoriaMetrics resolution.
 
 ---
-layout: two-cols
+layout: default
 ---
 
-# Push Metrics Comparison - Part 1
+<iframe
+  src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk"
+  width="100%"
+  height="360"
+  frameborder="0"
+  class="rounded-lg shadow-lg mb-4"
+></iframe>
 
-<div>
-  <iframe
-    src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk"
-    width="100%"
-    height="400"
-    frameborder="0"
-    class="rounded-lg shadow-lg"
-  ></iframe>
-</div>
-
-**Three pipelines, same metric:**
-1. Prometheus Pull (10s, ~6 samples/min)
-2. OTEL→Prometheus (500ms, ~120 samples/min)
-3. OTEL→VictoriaMetrics (<100ms, ~600 samples/min)
-
-::right::
-
-# Flag Controls
-
-<div class="flex items-center justify-center">
-  <iframe
-    src="http://localhost:8080/flags-ui"
-    width="350"
-    height="400"
-    frameborder="0"
-    class="rounded-lg shadow-lg border-2 border-gray-600"
-  ></iframe>
-</div>
+<iframe
+  src="http://himbeere.local/flags/"
+  width="100%"
+  height="96"
+  frameborder="0"
+  class="rounded-lg shadow-lg mt-4"
+></iframe>
 
 <!--
-Speaker Notes (Manuel/Simon - 13:00-15:30):
+Speaker Notes (Manuel/Simon - 13:00-19:00):
 - Manuel: "This dashboard shows game loop frequency—right now we're at 30Hz"
 - Simon: "Increasing to 60Hz" (changes flag)
 - Manuel: "And... there it goes. Look at the jump..."
 - Manuel narrates the differences in each graph
 - "Notice how Prometheus pull barely shows the change"
 - "But VictoriaMetrics? You can see the exact moment"
--->
-
----
-layout: two-cols
----
-
-# Push Metrics Comparison - Part 2
-
-<div>
-  <iframe
-    src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk"
-    width="100%"
-    height="400"
-    frameborder="0"
-    class="rounded-lg shadow-lg"
-  ></iframe>
-</div>
-
-**VictoriaMetrics with <100ms resolution:**
-
-You can see **individual game loop iterations**
-
-That's what you need for real-time debugging.
-
-::right::
-
-# Flag Controls
-
-<div class="flex items-center justify-center">
-  <iframe
-    src="http://localhost:8080/flags-ui"
-    width="350"
-    height="400"
-    frameborder="0"
-    class="rounded-lg shadow-lg border-2 border-gray-600"
-  ></iframe>
-</div>
-
-<!--
-Speaker Notes (Manuel - 15:30-17:00):
-- "Look at VictoriaMetrics closely"
-- "You can see individual game loop iterations"
+- "Look at VictoriaMetrics closely - you can see individual game loop iterations"
 - "That's what you need for real-time debugging"
-- "This is the difference between knowing and guessing"
--->
-
----
-layout: two-cols
----
-
-# Breaking Point
-
-<div class="space-y-4">
-  <div>
-    <h3 class="text-sm mb-2">CPU Usage</h3>
-    <iframe
-      src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk"
-      width="100%"
-      height="200"
-      frameborder="0"
-      class="rounded-lg shadow-lg"
-    ></iframe>
-  </div>
-
-  <div>
-    <h3 class="text-sm mb-2">Controller Poll Latency (Jaeger)</h3>
-    <iframe
-      src="http://himbeere.local/jaeger/"
-      width="100%"
-      height="200"
-      frameborder="0"
-      class="rounded-lg shadow-lg"
-    ></iframe>
-  </div>
-</div>
-
-::right::
-
-# Flag Controls
-
-<div class="flex items-center justify-center">
-  <iframe
-    src="http://localhost:8080/flags-ui"
-    width="350"
-    height="400"
-    frameborder="0"
-    class="rounded-lg shadow-lg border-2 border-gray-600"
-  ></iframe>
-</div>
-
-<!--
-Speaker Notes (Simon/Manuel - 17:00-19:00):
 - Simon: "Should I crank it all the way up?"
 - Manuel: "Do it."
 - Simon: Adjusts flag to 100Hz
 - Manuel: "Aaand there's our CPU ceiling. 87%. Frame drops starting to appear."
-- "Look at the Jaeger trace - controller poll time just jumped from 2ms to 40ms"
+- "Look at the metrics - you can see the exact moment performance degrades"
 - Simon: "Rolling back... Done. Performance restored."
 - "No restart. No deploy. Just OpenFeature."
 -->
