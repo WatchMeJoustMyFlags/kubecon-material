@@ -698,23 +698,35 @@ Speaker Notes (Simon - 19:00-21:00):
 -->
 
 ---
-layout: center
-class: text-center
+layout: default
 ---
 
 # Where's the Real-Time Systems Demo?
 
-<div class="my-8 flex gap-4 justify-center">
-  <img src="/images/otel-demo-1.png" alt="OTel Demo Frontend" width="200" class="rounded shadow" />
-  <img src="/images/otel-demo-2.png" alt="OTel Demo Cart" width="200" class="rounded shadow" />
+<div class="grid grid-cols-2 gap-12 mt-8">
+
+
+<div class="flex flex-col justify-center">
+  <div class="text-xl leading-relaxed mb-8">
+    Great for microservices—but where's the robotics? The game engines? The industrial IoT?
+  </div>
+
+  <div class="text-xl leading-relaxed">
+    <strong class="text-amber-300">Try these tools on real-time systems.</strong> Document what works. Share tuning tricks. Contribute examples.
+  </div>
 </div>
 
-**E-commerce frontend. Payment gateway. Recommendation engine.**
 
-Great for microservices—but where's the robotics? The game engines? The industrial IoT?
+<div>
+  <div class="space-y-4">
+    <img src="/images/otel-demo-1.png" alt="OTel Demo Frontend" class="rounded-lg shadow-lg w-76" />
+    <img src="/images/otel-demo-2.png" alt="OTel Demo Cart" class="rounded-lg shadow-lg w-76" style="position: relative; top: -3rem; left: 6rem;"/>
+  </div>
+  <div class="text-center -mt-8 text-base opacity-80">
+    E-commerce frontend. Payment gateway. Recommendation engine.
+  </div>
+</div>
 
-<div class="text-xl mt-8">
-<strong class="text-amber-300">The call to action:</strong> Try these tools on real-time systems. Document what works. Share tuning tricks. Contribute examples.
 </div>
 
 <!--
