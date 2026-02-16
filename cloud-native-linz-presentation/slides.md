@@ -421,7 +421,7 @@ layout: default
   <!-- Prometheus Scrape Row -->
   <div class="flex items-center gap-4 mb-8">
     <div class="font-semibold w-48" style="color: var(--slidev-theme-accents-teal)">Prometheus Scrape</div>
-    <div class="flex items-center gap-0 flex-1">
+    <div class="flex items-center gap-0 flex-1 relative">
       <div class="timeline-block timeline-prom py-3 relative flex-1">
         10s
         <div class="absolute -bottom-8 -left-2 text-2xl" style="color: var(--slidev-theme-accents-teal)">↓</div>
@@ -433,6 +433,7 @@ layout: default
       <div class="timeline-block timeline-prom py-3 relative flex-1" style="border-left: 0">
         10s
         <div class="absolute -bottom-8 -left-2 text-2xl" style="color: var(--slidev-theme-accents-teal)">↓</div>
+        <div class="absolute -right-2 -bottom-8 text-2xl" style="color: var(--slidev-theme-accents-teal)">↓</div>
       </div>
     </div>
   </div>
@@ -441,10 +442,13 @@ layout: default
   <div class="flex items-center gap-4">
     <div class="font-semibold w-48" style="color: var(--slidev-theme-accents-rose)">Game Events</div>
     <div class="relative flex-1">
-      <div class="flex gap-0.5">
-        <div v-for="i in 60" :key="i" class="flex-1 h-8 timeline-events animate-pulse" :style="`animation-delay: ${i * 0.05}s`"></div>
+      <div class="flex items-end" :style="`gap: 2px`">
+        <div v-for="i in 60" :key="i"
+             class="h-8 timeline-events animate-pulse"
+             :class="i <= 15 ? 'timeline-events-drop' : ''"
+             :style="`flex: ${i <= 15 ? 2 - (i * 0.067) : 1}; animation-delay: ${i * 0.05}s`"></div>
       </div>
-      <div class="absolute top-10 left-16 font-semibold flex items-center gap-2" style="color: var(--slidev-theme-accents-yellow)">
+      <div class="absolute top-10 left-6 font-semibold flex items-center gap-2" style="color: var(--slidev-theme-accents-yellow)">
         <span class="text-2xl">↑</span>
         <span>Frame drop? Won't see it for 10 seconds!</span>
       </div>
@@ -465,6 +469,10 @@ layout: default
 }
 .timeline-events {
   background-color: var(--slidev-theme-accents-rose);
+}
+.timeline-events-drop {
+  background-color: var(--slidev-theme-accents-red);
+  opacity: 0.7;
 }
 </style>
 
