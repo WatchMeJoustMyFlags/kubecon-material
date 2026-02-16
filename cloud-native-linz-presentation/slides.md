@@ -836,14 +836,19 @@ Speaker Notes (Both - 22:30-23:00):
 layout: section
 ---
 
-# Questions & Discussion
+# What questions do you have?
 
-**Quick recap of the journey:**
+<div class="mt-8">
+
+###### Quick recap of the journey
 - 10s (Prometheus pull) → 500ms (push to Prom) → <100ms (push to VictoriaMetrics)
 - From web app defaults to real-time hardware observability
 - Everything is open source: [github.com/WatchMeJoustMyFlags/JoustMania](https://github.com/WatchMeJoustMyFlags/JoustMania) 
 
-**Topics we covered:**
+</div>
+<div class="mt-8">
+
+###### Topics we covered
 - Microservices refactoring for OpenTelemetry
 - Raspberry Pi 5 handling full observability stack
 - Volume management with batching strategies
@@ -851,6 +856,6 @@ layout: section
 - VictoriaMetrics for high-frequency data
 - Distributed tracing for hardware debugging
 
-**What questions do you have?**
+</div>
 
 [//]: # (<img src="/images/title-slide-thumb.png" alt="Title Slide" width="480" style="position: absolute; bottom: 20px; right: 20px; border: 2px solid #44ffd2; border-radius: 4px;" />)
