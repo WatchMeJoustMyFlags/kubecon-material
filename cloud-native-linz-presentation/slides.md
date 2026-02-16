@@ -1,6 +1,6 @@
 ---
 theme: the-unnamed # https://github.com/estruyf/slidev-theme-the-unnamed
-title: Welcome to Slidev
+title: 18 Bluetooth Controllers Walk Into a Bar - Observability & Runtime Configuration with CNCF Tools
 drawings:
   persist: false
 transition: slide-left
