@@ -365,26 +365,39 @@ layout: default
 
 # Learning 3: Cardinality Low, Volume High
 
-<div class="grid grid-cols-2 gap-12 my-8">
+## The Challenge
+- **Cardinality:** Only 20-30 unique metric names — not the bottleneck
+- **Volume:** 18 controllers @ 60Hz ≈ 1,080 messages/second
+
+## Solution: Two-level batching
+
+<div class="grid grid-cols-2 gap-8">
 <div>
 
-### ✅ Cardinality: Low
-- Only 20-30 unique metric names
-- Manageable label combinations
-- Not the bottleneck
+**Level 1:** Application → Collector
+```python
+init_metrics(
+    service_name="controller-manager",
+    export_interval_ms=100 # (realtime)
+    # other services: 1000ms
+)
+```
 
 </div>
 <div>
 
-### ⚠️ Volume: High
-- 18 controllers @ 60Hz
-- ~1,080 messages/second
-- **Solution: Batching & aggregation**
+**Level 2:** Collector → Backends
+```yaml
+processors:
+  batch/fast:
+    timeout: 100ms
+    send_batch_size: 1000
+```
 
 </div>
 </div>
 
-**Batching at the source prevented cardinality explosion** — aggregating controller events before exporting kept metric counts low while handling high message volume.
+**Real-time exports** + **batching** = subsecond observability without overwhelming backends
 
 <!--
 Speaker Notes (Simon - 8:00-9:00):
@@ -393,33 +406,6 @@ Speaker Notes (Simon - 8:00-9:00):
 - "But 18 controllers at 60Hz means over 1,000 messages per second"
 - "Batching and aggregation at the source saved us"
 -->
-
----
-layout: default
----
-
-# Learning 3: Two Batching Strategies
-
-### Level 1: Application → Collector
-
-```python
-init_metrics(
-    service_name="controller-manager",
-    export_interval_ms=flagd.get_int("metrics_export_interval_ms")
-    # controller-manager: 100ms (realtime) | other services: 1000ms
-)
-```
-
-### Level 2: Collector → Backends
-
-```yaml
-processors:
-  batch/fast:
-    timeout: 100ms          # Send batch every 100ms
-    send_batch_size: 1000   # Or when 1000 data points collected
-```
-
-**100ms exports** + **1000-item batching** gives subsecond observability without overwhelming backends
 
 ---
 layout: default
