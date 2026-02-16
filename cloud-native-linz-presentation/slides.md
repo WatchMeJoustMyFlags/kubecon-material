@@ -654,35 +654,35 @@ layout: default
 
 <div class="grid grid-cols-2 gap-6 max-w-5xl mx-auto">
 
-<div class="p-6 bg-gray-800/50 rounded-lg border border-gray-700">
-  <div class="text-4xl font-bold text-teal-400 mb-3">1</div>
-  <div class="text-base leading-relaxed">
-    <strong>CNCF observability tools work for games, IoT, embedded systems—anything real-time.</strong>
-    <div class="mt-2 text-sm opacity-80">Not just web apps.</div>
+<div class="h-42 pl-14 pr-6 py-6 bg-gray-800/50 rounded-lg border border-gray-700 relative">
+  <div class="absolute top-3 left-3 text-5xl font-bold text-teal-400/20">1</div>
+  <div class="text-xl leading-relaxed">
+    <strong>These tools work for real-time.</strong>
+    <div class="mt-2 text-lg opacity-80">Games, IoT, embedded systems—anything real-time. Not just web apps.</div>
   </div>
 </div>
 
-<div class="p-6 bg-gray-800/50 rounded-lg border border-gray-700">
-  <div class="text-4xl font-bold text-teal-400 mb-3">2</div>
-  <div class="text-base leading-relaxed">
+<div class="h-42 pl-14 pr-6 py-6 bg-gray-800/50 rounded-lg border border-gray-700 relative">
+  <div class="absolute top-3 left-3 text-5xl font-bold text-teal-400/20">2</div>
+  <div class="text-xl leading-relaxed">
     <strong>But they're optimized for web apps.</strong>
-    <div class="mt-2 text-sm opacity-80">Default configs assume 15-second scrapes, not 60Hz game loops.</div>
+    <div class="mt-2 text-lg opacity-80">Default configs assume 15-second scrapes, not 60Hz game loops.</div>
   </div>
 </div>
 
-<div class="p-6 bg-gray-800/50 rounded-lg border border-gray-700">
-  <div class="text-4xl font-bold text-teal-400 mb-3">3</div>
-  <div class="text-base leading-relaxed">
+<div class="h-42 pl-14 pr-6 py-6 bg-gray-800/50 rounded-lg border border-gray-700 relative">
+  <div class="absolute top-3 left-3 text-5xl font-bold text-teal-400/20">3</div>
+  <div class="text-xl leading-relaxed">
     <strong>With tuning, you can get subsecond observability on an $80 computer.</strong>
-    <div class="mt-2 text-sm opacity-80">Scrape intervals, push vs pull, storage backends.</div>
+    <div class="mt-2 text-lg opacity-80">Intervals, push vs pull, storage backends.</div>
   </div>
 </div>
 
-<div class="p-6 bg-gray-800/50 rounded-lg border border-gray-700">
-  <div class="text-4xl font-bold text-teal-400 mb-3">4</div>
-  <div class="text-base leading-relaxed">
+<div class="h-42 pl-14 pr-6 py-6 bg-gray-800/50 rounded-lg border border-gray-700 relative">
+  <div class="absolute top-3 left-3 text-5xl font-bold text-teal-400/20">4</div>
+  <div class="text-xl leading-relaxed">
     <strong>The tools exist. The patterns exist.</strong>
-    <div class="mt-2 text-sm opacity-80">What's missing is the documented path.</div>
+    <div class="mt-2 text-lg opacity-80">What's missing is the documented path.</div>
   </div>
 </div>
 
