@@ -1,0 +1,22 @@
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node modules (if using slidev locally)
+node_modules/
+.npm/
+
+# Build outputs
+dist/
+*.log
+
+# Environment files
+.env
+.env.local
