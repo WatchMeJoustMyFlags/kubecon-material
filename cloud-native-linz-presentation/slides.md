@@ -6,6 +6,8 @@ drawings:
 transition: slide-left
 mdc: true
 duration: 25min
+grafana_host: himbeere.local
+jaeger_host: himbeere.local
 
 layout: cover
 class: text-center
@@ -330,11 +332,11 @@ layout: default
 
 # Learning 2: The Raspberry Pi Can Handle It
 
-<iframe 
-    src="http://himbeere.local/grafana/d/joustmania-host-metrics/joustmania-host-metrics-raspberry-pi?orgId=1&refresh=5s&kiosk" 
-    width="100%" 
-    height="400" 
-    frameborder="0" 
+<iframe
+    :src="`http://${$slidev.configs.grafana_host}/grafana/d/joustmania-host-metrics/joustmania-host-metrics-raspberry-pi?orgId=1&refresh=5s&kiosk`"
+    width="100%"
+    height="400"
+    frameborder="0"
     class="rounded-lg shadow-lg"></iframe>
 
 <!--
@@ -611,7 +613,7 @@ layout: default
 
 # Learning 6: These Tools Actually Work
 
-<iframe src="http://himbeere.local/jaeger/" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
+<iframe :src="`http://${$slidev.configs.jaeger_host}/jaeger/`" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
 
 <!--
 Speaker Notes (Manuel - 11:30-13:00):
@@ -636,7 +638,7 @@ layout: default
 ---
 
 <iframe
-  src="http://himbeere.local/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk"
+  :src="`http://${$slidev.configs.grafana_host}/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk`"
   width="100%"
   height="360"
   frameborder="0"
@@ -644,7 +646,7 @@ layout: default
 ></iframe>
 
 <iframe
-  src="http://himbeere.local/flags/"
+  :src="`http://${$slidev.configs.grafana_host}/flags/`"
   width="100%"
   height="96"
   frameborder="0"
