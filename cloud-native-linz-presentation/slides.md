@@ -42,6 +42,24 @@ Speaker Notes:
 -->
 
 ---
+layout: default
+---
+
+# Agenda
+
+<div class="text-xl mt-16 space-y-6">
+
+1. **The Challenge** — Why observability for a party game?
+
+2. **The Journey** — 6 key learnings from instrumentation to subsecond metrics
+
+3. **Live Demo** — Watch metrics respond in real-time as we change the game
+
+4. **The Path Forward** — What's missing and how you can help
+
+</div>
+
+---
 layout: center
 class: text-center
 ---
