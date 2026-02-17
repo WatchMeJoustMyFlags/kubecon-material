@@ -335,7 +335,17 @@ layout: default
   <img src="/images/grafana-host-metrics-fallback.png" alt="Host Metrics Dashboard" class="absolute inset-0 w-full h-full object-cover rounded-lg shadow-lg" />
   <iframe
     :src="`http://${$slidev.configs.demo_host}/grafana/d/joustmania-host-metrics/joustmania-host-metrics-raspberry-pi?orgId=1&refresh=5s&kiosk`"
-    class="absolute inset-0 w-full h-full rounded-lg shadow-lg"
+    @load="(e) => {
+      try {
+        e.target.contentWindow.location.href;
+        e.target.style.opacity = '1';
+      } catch (err) {
+        if (err.name === 'SecurityError') {
+          e.target.style.opacity = '1';
+        }
+      }
+    }"
+    class="absolute inset-0 w-full h-full rounded-lg shadow-lg opacity-0 transition-opacity duration-500"
     frameborder="0"></iframe>
 </div>
 
@@ -370,7 +380,7 @@ layout: default
 - Memory: ~1.4 GB / 8 GB (~18%)
 - Temp: 55-60°C (with fan cooling)
 - Load average: 2.4
-- Running multiple simultaneous games
+- 18 controllers @ 60Hz
 
 </div>
 </div>
