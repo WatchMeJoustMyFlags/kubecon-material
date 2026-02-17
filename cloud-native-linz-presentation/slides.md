@@ -331,12 +331,13 @@ layout: default
 
 # Learning 2: The Raspberry Pi Can Handle It
 
-<iframe
+<div class="relative w-full h-[400px]">
+  <img src="/images/grafana-host-metrics-fallback.png" alt="Host Metrics Dashboard" class="absolute inset-0 w-full h-full object-cover rounded-lg shadow-lg" />
+  <iframe
     :src="`http://${$slidev.configs.demo_host}/grafana/d/joustmania-host-metrics/joustmania-host-metrics-raspberry-pi?orgId=1&refresh=5s&kiosk`"
-    width="100%"
-    height="400"
-    frameborder="0"
-    class="rounded-lg shadow-lg"></iframe>
+    class="absolute inset-0 w-full h-full rounded-lg shadow-lg"
+    frameborder="0"></iframe>
+</div>
 
 <!--
 Speaker Notes (Simon - 6:30-7:15):
@@ -359,16 +360,17 @@ layout: default
 ### Raspberry Pi 5 Specs
 - Quad-core ARM Cortex-A76 @ 2.4GHz
 - 8GB LPDDR4X RAM
-- ~$80 USD
+- ~$80 USD (before global memory shortage)
 
 </div>
 <div>
 
 ### Observed Performance
-- CPU: ~45% under full load
-- Memory: ~850 MB / 8 GB (10%)
-- Temp: 65°C (with fan cooling)
-- 18 controllers @ 60Hz
+- CPU: ~42% under full game load
+- Memory: ~1.4 GB / 8 GB (~18%)
+- Temp: 55-60°C (with fan cooling)
+- Load average: 2.4
+- Running multiple simultaneous games
 
 </div>
 </div>
