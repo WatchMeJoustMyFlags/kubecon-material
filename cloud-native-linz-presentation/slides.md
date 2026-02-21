@@ -198,9 +198,10 @@ graph LR
 layout: full
 class: p-0
 ---
-<iframe
-  :src="`http://${$slidev.configs.demo_host}/jaeger/search?service=game-coordinator-service&uiEmbed=v0&uiSearchHideGraph=1`"
-  class="w-full h-full border-none"
+<JaegerFirstTrace
+  :host="$slidev.configs.demo_host"
+  service="game-coordinator-service"
+  class="w-full h-full"
 />
 
 ---
