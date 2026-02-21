@@ -158,7 +158,6 @@ What could possibly go wrong?
 
 ---
 layout: section
-class: text-center
 ---
 
 # The Journey: 6 Learnings
@@ -560,7 +559,7 @@ layout: default
 
 <div style="display: flex; flex-direction: column; justify-content: center; height: 100%; align-items: start;">
 
-<h1>Learning 6: These Tools Actually Work</h1>
+<h1 class="my-0!">Learning 6: These Tools Actually Work</h1>
 
 </div>
 
@@ -569,8 +568,6 @@ layout: section
 ---
 
 # Live Demo: Real-time observability in action
-
-We'll change the game frequency via feature flags and watch metrics respond across all three approaches — from 10-second pull intervals to sub-100ms VictoriaMetrics resolution.
 
 ---
 layout: full
@@ -650,9 +647,6 @@ layout: default
     <img src="/images/otel-demo-1.png" alt="OTel Demo Frontend" class="rounded-lg shadow-lg w-76" />
     <img src="/images/otel-demo-2.png" alt="OTel Demo Cart" class="rounded-lg shadow-lg w-76" style="position: relative; top: -3rem; left: 6rem;"/>
   </div>
-  <div class="text-center -mt-8 text-base opacity-80">
-    E-commerce frontend. Payment gateway. Recommendation engine.
-  </div>
 </div>
 
 </div>
@@ -689,8 +683,6 @@ layout: section
 ---
 
 # _Real-Time_ Observability with CNCF Tools
-
-
 
 ---
 layout: cover
