@@ -667,8 +667,12 @@ class: text-center
 
 **Fork it. Break it. Make it better.**
 
-<div class="text-lg mt-8 opacity-80">
-P.S. If you solved subsecond Prometheus pull without VictoriaMetrics, tell us.
+<div class="mt-8 text-lg opacity-80">
+
+## Shoutouts
+
+J. S. Joust · JoustMania · OTel community · CNCF community · open-source community
+
 </div>
 
 <div class="mt-8">
