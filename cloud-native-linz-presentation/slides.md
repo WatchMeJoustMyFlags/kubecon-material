@@ -20,14 +20,14 @@ class: text-center
   <img src="/images/simon.jpg" alt="Simon Schrottner" class="h-20 w-20 rounded-full flex-shrink-0" />
   <div class="leading-tight">
     <p class="!text-xl font-bold !mt-0 !mb-0">Simon Schrottner</p>
-    <p class="!text-lg !mt-0 !mb-0">Senior Software Engineer, Dynatrace</p>
+    <p class="!text-lg !mt-0 !mb-0">Dynatrace</p>
   </div>
 </div>
 <div class="flex items-center gap-2">
   <img src="/images/manuel.jpg" alt="Manuel Timelthaler" class="h-20 w-20 rounded-full flex-shrink-0" />
   <div class="leading-tight">
     <p class="!text-xl font-bold !mt-0 !mb-0">Manuel Timelthaler</p>
-    <p class="!text-lg !mt-0 !mb-0">Software Architect, Tractive</p>
+    <p class="!text-lg !mt-0 !mb-0">Tractive</p>
   </div>
 </div>
 </div>
@@ -838,11 +838,7 @@ class: text-center
 
 **Simon Schrottner**
 
-<div class="text-sm mt-2 opacity-80">
-
-Senior Software Engineer, Dynatrace
-
-</div>
+<div class="opacity-80">Dynatrace</div>
 
 <div class="text-sm mt-2">
 
@@ -855,11 +851,7 @@ Senior Software Engineer, Dynatrace
 
 **Manuel Timelthaler**
 
-<div class="text-sm mt-2 opacity-80">
-
-Software Architect, Tractive
-
-</div>
+<div class="opacity-80">Tractive</div>
 
 <div class="text-sm mt-2">
 
