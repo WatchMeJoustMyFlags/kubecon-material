@@ -54,51 +54,6 @@ _No screens, just glowing controllers and chaos._
 
 
 ---
-layout: default
----
-
-# Original Architecture (IPC-Based)
-
-<div class="grid grid-cols-2">
-<div>
-
-**Before observability:**
-
-- Process-based (multiprocessing)
-- 30 Hz game loop (33ms frames)
-- IPC via queues/shared memory
-- 4 Python processes
-
-**The problem:** OpenTelemetry needs network calls for context propagation
-
-</div>
-<div class="-mt-8">
-
-```mermaid {scale:0.85}
-graph TD
-    Menu[Menu]
-    GC[Game Coordinator]
-    CM[Controller Manager]
-    Audio[Audio]
-    Controllers[18+ Controllers<br/>@ 30Hz]
-
-    Menu -->|IPC| GC
-    GC -->|IPC| CM
-    GC -->|IPC| Audio
-    CM -->|Bluetooth| Controllers
-
-    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
-    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
-    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
-    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
-    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#0e131f
-```
-
-</div>
-</div>
-
-
----
 layout: center
 class: text-center
 ---
@@ -166,21 +121,23 @@ What we discovered bringing CNCF tools to a real-time game
 layout: default
 ---
 
-# Learning 1: Had to Refactor to Microservices
+# Learning 1: The Original Architecture
+
+<div class="grid grid-cols-2">
+<div>
+
+- Process-based (multiprocessing)
+- 30 Hz game loop (33ms frames)
+- IPC via queues/shared memory
+- 4 Python processes
 
 **Problem:** IPC (pipes/queues) doesn't work with OpenTelemetry auto-instrumentation
 
-<div class="grid grid-cols-3 gap-8 items-center mb-8">
-<div>
-
-### <span class="text-lg">Before</span><br>Process-Based IPC
-
 </div>
-<div class="col-span-2">
+<div class="-mt-8">
 
-```mermaid {scale:0.7}
-%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
-graph LR
+```mermaid {scale:0.85}
+graph TD
     Menu[Menu]
     GC[Game Coordinator]
     CM[Controller Manager]
@@ -192,46 +149,11 @@ graph LR
     GC -->|IPC| Audio
     CM -->|Bluetooth| Controllers
 
-    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#000000
-    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#000000
-    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#000000
-    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#000000
-    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#000000
-```
-
-</div>
-</div>
-
-<div class="grid grid-cols-3 gap-8 items-center">
-<div>
-
-### <span class="text-lg">After</span><br>gRPC Microservices
-
-</div>
-<div class="col-span-2">
-
-```mermaid {scale:0.7}
-%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
-graph LR
-    Flagd[flagd]
-    Menu[Menu]
-    GC[Game Coordinator]
-    CM[Controller Manager]
-    Audio[Audio]
-    Controllers[Controllers]
-
-    Flagd -.->|gRPC| GC
-    Menu -->|gRPC| GC
-    GC -->|gRPC| CM
-    GC -->|gRPC| Audio
-    CM -->|Bluetooth| Controllers
-
-    style Flagd fill:#0e131f,stroke:#ffe45e,stroke-width:2px,color:#ffe45e
-    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#000000
-    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#000000
-    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#000000
-    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#000000
-    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#000000
+    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
+    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
+    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
+    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
+    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#0e131f
 ```
 
 </div>
@@ -241,7 +163,7 @@ graph LR
 layout: default
 ---
 
-# Learning 1: The Full Picture
+# Learning 1: Microservices Unlocked the Stack
 
 **gRPC microservices enabled the observability stack**<br>
 W3C trace context flows through calls, enabling distributed tracing
