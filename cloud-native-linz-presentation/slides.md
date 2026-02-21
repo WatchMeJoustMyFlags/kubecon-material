@@ -326,6 +326,15 @@ Speaker Notes (Simon - 5:00-6:30):
 -->
 
 ---
+layout: full
+class: p-0
+---
+<iframe
+  :src="`http://${$slidev.configs.demo_host}/jaeger/search?service=game-coordinator-service&uiEmbed=v0&uiSearchHideGraph=1`"
+  class="w-full h-full border-none"
+/>
+
+---
 layout: default
 ---
 
@@ -536,6 +545,15 @@ Speaker Notes (Manuel - 9:00-10:00):
 -->
 
 ---
+layout: full
+class: p-0
+---
+<iframe
+  :src="`http://${$slidev.configs.demo_host}/grafana/d/presentation-pipeline/presentation3a-pipeline-comparison?orgId=1&from=1771685894180&to=1771686034246&viewPanel=1&kiosk`"
+  class="w-full h-full border-none"
+/>
+
+---
 layout: default
 ---
 
@@ -575,6 +593,15 @@ Speaker Notes (Manuel - 9:00-11:30):
 - "Show of hands—how many of you are using Prometheus pull exclusively? (pause) Yeah, same. Until now"
 - "With OpenTelemetry's push model to Prometheus, we got down to 500-millisecond resolution. Better"
 -->
+
+---
+layout: full
+class: p-0
+---
+<iframe
+  :src="`http://${$slidev.configs.demo_host}/grafana/d/presentation-pipeline/presentation3a-pipeline-comparison?orgId=1&from=1771685894180&to=1771686034246&viewPanel=2&kiosk`"
+  class="w-full h-full border-none"
+/>
 
 ---
 layout: default
@@ -623,13 +650,23 @@ Speaker Notes (Manuel - 9:00-11:30 continued):
 -->
 
 ---
+layout: full
+class: p-0
+---
+<iframe
+  :src="`http://${$slidev.configs.demo_host}/grafana/d/presentation-pipeline/presentation3a-pipeline-comparison?orgId=1&from=1771685894180&to=1771686034246&viewPanel=3&kiosk`"
+  class="w-full h-full border-none"
+/>
+
+---
 layout: default
 ---
 
-# Learning 6: These Tools Actually Work
+<div style="display: flex; flex-direction: column; justify-content: center; height: 100%; align-items: start;">
 
-<iframe :src="`http://${$slidev.configs.demo_host}/jaeger/`" width="100%" height="400" frameborder="0" class="rounded-lg shadow-lg"></iframe>
+<h1>Learning 6: These Tools Actually Work</h1>
 
+</div>
 <!--
 Speaker Notes (Manuel - 11:30-13:00):
 - "Which brings us to learning number six, and honestly my favorite: these tools actually work for real-time hardware"
@@ -649,24 +686,13 @@ layout: section
 We'll change the game frequency via feature flags and watch metrics respond across all three approaches — from 10-second pull intervals to sub-100ms VictoriaMetrics resolution.
 
 ---
-layout: default
+layout: full
+class: p-0
 ---
-
 <iframe
-  :src="`http://${$slidev.configs.demo_host}/grafana/d/metrics-pipeline-comparison/metrics-pipeline-comparison?orgId=1&refresh=5s&kiosk`"
-  width="100%"
-  height="360"
-  frameborder="0"
-  class="rounded-lg shadow-lg mb-4"
-></iframe>
-
-<iframe
-  :src="`http://${$slidev.configs.demo_host}/flags/`"
-  width="100%"
-  height="96"
-  frameborder="0"
-  class="rounded-lg shadow-lg mt-4"
-></iframe>
+  :src="`http://${$slidev.configs.demo_host}/grafana/d/player-insights/player-insights?orgId=1&refresh=5s&kiosk`"
+  class="w-full h-full border-none"
+/>
 
 <!--
 Speaker Notes (Manuel/Simon - 13:00-19:00):
