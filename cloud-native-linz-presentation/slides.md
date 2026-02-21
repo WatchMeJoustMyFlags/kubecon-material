@@ -52,44 +52,32 @@ class: text-center
 Keep your controller still, jostle everyone else's.<br>
 _No screens, just glowing controllers and chaos._
 
-
 ---
 layout: center
-class: text-center
 ---
 
-# What If We Actually Observed This Thing?
+<v-clicks>
 
-<div class="grid grid-cols-3 gap-x-16 gap-y-8 items-end justify-items-center my-12 px-12">
-  <div class="flex flex-col items-center gap-2">
-    <img src="/images/opentelemetry.png" alt="OpenTelemetry" class="h-14" />
-    <span class="text-sm text-gray-400">Telemetry Collection</span>
-  </div>
-  <div class="flex flex-col items-center gap-2">
-    <img src="/images/prometheus.png" alt="Prometheus" class="h-20" />
-    <span class="text-sm text-gray-400">Metrics Storage</span>
-  </div>
-  <div class="flex flex-col items-center gap-2">
-    <img src="/images/jaeger-reverse.png" alt="Jaeger" class="h-20" />
-    <span class="text-sm text-gray-400">Distributed Tracing</span>
-  </div>
-  <div class="flex flex-col items-center gap-2">
-    <img src="/images/grafana.svg" alt="Grafana" class="h-20" />
-    <span class="text-sm text-gray-400">Visualization</span>
-  </div>
-  <div class="flex flex-col items-center gap-2">
-    <img src="/images/loki.png" alt="Loki" class="h-20" />
-    <span class="text-sm text-gray-400">Log Aggregation</span>
-  </div>
-  <div class="flex flex-col items-center gap-2">
-    <img src="/images/openfeature.svg" alt="OpenFeature" class="h-14 w-auto" />
-    <span class="text-sm text-gray-400">Feature Flags</span>
-  </div>
-</div>
+# How do we know what's going on?
 
-<div class="text-2xl mt-8 text-amber-300">
-What could possibly go wrong?
-</div>
+# What if we added observability tools?
+
+# What if we added feature flags too?
+
+</v-clicks>
+
+<style>
+h1:nth-of-type(1)::before {
+  background: var(--slidev-theme-accents-blue) !important;
+}
+h1:nth-of-type(2)::before {
+  background: var(--slidev-theme-accents-blue) !important;
+  transform: rotate(1deg) !important;
+}
+h1:nth-of-type(3)::before {
+  background: var(--slidev-theme-accents-blue) !important;
+}
+</style>
 
 ---
 layout: default
