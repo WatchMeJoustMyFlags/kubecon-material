@@ -417,35 +417,12 @@ layout: default
 - **Cardinality:** Only 20-30 unique metric names — not the bottleneck
 - **Volume:** 18 controllers @ 60Hz ≈ 1,080 messages/second
 
-## Solution: Two-level batching
+## Solution
 
-<div class="grid grid-cols-2 gap-8">
-<div>
+- **Batching:** group messages before sending to the collector, and again before forwarding to backends
+- **Aggregation:** push summaries, not raw telemetry
 
-**Level 1:** Application → Collector
-```python
-init_metrics(
-    service_name="controller-manager",
-    export_interval_ms=100 # (realtime)
-    # other services: 1000ms
-)
-```
-
-</div>
-<div>
-
-**Level 2:** Collector → Backends
-```yaml
-processors:
-  batch/fast:
-    timeout: 100ms
-    send_batch_size: 1000
-```
-
-</div>
-</div>
-
-**Real-time exports** + **batching** = subsecond observability without overwhelming backends
+**Result:** subsecond observability without overwhelming backends
 
 <!--
 Speaker Notes (Simon - 8:00-9:00):
