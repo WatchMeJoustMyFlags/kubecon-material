@@ -43,14 +43,16 @@ class: text-center
 
 # What is JoustMania?
 
-<div class="flex justify-center items-center my-8">
-    <img src="/images/joustmania-magfest.jpg" alt="JoustMania at MagFest" class="h-64 rounded-lg shadow-lg rotate-1" />
-</div>
+<JsJoustGallery />
 
 **A motion-controlled party game for up to 18+ PlayStation Move controllers**
 
 Keep your controller still, jostle everyone else's.<br>
 _No screens, just glowing controllers and chaos._
+
+<div class="abs-br m-4 text-xs text-right opacity-50" style="max-width: 340px;">
+  Photos by Brent Knepper, Sara Bobo, and Die Gute Fabrik; showing original J.S. Joust game
+</div>
 
 ---
 layout: center
