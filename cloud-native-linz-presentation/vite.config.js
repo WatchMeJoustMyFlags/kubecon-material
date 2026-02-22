@@ -17,6 +17,10 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/jaeger-proxy/, "/jaeger"),
         changeOrigin: true,
       },
+      "/chaos": {
+        target: `http://${demoHost}`,
+        changeOrigin: true,
+      },
     },
   },
   //@ts-ignore

@@ -481,14 +481,19 @@ layout: section
 # Live Demo: Real-time observability in action
 
 ---
+layout: default
+---
+
+<ChaosDashboard />
+
+---
 layout: full
 class: p-0
 ---
 <iframe
-  :src="`http://${$slidev.configs.demo_host}/grafana/d/player-insights/player-insights?orgId=1&refresh=5s&kiosk`"
+  :src="`http://${$slidev.configs.demo_host}/grafana/d/presentation-chaos/presentation3a-chaos-demo?orgId=1&refresh=5s&kiosk`"
   class="w-full h-full border-none"
 />
-
 
 ---
 layout: default
