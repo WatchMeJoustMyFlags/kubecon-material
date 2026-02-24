@@ -223,8 +223,9 @@ graph LR
         GC[Game Coordinator<br/>:50053]
         CM[Controller Manager<br/>:50052]
         Audio[Audio<br/>:50056]
-        Controllers[Controllers]
     end
+    
+    Controllers[Controllers]
 
     Menu -->|gRPC| GC
     Menu <-->|gRPC Stream| CM
@@ -280,16 +281,10 @@ graph LR
     GC <-->|gRPC Stream| CM
     GC -->|gRPC| Audio
     Menu -->|gRPC| Audio
-    Flagd -.->|gRPC| GC
-    Flagd -.->|gRPC| Audio
-    Flagd -.->|gRPC| Menu
-    Flagd -.->|gRPC| CM
+    Flagd -.->|gRPC| RaspberryPi
     CM -->|Bluetooth| Controllers
 
-    Menu -.->|OTLP| OTel
-    GC -.->|OTLP| OTel
-    CM -.->|OTLP| OTel
-    Audio -.->|OTLP| OTel
+    RaspberryPi -.->|OTLP| OTel
     OTel -->|metrics<br/>traces<br/>logs| Observability
 
     style Flagd fill:#0e131f,stroke:#ffe45e,stroke-width:2px,color:#ffe45e
