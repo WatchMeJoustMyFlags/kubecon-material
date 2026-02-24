@@ -2,7 +2,7 @@
   <div class="grid grid-cols-2 gap-6 h-full p-6">
     <!-- Left column: controls -->
     <div class="flex flex-col gap-4">
-      <h2 class="text-2xl font-bold text-white">Chaos Mode</h2>
+      <h2 class="text-2xl font-bold text-white">Controlled Chaos with Feature Flags</h2>
 
       <!-- Status badge -->
       <div class="flex items-center gap-3">
