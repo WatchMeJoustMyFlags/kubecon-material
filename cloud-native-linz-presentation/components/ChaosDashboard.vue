@@ -58,7 +58,7 @@
     </div>
 
     <!-- Right column: raw JSON -->
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 min-h-0">
       <p class="text-xs text-gray-500 uppercase tracking-wider">Raw flagd Status</p>
       <pre class="flex-1 bg-gray-900 rounded p-3 text-xs text-green-300 font-mono overflow-auto">{{ rawJson }}</pre>
       <div v-if="lastAction" class="text-xs font-mono">
@@ -88,10 +88,7 @@ const lastAction = ref(null);
 let pollInterval = null;
 
 const rawJson = computed(() => {
-  const display = status.value?.targeting
-    ? { ...status.value, targeting: "…" }
-    : status.value;
-  return JSON.stringify(display, null, 2);
+  return JSON.stringify(status.value, null, 2);
 });
 
 const activeFault = computed(() => {
