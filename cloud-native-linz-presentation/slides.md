@@ -544,7 +544,6 @@ layout: default
 
 <div class="grid grid-cols-2 gap-12 mt-8">
 
-
 <div class="flex flex-col justify-center">
   <div class="text-xl leading-relaxed mb-8">
     Great for microservices—but where's the robotics? The game engines? The industrial IoT?
@@ -555,16 +554,15 @@ layout: default
   </div>
 </div>
 
-
 <div>
-  <div class="space-y-4">
-    <img src="/images/otel-demo-1.png" alt="OTel Demo Frontend" class="rounded-lg shadow-lg w-76" />
-    <img src="/images/otel-demo-2.png" alt="OTel Demo Cart" class="rounded-lg shadow-lg w-76" style="position: relative; top: -3rem; left: 6rem;"/>
+  <div class="h-64">
+    <img src="/images/otel-demo-1.png" class="rounded-lg shadow-lg w-64" style="position: relative; top: -1rem; left: 0rem" />
+    <img src="/images/otel-demo-2.png" class="rounded-lg shadow-lg w-64" style="position: relative; top: -3rem; left: 4rem" />
+    <img src="/images/otel-demo-3.png" class="rounded-lg shadow-lg w-64" style="position: relative; top: -5rem; left: 8rem" />
   </div>
 </div>
 
 </div>
-
 
 ---
 layout: center
