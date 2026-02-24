@@ -38,9 +38,6 @@ jobs:
       - name: Build slides
         run: npm run build -- --base /kubecon-material/
 
-      - name: Copy images to dist
-        run: cp -r images dist/images
-
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

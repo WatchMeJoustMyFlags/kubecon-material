@@ -22,20 +22,19 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
-const base = import.meta.env.BASE_URL
 const images = [
-  `${base}images/jsjoust-images/jsjoust-brent01.jpg`,
-  `${base}images/jsjoust-images/jsjoust-sara1.jpg`,
-  `${base}images/jsjoust-images/jsjoust-brent02.jpg`,
-  `${base}images/jsjoust-images/jsjoust-photo1.jpg`,
-  `${base}images/jsjoust-images/jsjoust-brent03.jpg`,
-  `${base}images/jsjoust-images/jsjoust-sara2.jpg`,
-  `${base}images/jsjoust-images/jsjoust-brent04.jpg`,
-  `${base}images/jsjoust-images/jsjoust-photo2.png`,
-  `${base}images/jsjoust-images/jsjoust-brent05.jpg`,
-  `${base}images/jsjoust-images/jsjoust-brent06.jpg`,
-  `${base}images/jsjoust-images/jsjoust-brent09.jpg`,
-  `${base}images/jsjoust-images/jsjoust-brent10.jpg`,
+  '/images/jsjoust-images/jsjoust-brent01.jpg',
+  '/images/jsjoust-images/jsjoust-sara1.jpg',
+  '/images/jsjoust-images/jsjoust-brent02.jpg',
+  '/images/jsjoust-images/jsjoust-photo1.jpg',
+  '/images/jsjoust-images/jsjoust-brent03.jpg',
+  '/images/jsjoust-images/jsjoust-sara2.jpg',
+  '/images/jsjoust-images/jsjoust-brent04.jpg',
+  '/images/jsjoust-images/jsjoust-photo2.png',
+  '/images/jsjoust-images/jsjoust-brent05.jpg',
+  '/images/jsjoust-images/jsjoust-brent06.jpg',
+  '/images/jsjoust-images/jsjoust-brent09.jpg',
+  '/images/jsjoust-images/jsjoust-brent10.jpg',
 ]
 
 const current = ref(0)
