@@ -450,6 +450,16 @@ class: p-0
 />
 
 ---
+layout: full
+class: p-0
+---
+<JaegerFirstTrace
+  :host="$slidev.configs.demo_host"
+  service="game-coordinator-service"
+  class="w-full h-full"
+/>
+
+---
 layout: default
 ---
 
