@@ -391,13 +391,9 @@ layout: default
 
 # Learning 3: Cardinality Low, Volume High
 
-<v-click>
-
-## The Challenge
+## Export rate is the real challenge
 - **Cardinality:** Hundreds of time series, not millions — manageable
 - **Volume:** 18 controllers @ 60Hz ≈ 1,080 messages/second
-
-</v-click>
 
 <v-click>
 
@@ -490,6 +486,17 @@ layout: default
 - **Game loop:** 60Hz (16ms per frame)
 - **Result:** 600 frames between each data point
 
+<!--
+- Even if you scraped every second, you'd still miss 60 frames — the architecture is wrong, not just the config
+- What breaks if you push below 10 seconds?
+  - **Context deadline exceeded**: if scrape takes longer than the interval, scrapes overlap → errors
+  - **HTTP overhead compounds**: every scrape is a full HTTP GET + text serialization of ALL metrics
+  - **Head block pressure**: chunks fill faster → more GC + compaction spikes → I/O bursts (bad on Pi SD card)
+  - **CPU spikes**: scrape parsing, WAL appends, and rule evaluation all compete for the same core
+- 10s was not us being lazy — it's where Prometheus itself stops being reliable
+- To go faster, you need to flip the model: **push** instead of pull
+-->
+
 ---
 layout: full
 class: p-0
@@ -521,18 +528,38 @@ metric_reader = PeriodicExportingMetricReader(
 ```mermaid {scale:1}
 %%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
 graph LR
-    Services[Game Services] -->|OTLP Push<br/>100ms| Collector[OTEL Collector]
-    Collector -->|Remote Write<br/>~500ms| Prom[Prometheus]
+    Services[Game Services] -->|OTLP Push<br/>100ms| Receiver[Receiver]
+
+    subgraph OTelCollector[OTel Collector]
+        Receiver --> BatchProc[Batch Processor<br/>waits up to 200ms]
+        BatchProc --> Exporter[Exporter]
+    end
+
+    Exporter -->|Remote Write| Prom[Prometheus]
 
     style Services fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
-    style Collector fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
+    style Receiver fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
+    style BatchProc fill:#444444,stroke:#888888,stroke-width:2px,color:#aaaaaa
+    style Exporter fill:#f39c12,stroke:#f39c12,stroke-width:2px,color:#0e131f
     style Prom fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
+    style OTelCollector fill:transparent,stroke:#ffe45e,stroke-width:2px,color:#ffe45e
 ```
 
 </div>
 
-**Reality check** — We export at 100ms, but Prometheus remote write can only achieve ~500ms resolution due to write path limitations. Still **30x faster** than 15s scrape, but not real-time yet.
+**500ms end-to-end reliably** — one config change, 30× faster than pull.<br>For true sub-100ms, the TSDB itself becomes the next bottleneck.
 
+<!--
+- 100ms (SDK wait) + up to 200ms (batch hold) + overhead → ~200–500ms end-to-end depending on timing alignment.
+  - Hop 1: SDK to Collector (PeriodicExportingMetricReader)
+  - Hop 2: batch processor (sits between the OTLP receiver and the prometheusremotewrite exporter)
+  - Hop 3: Remote write to Prometheus, plus some ingestion overhead
+- One meaningful change: SDK export interval set to 100ms (default is 60s). Collector batch processor left at its 200ms default.
+  - Tradeoff is efficiency for latency
+  - batch.timout of 50ms gets us closer to ~150ms, but more HTTP overhead
+  - But Prometheus’s write path strains at that rate with high cardinality.
+  - you need a TSDB designed for high‑frequency ingest.
+-->
 
 ---
 layout: full
