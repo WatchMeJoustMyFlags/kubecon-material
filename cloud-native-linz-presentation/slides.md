@@ -91,7 +91,7 @@ layout: default
 
 1. **The Challenge** — Why observability for a party game?
 
-2. **The Journey** — 6 key learnings from instrumentation to subsecond metrics
+2. **The Journey** — 7 key learnings from instrumentation to subsecond metrics
 
 3. **Live Demo** — Watch metrics respond in real-time as we change the game
 
@@ -103,7 +103,7 @@ layout: default
 layout: section
 ---
 
-# The Journey: 6 Learnings
+# The Journey: 7 Learnings
 
 What we discovered bringing CNCF tools to a real-time game
 
@@ -273,7 +273,7 @@ layout: default
 # Learning 3: Cardinality Low, Volume High
 
 ## The Challenge
-- **Cardinality:** Only 20-30 unique metric names — not the bottleneck
+- **Cardinality:** Only 20-30 unique metric names — manageable
 - **Volume:** 18 controllers @ 60Hz ≈ 1,080 messages/second
 
 ## Solution
@@ -281,14 +281,15 @@ layout: default
 - **Batching:** group messages before sending to the collector, and again before forwarding to backends
 - **Aggregation:** push summaries, not raw telemetry
 
-**Result:** subsecond observability without overwhelming backends
+**Result:** subsecond observability without overwhelming backends — metric name cardinality
+was never the issue. Label cardinality is a different story.
 
 
 ---
 layout: default
 ---
 
-# Learning 4: Prometheus is Too Slow
+# Learning 4: Pull Scraping Is Too Slow
 
 <div class="mt-10 mb-18">
 
@@ -358,9 +359,6 @@ layout: default
 - **Game loop:** 60Hz (16ms per frame)
 - **Result:** 600 frames between each data point
 
-**We needed something faster.**
-
-
 ---
 layout: full
 class: p-0
@@ -415,47 +413,6 @@ class: p-0
 />
 
 ---
-layout: default
----
-
-# Learning 5: VictoriaMetrics for Hardware
-
-<div class="grid grid-cols-2 gap-8 my-8">
-<div>
-
-### Prometheus Limitations
-- Built for web app monitoring
-- Remote write adds latency
-- Limited ingestion rate
-- Storage not optimized for high-frequency data
-
-</div>
-<div>
-
-### VictoriaMetrics Benefits
-- **Native OTLP support** (no conversion)
-- **10x higher ingestion rate**
-- **Better compression** for time-series
-- **Optimized for IoT/hardware** use cases
-
-</div>
-</div>
-
-```mermaid {scale:1}
-%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
-graph LR
-    Services[Game Services] -->|OTLP Push<br/>100ms| Collector[OTEL Collector]
-    Collector -->|OTLP Native<br/><100ms| VM[VictoriaMetrics]
-
-    style Services fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#0e131f
-    style Collector fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
-    style VM fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
-```
-
-**Result** — Sub-100ms resolution, native OTLP, built for hardware observability.
-
-
----
 layout: full
 class: p-0
 ---
@@ -468,9 +425,50 @@ class: p-0
 layout: default
 ---
 
+# Learning 6: Labels Create Cardinality, Cardinality Demands a New TSDB
+
+<div class="grid grid-cols-2 gap-8 my-6">
+<div>
+
+### Prometheus Handles the Write Path
+- **2.24% CPU** for 100ms push from 18+ controllers
+- Sequential queries: **1–4ms** — no issue
+- Zero dropped samples
+
+</div>
+<div>
+
+### But Labels Multiply Series
+- 114 histogram queries × 50+ `le` bucket variants
+- **≈ 5,700 series lookups** per dashboard refresh
+- Concurrent query p99: **182ms** → projected **450ms** on Pi 5
+
+</div>
+</div>
+
+```mermaid {scale:1}
+%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
+graph LR
+    Label[Add a Label] -->|× bucket variants| Series[5,700 Series Lookups]
+    Series -->|concurrent reads| Prom[Prometheus\n182ms p99]
+    Series -->|concurrent reads| VM[VictoriaMetrics\n76ms p99]
+
+    style Label fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
+    style Series fill:#ff6b6b,stroke:#ff6b6b,stroke-width:2px,color:#0e131f
+    style Prom fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
+    style VM fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
+```
+
+**Result** — Prometheus could do everything. Adding a label was the tipping point:
+cardinality makes VictoriaMetrics mandatory, not optional.
+
+---
+layout: default
+---
+
 <div style="display: flex; flex-direction: column; justify-content: center; height: 100%; align-items: start;">
 
-<h1 class="my-0!">Learning 6: These Tools Actually Work</h1>
+<h1 class="my-0!">Learning 7: These Tools Actually Work</h1>
 
 </div>
 
@@ -491,7 +489,7 @@ layout: full
 class: p-0
 ---
 <iframe
-  :src="`http://${$slidev.configs.demo_host}/grafana/d/presentation-chaos/presentation3a-chaos-demo?orgId=1&refresh=5s&kiosk`"
+  :src="`http://${$slidev.configs.demo_host}/grafana/d/presentation-chaos/presentation3a-chaos-demo?orgId=1&from=now-15m&to=now&refresh=5s&kiosk`"
   class="w-full h-full border-none"
 />
 
@@ -581,7 +579,7 @@ class: text-center
 
 ## Shoutouts
 
-J. S. Joust · JoustMania · OTel community · CNCF community · open-source community
+J. S. Joust · JoustMania · OTel / CNCF community
 
 </div>
 
