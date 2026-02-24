@@ -212,59 +212,15 @@ layout: default
 
 # Learning 2: The Raspberry Pi Can Handle It
 
-<script setup>
-import { onMounted } from 'vue'
-import { useDemoHost } from './composables/useDemoHost.js'
-
-const { showIframe, checkReachability } = useDemoHost()
-
-onMounted(() => {
-  checkReachability($slidev.configs.demo_host)
-})
-</script>
-
-<div class="relative w-full h-[400px] group">
-  <img src="/images/grafana-host-metrics-fallback.png" alt="Host Metrics Dashboard" class="absolute inset-0 w-full h-full object-cover rounded-lg shadow-lg" />
-  <iframe
-    v-show="showIframe"
-    :src="`http://${$slidev.configs.demo_host}/grafana/d/joustmania-host-metrics/joustmania-host-metrics-raspberry-pi?orgId=1&refresh=5s&kiosk`"
-    class="absolute inset-0 w-full h-full rounded-lg shadow-lg transition-opacity duration-500"
-    frameborder="0"></iframe>
-
-  <!-- Toggle: press 'v' key to switch between iframe and fallback -->
-</div>
-
-
----
-layout: default
----
-
-# Learning 2: Pi Performance
-
-<div class="grid grid-cols-2 gap-12 my-8">
-<div>
-
 ### Raspberry Pi 5 Specs
 - Quad-core ARM Cortex-A76 @ 2.4GHz
 - 8GB LPDDR4X RAM
 - ~$80 USD (before global memory shortage)
 
-</div>
-<div>
-
-### Observed Performance
-- CPU: ~42% under full game load
-- Memory: ~1.4 GB / 8 GB (~18%)
-- Temp: 55-60°C (with fan cooling)
-- Load average: 2.4
-- 18 controllers @ 60Hz
-
-</div>
-</div>
+<img class="mt-8 mb-12" src="/images/grafana-host-metrics-small.png"/>
 
 **The Pi runs both the game AND the full observability stack.**<br>
 We didn't think this was possible initially, though you could also send telemetry to external services.
-
 
 ---
 layout: default
