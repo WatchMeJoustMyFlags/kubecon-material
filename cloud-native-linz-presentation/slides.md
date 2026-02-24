@@ -206,7 +206,7 @@ layout: default
 
 # Learning 1: Microservices Unlocked the Stack
 
-<v-click>
+<v-click at="1">
   <div class="mt-4 text-center text-lg">
   <strong>Auto-instrumentation came for free with gRPC</strong><br>
   </div>
@@ -242,7 +242,7 @@ graph LR
     linkStyle default stroke:#ffffff,fill:none
 ```
 
-<v-click>
+<v-click at="1">
   <div class="mt-7 text-center">
   <span class="text-sm text-gray-400">W3C trace context propagates automatically, enabling distributed tracing out of the box</span>
   </div>
@@ -252,7 +252,7 @@ graph LR
 layout: default
 ---
 
-# Learning 1: Microservices Unlocked the Stack
+# Learning 1: Microservices - the full picture
 
 ```mermaid {scale:0.75}
 %%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
@@ -585,42 +585,48 @@ class: p-0
 layout: default
 ---
 
-# Learning 6: Labels Create Cardinality, Cardinality Demands a New TSDB
+# Learning 6: Labels Are Not Free
 
-<div class="grid grid-cols-2 gap-8 my-6">
-<div>
+<div class="grid grid-cols-2 gap-12 mt-12">
+<div class="text-center">
 
-### Prometheus Handles the Write Path
-- **2.24% CPU** for 100ms push from 18+ controllers
-- Sequential queries: **1–4ms** — no issue
-- Zero dropped samples
+### Add a `game_id` label
+<div class="text-5xl mt-4">🏷️</div>
+<div class="mt-4 text-gray-400">1,216 series → 18,000 series</div>
 
 </div>
-<div>
+<div class="text-center">
 
-### But Labels Multiply Series
-- 114 histogram queries × 50+ `le` bucket variants
-- **≈ 5,700 series lookups** per dashboard refresh
-- Concurrent query p99: **182ms** → projected **450ms** on Pi 5
+### Prometheus concurrent p50
+<div class="text-5xl mt-4 font-bold text-red-400">87ms → 389ms</div>
+<div class="mt-4 text-gray-400">VictoriaMetrics: 47ms → 46ms</div>
 
 </div>
 </div>
 
-```mermaid {scale:1}
-%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
-graph LR
-    Label[Add a Label] -->|× bucket variants| Series[5,700 Series Lookups]
-    Series -->|concurrent reads| Prom[Prometheus\n182ms p99]
-    Series -->|concurrent reads| VM[VictoriaMetrics\n76ms p99]
+<div class="mt-10 text-center text-lg">
+Every label dimension multiplies your series count — cardinality is where Prometheus hurts
+</div>
 
-    style Label fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#0e131f
-    style Series fill:#ff6b6b,stroke:#ff6b6b,stroke-width:2px,color:#0e131f
-    style Prom fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#0e131f
-    style VM fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#0e131f
-```
+<div class="mt-6 text-center text-xs text-gray-500">
+Benchmark: 36 controllers at 100ms push intervals — 2× our setup, so real-world numbers are better
+</div>
 
-**Result** — Prometheus could do everything. Adding a label was the tipping point:
-cardinality makes VictoriaMetrics mandatory, not optional.
+<!--
+Full benchmark details in https://github.com/WatchMeJoustMyFlags/JoustMania/issues/575
+
+- Writes are fine on both: Prometheus only uses ~5.6% CPU on Pi 5 at 100ms push intervals with 36 controllers
+- The original assumption (Prometheus can't handle 100ms pushes) was WRONG
+- What actually matters is READ performance under concurrent load with high cardinality
+- Low cardinality (1,216 series): Prometheus 87ms p50 vs VM 47ms — both acceptable
+- Add game_id label → 50 games × 36 controllers = 18,000 series
+- High cardinality concurrent p50: Prometheus 389ms vs VM 46ms (8.4x gap)
+- On Pi 5 (2.5x CPU scaling factor): Prometheus ~970ms p50 — queries never finish before next 500ms dashboard refresh
+- VictoriaMetrics earns its place through READ performance, not write ingestion
+- Sequential queries Prometheus is actually faster (19ms vs 52ms for full scan) — the problem is concurrent parallelism
+- If we only add game_id to counters (deaths, kills, near_death): ~5,400 series after 50 games — both TSDBs comfortable
+-->
+
 
 ---
 layout: default
