@@ -17,6 +17,9 @@ importers:
       '@slidev/theme-seriph':
         specifier: latest
         version: 0.25.0
+      slidev-addon-qrcode:
+        specifier: ^1.0.2
+        version: 1.0.2
       vue:
         specifier: ^3.5.26
         version: 3.5.28(typescript@5.9.3)
@@ -2579,6 +2582,13 @@ packages:
     resolution: {integrity: sha512-uxFIHU0YlHYhDQtV4R9J6a52SLx28BCjT+4ieh7IGbgwVJWO+km431c4yRlREUAsAmt/uMjQUyQHNEPf0M39CA==}
     engines: {node: '>=6'}
 
+  qr-code-styling@1.9.2:
+    resolution: {integrity: sha512-RgJaZJ1/RrXJ6N0j7a+pdw3zMBmzZU4VN2dtAZf8ZggCfRB5stEQ3IoDNGaNhYY3nnZKYlYSLl5YkfWN5dPutg==}
+    engines: {node: '>=18.18.0'}
+
+  qrcode-generator@1.5.2:
+    resolution: {integrity: sha512-pItrW0Z9HnDBnFmgiNrY1uxRdri32Uh9EjNYLPVC2zZ3ZRIIEqBoDgm4DkvDwNNDHTK7FNkmr8zAa77BYc9xNw==}
+
   quansync@0.2.11:
     resolution: {integrity: sha512-AifT7QEbW9Nri4tAwR5M/uzpBuqfZf+zwaEM/QkzEjj7NBuFD2rBuy0K3dE+8wltbezDV7JMA0WfnCPYRSYbXA==}
 
@@ -2719,6 +2729,10 @@ packages:
 
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
+
+  slidev-addon-qrcode@1.0.2:
+    resolution: {integrity: sha512-vYjfu8KHnOaiijWaQFc5LaaglDIISGZ5Bx4m0RbmDlPiIZDseEoJX6O3Lxh4LaaCdo5JpMK/3o6CcNZtcTqpLg==}
+    engines: {slidev: '>=0.32.1'}
 
   slidev-theme-the-unnamed@0.0.22:
     resolution: {integrity: sha512-cJFD+M9SC99/VcQKmx5siXZTzx/y+zAGPzD+BCiHrKmuH4mPtb2ykRnksgaukukK+a46BF4Mofp0oZlDcSE3hg==}
@@ -6356,6 +6370,12 @@ snapshots:
 
   punycode.js@2.3.1: {}
 
+  qr-code-styling@1.9.2:
+    dependencies:
+      qrcode-generator: 1.5.2
+
+  qrcode-generator@1.5.2: {}
+
   quansync@0.2.11: {}
 
   quansync@1.0.0: {}
@@ -6528,6 +6548,10 @@ snapshots:
       totalist: 3.0.1
 
   sisteransi@1.0.5: {}
+
+  slidev-addon-qrcode@1.0.2:
+    dependencies:
+      qr-code-styling: 1.9.2
 
   slidev-theme-the-unnamed@0.0.22(@nuxt/kit@3.21.1)(@vue/compiler-sfc@3.5.28)(postcss@8.5.6)(rollup@4.59.0)(typescript@5.9.3)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.2)):
     dependencies:

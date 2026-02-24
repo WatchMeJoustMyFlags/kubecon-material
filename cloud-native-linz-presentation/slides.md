@@ -7,6 +7,8 @@ transition: slide-left
 mdc: true
 duration: 25min
 demo_host: himbeere.local
+addons:
+  - slidev-addon-qrcode
 
 layout: cover
 class: text-center
@@ -749,11 +751,16 @@ J. S. Joust · JoustMania · OTel / CNCF community
 
 </div>
 
-<div class="mt-8">
-  <img src="./images/joustmania-qr.svg" alt="QR Code" width="200" class="inline-block" />
-</div>
+<QRCode
+  :width="216"
+  :height="216"
+  type="svg"
+  data="https://github.com/WatchMeJoustMyFlags/JoustMania"
+  :margin="8"
+  :dotsOptions="{ type: 'square', color: '#fff' }"
+/>
 
-<div class="text-sm mt-4">
+<div class="text-sm">
   <a href="https://github.com/WatchMeJoustMyFlags/JoustMania" class="text-blue-400">github.com/WatchMeJoustMyFlags/JoustMania</a>
 </div>
 
@@ -807,29 +814,19 @@ Questions? 🎮
 
 
 ---
-layout: section
+layout: center
+class: text-center
 ---
 
-# What questions do you have?
+# We need your feedback 🙏
 
-<div class="mt-8">
+<QRCode
+  :width="260"
+  :height="260"
+  type="svg"
+  data="https://docs.google.com/forms/d/e/1FAIpQLScdCJDSw0HKvfNuuAiFHHoG7f_dYTks5fMqm7S6NwvydLsqXg/viewform?usp=dialog"
+  :margin="8"
+  :dotsOptions="{ type: 'square', color: '#fff' }"
+/>
 
-###### Quick recap of the journey
-- 10s (Prometheus pull) → 500ms (push to Prom) → <100ms (push to VictoriaMetrics)
-- From web app defaults to real-time hardware observability
-- Everything is open source: [github.com/WatchMeJoustMyFlags/JoustMania](https://github.com/WatchMeJoustMyFlags/JoustMania) 
-
-</div>
-<div class="mt-8">
-
-###### Topics we covered
-- Microservices refactoring for OpenTelemetry
-- Raspberry Pi 5 handling full observability stack
-- Volume management with batching strategies
-- Push metrics vs pull metrics
-- VictoriaMetrics for high-frequency data
-- Distributed tracing for hardware debugging
-
-</div>
-
-[//]: # (<img src="./images/title-slide-thumb.png" alt="Title Slide" width="480" style="position: absolute; bottom: 20px; right: 20px; border: 2px solid #44ffd2; border-radius: 4px;" />)
+<div class="text-sm opacity-60">Scan to leave feedback — helps us improve for KubeCon</div>
