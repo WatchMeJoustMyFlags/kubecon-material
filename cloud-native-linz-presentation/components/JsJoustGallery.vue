@@ -21,21 +21,20 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import img0 from '../images/jsjoust-images/jsjoust-brent01.jpg'
+import img1 from '../images/jsjoust-images/jsjoust-sara1.jpg'
+import img2 from '../images/jsjoust-images/jsjoust-brent02.jpg'
+import img3 from '../images/jsjoust-images/jsjoust-photo1.jpg'
+import img4 from '../images/jsjoust-images/jsjoust-brent03.jpg'
+import img5 from '../images/jsjoust-images/jsjoust-sara2.jpg'
+import img6 from '../images/jsjoust-images/jsjoust-brent04.jpg'
+import img7 from '../images/jsjoust-images/jsjoust-photo2.png'
+import img8 from '../images/jsjoust-images/jsjoust-brent05.jpg'
+import img9 from '../images/jsjoust-images/jsjoust-brent06.jpg'
+import img10 from '../images/jsjoust-images/jsjoust-brent09.jpg'
+import img11 from '../images/jsjoust-images/jsjoust-brent10.jpg'
 
-const images = [
-  '/images/jsjoust-images/jsjoust-brent01.jpg',
-  '/images/jsjoust-images/jsjoust-sara1.jpg',
-  '/images/jsjoust-images/jsjoust-brent02.jpg',
-  '/images/jsjoust-images/jsjoust-photo1.jpg',
-  '/images/jsjoust-images/jsjoust-brent03.jpg',
-  '/images/jsjoust-images/jsjoust-sara2.jpg',
-  '/images/jsjoust-images/jsjoust-brent04.jpg',
-  '/images/jsjoust-images/jsjoust-photo2.png',
-  '/images/jsjoust-images/jsjoust-brent05.jpg',
-  '/images/jsjoust-images/jsjoust-brent06.jpg',
-  '/images/jsjoust-images/jsjoust-brent09.jpg',
-  '/images/jsjoust-images/jsjoust-brent10.jpg',
-]
+const images = [img0, img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11]
 
 const current = ref(0)
 let timer = null

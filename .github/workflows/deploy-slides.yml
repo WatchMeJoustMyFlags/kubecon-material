@@ -36,15 +36,17 @@ jobs:
         run: npm ci
 
       - name: Build slides
-        run: npm run build -- --base /kubecon-material/
+        run: npm run build -- --base /kubecon-material/cloud-native-linz-presentation/
 
-      - name: Add 404 fallback for SPA routing
-        run: cp dist/index.html dist/404.html
+      - name: Stage into subfolder
+        run: |
+          mkdir -p ../gh-pages/cloud-native-linz-presentation
+          cp -r dist/. ../gh-pages/cloud-native-linz-presentation/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: cloud-native-linz-presentation/dist
+          path: gh-pages
 
   deploy:
     needs: build

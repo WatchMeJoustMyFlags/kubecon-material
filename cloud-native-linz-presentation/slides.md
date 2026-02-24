@@ -17,14 +17,14 @@ class: text-center
 
 <div class="grid grid-cols-2 px-4 mx-auto mt-12 text-left">
 <div class="flex items-center gap-2">
-  <img src="/images/simon.jpg" alt="Simon Schrottner" class="h-20 w-20 rounded-full flex-shrink-0" />
+  <img src="./images/simon.jpg" alt="Simon Schrottner" class="h-20 w-20 rounded-full flex-shrink-0" />
   <div class="leading-tight">
     <p class="!text-xl font-bold !mt-0 !mb-0">Simon Schrottner</p>
     <p class="!text-lg !mt-0 !mb-0">Dynatrace</p>
   </div>
 </div>
 <div class="flex items-center gap-2">
-  <img src="/images/manuel.jpg" alt="Manuel Timelthaler" class="h-20 w-20 rounded-full flex-shrink-0" />
+  <img src="./images/manuel.jpg" alt="Manuel Timelthaler" class="h-20 w-20 rounded-full flex-shrink-0" />
   <div class="leading-tight">
     <p class="!text-xl font-bold !mt-0 !mb-0">Manuel Timelthaler</p>
     <p class="!text-lg !mt-0 !mb-0">Tractive</p>
@@ -217,7 +217,7 @@ layout: default
 - 8GB LPDDR4X RAM
 - ~$80 USD (before global memory shortage)
 
-<img class="mt-8 mb-12" src="/images/grafana-host-metrics-small.png"/>
+<img class="mt-8 mb-12" src="./images/grafana-host-metrics-small.png"/>
 
 **The Pi runs both the game AND the full observability stack.**<br>
 We didn't think this was possible initially, though you could also send telemetry to external services.
@@ -522,9 +522,9 @@ layout: default
 
 <div>
   <div class="h-64">
-    <img src="/images/otel-demo-1.png" class="rounded-lg shadow-lg w-64" style="position: relative; top: -1rem; left: 0rem" />
-    <img src="/images/otel-demo-2.png" class="rounded-lg shadow-lg w-64" style="position: relative; top: -3rem; left: 4rem" />
-    <img src="/images/otel-demo-3.png" class="rounded-lg shadow-lg w-64" style="position: relative; top: -5rem; left: 8rem" />
+    <img src="./images/otel-demo-1.png" class="rounded-lg shadow-lg w-64" style="position: relative; top: -1rem; left: 0rem" />
+    <img src="./images/otel-demo-2.png" class="rounded-lg shadow-lg w-64" style="position: relative; top: -3rem; left: 4rem" />
+    <img src="./images/otel-demo-3.png" class="rounded-lg shadow-lg w-64" style="position: relative; top: -5rem; left: 8rem" />
   </div>
 </div>
 
@@ -548,7 +548,7 @@ J. S. Joust · JoustMania · OTel / CNCF community
 </div>
 
 <div class="mt-8">
-  <img src="/images/joustmania-qr.svg" alt="QR Code" width="200" class="inline-block" />
+  <img src="./images/joustmania-qr.svg" alt="QR Code" width="200" class="inline-block" />
 </div>
 
 <div class="text-sm mt-4">
@@ -630,4 +630,4 @@ layout: section
 
 </div>
 
-[//]: # (<img src="/images/title-slide-thumb.png" alt="Title Slide" width="480" style="position: absolute; bottom: 20px; right: 20px; border: 2px solid #44ffd2; border-radius: 4px;" />)
+[//]: # (<img src="./images/title-slide-thumb.png" alt="Title Slide" width="480" style="position: absolute; bottom: 20px; right: 20px; border: 2px solid #44ffd2; border-radius: 4px;" />)
