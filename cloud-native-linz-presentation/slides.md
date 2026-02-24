@@ -54,6 +54,23 @@ _No screens, just glowing controllers and chaos._
   Photos by Brent Knepper, Sara Bobo, and Die Gute Fabrik; showing original J.S. Joust game
 </div>
 
+
+<!-- 
+## Game Facts:
+- OpenSource Game
+- 18+ Bluetooth controllers
+- Real-time gameplay
+- fun icebreaker
+
+## Story
+1. Conference Story
+2. Game about to start -> LED Problems -> What now?
+3. === OFF-ON ===
+4. Pi, USB, Bluetooth Adapter, Bluetooth Signal, Controller?
+5. === Observablity Company ===
+6. === IoT Company ===
+
+-->
 ---
 layout: center
 ---
@@ -80,6 +97,21 @@ h1:nth-of-type(3)::before {
   background: var(--slidev-theme-accents-blue) !important;
 }
 </style>
+
+<!-- 
+**click**
+## How do we know what's going on?
+- Pi
+- USB
+- Bluetooth Adapter 
+- Bluetooth Signal,
+- Controller?
+## === Observablity Company ===
+**click**
+## === OpenFeature ===
+**click**
+
+-->
 
 ---
 layout: default
@@ -121,7 +153,7 @@ layout: default
 - IPC via queues/shared memory
 - 4 Python processes
 
-**Problem:** IPC (pipes/queues) doesn't work with OpenTelemetry auto-instrumentation
+**Problem:** IPC (pipes/queues) needs manual instrumentation
 
 </div>
 <div class="-mt-8">
@@ -149,33 +181,107 @@ graph TD
 </div>
 </div>
 
+
+<!-- 
+
+## Architecture
+- OpenSource Python Game (long running)
+- Multiple Processes via shared memory and IPC
+
+## Problem
+
+- Manually passing context through IPC is a nightmare
+- it works but tideous
+
+## === So how do we solve this? ===
+
+### Overengineering
+-->
+
 ---
 layout: default
 ---
 
 # Learning 1: Microservices Unlocked the Stack
 
-**gRPC microservices enabled the observability stack**<br>
-W3C trace context flows through calls, enabling distributed tracing
+<v-click>
+  <div class="mt-4 text-center text-lg">
+  <strong>Auto-instrumentation came for free with gRPC</strong><br>
+  </div>
+</v-click>
+
 
 ```mermaid {scale:0.75}
 %%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
 graph LR
-    Dashboard[Dashboard<br/>:8080]
-    Flagd[flagd<br/>:8013]
-    Menu[Menu<br/>:50054]
-    GC[Game Coordinator<br/>:50053]
-    CM[Controller Manager<br/>:50052]
-    Audio[Audio<br/>:50056]
-    Controllers[Controllers]
-    OTel[OTel Collector<br/>:4317]
-    Observability[Grafana<br/>Jaeger<br/>Prometheus<br/>Loki]
 
-    Dashboard -->|gRPC| Menu
+    subgraph RaspberryPi["Raspberry Pi"]
+        direction LR
+        Menu[Menu<br/>:50054]
+        GC[Game Coordinator<br/>:50053]
+        CM[Controller Manager<br/>:50052]
+        Audio[Audio<br/>:50056]
+        Controllers[Controllers]
+    end
+
     Menu -->|gRPC| GC
-    GC -->|gRPC| CM
+    Menu <-->|gRPC Stream| CM
+    GC <-->|gRPC Stream| CM
     GC -->|gRPC| Audio
+    Menu -->|gRPC| Audio
+    CM -->|Bluetooth| Controllers
+
+    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#000000
+    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#000000
+    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#000000
+    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#000000
+    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#000000
+    style RaspberryPi fill:transparent,stroke:#aaaaaa,stroke-width:2px,color:#aaaaaa
+    linkStyle default stroke:#ffffff,fill:none
+```
+
+<v-click>
+  <div class="mt-7 text-center">
+  <span class="text-sm text-gray-400">W3C trace context propagates automatically, enabling distributed tracing out of the box</span>
+  </div>
+</v-click>
+
+---
+layout: default
+---
+
+# Learning 1: Microservices Unlocked the Stack
+
+```mermaid {scale:0.75}
+%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
+graph LR
+
+    subgraph RaspberryPi["Raspberry Pi"]
+        direction LR
+        Menu[Menu<br/>:50054]
+        GC[Game Coordinator<br/>:50053]
+        CM[Controller Manager<br/>:50052]
+        Audio[Audio<br/>:50056]
+    end
+
+    subgraph Infrastructure["Infrastructure"]
+        direction LR
+        Flagd[flagd<br/>:8015]
+        OTel[OTel Collector<br/>:4317]
+        Observability[Grafana<br/>Jaeger<br/>Prometheus<br/>Loki<br/>other backends]
+    end
+    
+    Controllers[Controllers]
+
+    Menu -->|gRPC| GC
+    Menu <-->|gRPC Stream| CM
+    GC <-->|gRPC Stream| CM
+    GC -->|gRPC| Audio
+    Menu -->|gRPC| Audio
     Flagd -.->|gRPC| GC
+    Flagd -.->|gRPC| Audio
+    Flagd -.->|gRPC| Menu
+    Flagd -.->|gRPC| CM
     CM -->|Bluetooth| Controllers
 
     Menu -.->|OTLP| OTel
@@ -184,7 +290,6 @@ graph LR
     Audio -.->|OTLP| OTel
     OTel -->|metrics<br/>traces<br/>logs| Observability
 
-    style Dashboard fill:#fe4a49,stroke:#fe4a49,stroke-width:2px,color:#0e131f
     style Flagd fill:#0e131f,stroke:#ffe45e,stroke-width:2px,color:#ffe45e
     style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#000000
     style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#000000
@@ -193,8 +298,10 @@ graph LR
     style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#000000
     style OTel fill:#f39c12,stroke:#f39c12,stroke-width:2px,color:#0e131f
     style Observability fill:#95a5a6,stroke:#95a5a6,stroke-width:2px,color:#0e131f
+    style RaspberryPi fill:transparent,stroke:#aaaaaa,stroke-width:2px,color:#aaaaaa
+    style Infrastructure fill:transparent,stroke:#aaaaaa,stroke-width:2px,color:#aaaaaa
+    linkStyle default stroke:#ffffff,fill:none
 ```
-
 
 ---
 layout: full
@@ -219,9 +326,64 @@ layout: default
 
 <img class="mt-8 mb-12" src="./images/grafana-host-metrics-small.png"/>
 
-**The Pi runs both the game AND the full observability stack.**<br>
-We didn't think this was possible initially, though you could also send telemetry to external services.
+---
+layout: default
+---
 
+# Learning 2: The Raspberry Pi Can Handle It
+
+**The Pi runs both the game AND the full observability stack.**<br>
+
+```mermaid {scale:0.75}
+%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
+graph LR
+
+    subgraph RaspberryPi["Raspberry Pi"]
+        direction LR
+        Menu[Menu<br/>:50054]
+        GC[Game Coordinator<br/>:50053]
+        CM[Controller Manager<br/>:50052]
+        Audio[Audio<br/>:50056]
+    
+        Flagd[flagd<br/>:8015]
+        OTel[OTel Collector<br/>:4317]
+        Observability[Grafana<br/>Jaeger<br/>Prometheus<br/>Loki<br/>other backends]
+    end
+    
+    Controllers[Controllers]
+        
+    Menu -->|gRPC| GC
+    Menu <-->|gRPC Stream| CM
+    GC <-->|gRPC Stream| CM
+    GC -->|gRPC| Audio
+    Menu -->|gRPC| Audio
+    Flagd -.->|gRPC| GC
+    Flagd -.->|gRPC| Audio
+    Flagd -.->|gRPC| Menu
+    Flagd -.->|gRPC| CM
+    CM -->|Bluetooth| Controllers
+
+    Menu -.->|OTLP| OTel
+    GC -.->|OTLP| OTel
+    CM -.->|OTLP| OTel
+    Audio -.->|OTLP| OTel
+    OTel -->|metrics<br/>traces<br/>logs| Observability
+
+    style Flagd fill:#0e131f,stroke:#ffe45e,stroke-width:2px,color:#ffe45e
+    style Menu fill:#f141a8,stroke:#f141a8,stroke-width:2px,color:#000000
+    style GC fill:#5eadf2,stroke:#5eadf2,stroke-width:2px,color:#000000
+    style CM fill:#44ffd2,stroke:#44ffd2,stroke-width:2px,color:#000000
+    style Audio fill:#ffe45e,stroke:#ffe45e,stroke-width:2px,color:#000000
+    style Controllers fill:#15c2cb,stroke:#15c2cb,stroke-width:2px,color:#000000
+    style OTel fill:#f39c12,stroke:#f39c12,stroke-width:2px,color:#0e131f
+    style Observability fill:#95a5a6,stroke:#95a5a6,stroke-width:2px,color:#0e131f
+    style RaspberryPi fill:transparent,stroke:#aaaaaa,stroke-width:2px,color:#aaaaaa
+    linkStyle default stroke:#ffffff,fill:none
+```
+
+<!--
+
+--
 ---
 layout: default
 ---
