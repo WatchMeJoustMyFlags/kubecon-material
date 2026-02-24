@@ -381,24 +381,40 @@ graph LR
     linkStyle default stroke:#ffffff,fill:none
 ```
 
+<!--
+false assumption that the Pi can't handle everything, but that was not the only false assumption of the project
+-->
+
 ---
 layout: default
 ---
 
 # Learning 3: Cardinality Low, Volume High
 
+<v-click>
+
 ## The Challenge
-- **Cardinality:** Only 20-30 unique metric names — manageable
+- **Cardinality:** Hundreds of time series, not millions — manageable
 - **Volume:** 18 controllers @ 60Hz ≈ 1,080 messages/second
+
+</v-click>
+
+<v-click>
 
 ## Solution
 
-- **Batching:** group messages before sending to the collector, and again before forwarding to backends
-- **Aggregation:** push summaries, not raw telemetry
+- **Two levels of batching**
+    - SDK buffers and exports on a 100ms schedule (not every event)
+    - Collector batches again before forwarding to backends
+- **Result:** backends see smooth, regular pushes — not a firehose
 
-**Result:** subsecond observability without overwhelming backends — metric name cardinality
-was never the issue. Label cardinality is a different story.
+</v-click>
 
+<!--
+* the reality is more like 140+ metric definitions across all services,
+* but if you count what's actually visible on dashboards (grouped by metric name, not label combinations), 20-30 is plausible.
+* bounded label sets: 18 controller serials, a handful of game modes, a few button types.
+-->
 
 ---
 layout: default
