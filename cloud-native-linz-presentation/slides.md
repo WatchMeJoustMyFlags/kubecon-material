@@ -788,7 +788,8 @@ class: text-center
 
 <div class="text-sm mt-2">
 
-[@aepfli](https://github.com/aepfli) · [github.com/aepfli](https://github.com/aepfli)
+[linkedin.com/in/aepfli/](https://www.linkedin.com/in/aepfli)<br>
+[@aepfli](https://bsky.app/profile/aepfli.bsky.social) · [github.com/aepfli](https://github.com/aepfli)
 
 </div>
 
@@ -799,8 +800,9 @@ class: text-center
 
 <div class="opacity-80">Tractive</div>
 
-<div class="text-sm mt-2">
+<div class="text-sm mt-2 whitespace-nowrap">
 
+[linkedin.com/in/manuel-timelthaler](https://www.linkedin.com/in/manuel-timelthaler)<br>
 [github.com/Lorti](https://github.com/Lorti)
 
 </div>
@@ -808,7 +810,13 @@ class: text-center
 </div>
 </div>
 
-<div class="text-4xl mt-16 font-bold">
+<p class="text-base!">
+
+or find us on [CNCF’s Slack Channel](https://slack.cncf.io/)
+
+</p>
+
+<div class="text-4xl mt-12 font-bold">
 Questions? 🎮
 </div>
 
