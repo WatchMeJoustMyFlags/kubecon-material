@@ -810,11 +810,11 @@ class: text-center
 </div>
 </div>
 
-<p class="text-base!">
+<div class="text-base!">
 
 or find us on [CNCF’s Slack Channel](https://slack.cncf.io/)
 
-</p>
+</div>
 
 <div class="text-4xl mt-12 font-bold">
 Questions? 🎮
