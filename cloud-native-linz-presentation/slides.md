@@ -788,7 +788,7 @@ class: text-center
 
 <div class="text-sm mt-2">
 
-[linkedin.com/in/aepfli/](https://www.linkedin.com/in/aepfli)<br>
+[linkedin.com/in/aepfli](https://www.linkedin.com/in/aepfli)<br>
 [@aepfli](https://bsky.app/profile/aepfli.bsky.social) · [github.com/aepfli](https://github.com/aepfli)
 
 </div>
