@@ -505,11 +505,19 @@ layout: default
 ---
 layout: full
 class: p-0
+hide: true
 ---
 <iframe
   :src="`http://${$slidev.configs.demo_host}/grafana/d/presentation-pipeline/presentation3a-pipeline-comparison?orgId=1&from=1772568636686&to=1772568702462&viewPanel=1&kiosk`"
   class="w-full h-full border-none"
 />
+
+---
+layout: image
+image: ./images/2026-03-13_11-13-49_pull_metrics.png
+backgroundSize: contain
+hide: false
+---
 
 ---
 layout: default
@@ -569,6 +577,7 @@ graph LR
 ---
 layout: full
 class: p-0
+hide: true
 ---
 <iframe
   :src="`http://${$slidev.configs.demo_host}/grafana/d/presentation-pipeline/presentation3a-pipeline-comparison?orgId=1&from=1772309362553&to=1772309419883&viewPanel=2&kiosk`"
@@ -578,11 +587,26 @@ class: p-0
 ---
 layout: full
 class: p-0
+hide: true
 ---
 <iframe
   :src="`http://${$slidev.configs.demo_host}/grafana/d/presentation-pipeline/presentation3a-pipeline-comparison?orgId=1&from=1772309362553&to=1772309419883&viewPanel=3&kiosk`"
   class="w-full h-full border-none"
 />
+
+---
+layout: image
+image: ./images/2026-03-13_11-14-03_push_metrics.png
+backgroundSize: contain
+hide: false
+---
+
+---
+layout: image
+image: ./images/2026-03-13_11-14-45_metris_comparison.png
+backgroundSize: contain
+hide: false
+---
 
 ---
 layout: default
