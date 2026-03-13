@@ -1,0 +1,24 @@
+{
+  "name": "kubecon-cloudnativecon-europe-presentation",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export"
+  },
+  "dependencies": {
+    "@slidev/cli": "^52.11.3",
+    "@slidev/theme-default": "latest",
+    "@slidev/theme-seriph": "latest",
+    "slidev-addon-qrcode": "^1.0.2",
+    "vue": "^3.5.26"
+  },
+  "overrides": {
+    "esbuild": "^0.27.2"
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.58.2",
+    "slidev-theme-the-unnamed": "^0.0.22"
+  }
+}

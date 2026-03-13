@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'cloud-native-linz-presentation/**'
+      - 'kubecon-cloudnativecon-europe-presentation/**'
   workflow_dispatch:
 
 permissions:
@@ -20,28 +21,28 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cloud-native-linz-presentation
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-          cache: npm
-          cache-dependency-path: cloud-native-linz-presentation/package-lock.json
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build slides
-        run: npm run build -- --base /kubecon-material/cloud-native-linz-presentation/
-
-      - name: Stage into subfolder
+      - name: Build cloud-native-linz-presentation
+        working-directory: cloud-native-linz-presentation
         run: |
+          npm ci
+          npm run build -- --base /kubecon-material/cloud-native-linz-presentation/
           mkdir -p ../gh-pages/cloud-native-linz-presentation
           cp -r dist/. ../gh-pages/cloud-native-linz-presentation/
+
+      - name: Build kubecon-cloudnativecon-europe-presentation
+        working-directory: kubecon-cloudnativecon-europe-presentation
+        run: |
+          npm ci
+          npm run build -- --base /kubecon-material/kubecon-cloudnativecon-europe-presentation/
+          mkdir -p ../gh-pages/kubecon-cloudnativecon-europe-presentation
+          cp -r dist/. ../gh-pages/kubecon-cloudnativecon-europe-presentation/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
