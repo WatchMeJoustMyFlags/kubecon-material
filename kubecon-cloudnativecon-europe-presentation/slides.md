@@ -303,12 +303,20 @@ graph LR
 ---
 layout: full
 class: p-0
+hide: true
 ---
 <JaegerFirstTrace
   :host="$slidev.configs.demo_host"
   service="game-coordinator-service"
   class="w-full h-full"
 />
+
+---
+layout: full
+class: p-0
+hide: false
+---
+<img class="-mt-4" src="./images/2026-03-13_11-16-28_jaeger.png"></img>
 
 ---
 layout: default
