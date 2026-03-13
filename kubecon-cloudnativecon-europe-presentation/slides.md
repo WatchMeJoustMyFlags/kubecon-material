@@ -35,7 +35,7 @@ class: text-center
 </div>
 
 <div class="abs-br m-6 flex gap-2">
-  Cloud Native Linz, February 2026
+  KubeCon + CloudNativeCon Europe 2026
 </div>
 
 ---
@@ -819,23 +819,3 @@ or find us on [CNCF’s Slack Channel](https://slack.cncf.io/)
 <div class="text-4xl mt-12 font-bold">
 Questions? 🎮
 </div>
-
-
-
----
-layout: center
-class: text-center
----
-
-# We need your feedback 🙏
-
-<QRCode
-  :width="260"
-  :height="260"
-  type="svg"
-  data="https://docs.google.com/forms/d/e/1FAIpQLScdCJDSw0HKvfNuuAiFHHoG7f_dYTks5fMqm7S6NwvydLsqXg/viewform?usp=dialog"
-  :margin="8"
-  :dotsOptions="{ type: 'square', color: '#fff' }"
-/>
-
-<div class="text-sm opacity-60">Scan to leave feedback — helps us improve for KubeCon</div>
