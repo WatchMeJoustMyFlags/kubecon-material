@@ -680,6 +680,7 @@ layout: default
 ---
 layout: full
 class: p-0
+hide: true
 ---
 <iframe
   :src="`http://${$slidev.configs.demo_host}/grafana/d/presentation-chaos/presentation3a-chaos-demo?orgId=1&from=now-15m&to=now&refresh=5s&kiosk`"
@@ -689,12 +690,22 @@ class: p-0
 ---
 layout: full
 class: p-0
+hide: true
 ---
 <JaegerFirstTrace
   :host="$slidev.configs.demo_host"
   service="game-coordinator-service"
   class="w-full h-full"
 />
+
+---
+layout: full
+class: p-0
+hide: false
+---
+<video controls>
+  <source src="./images/2026-03-13_10-45-41_poll_drops.mp4" type="video/mp4">
+</video>
 
 ---
 layout: default
