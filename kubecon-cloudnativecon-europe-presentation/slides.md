@@ -678,7 +678,7 @@ layout: default
 layout: section
 ---
 
-# Live Demo: _Real-Time_ Observability with CNCF Tools
+# Demo: _Real-Time_ Observability with CNCF Tools
 
 Watch metrics respond in real-time as we change the game
 
