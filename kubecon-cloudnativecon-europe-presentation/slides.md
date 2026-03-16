@@ -127,24 +127,6 @@ h1:nth-of-type(3)::before {
 -->
 
 ---
-layout: default
----
-
-# Agenda
-
-<div class="text-xl mt-16 space-y-6">
-
-1. **The Challenge** — Why observability for a party game?
-
-2. **The Journey** — 7 key learnings from instrumentation to subsecond metrics
-
-3. **Live Demo** — Watch metrics respond in real-time as we change the game
-
-4. **The Path Forward** — What's missing and how you can help
-
-</div>
-
----
 layout: section
 ---
 
