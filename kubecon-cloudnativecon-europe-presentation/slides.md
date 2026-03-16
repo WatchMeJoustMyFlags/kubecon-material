@@ -711,68 +711,35 @@ hide: false
 layout: default
 ---
 
-# 4 Key Takeaways
+# The tools exist. The patterns exist. <br> What's missing is _you_.
 
-<div class="grid grid-cols-2 gap-6 max-w-5xl mx-auto">
+<div class="grid grid-cols-2 gap-10">
 
-<div class="h-42 pl-14 pr-6 py-6 bg-gray-800/50 rounded-lg border border-gray-700 relative">
-  <div class="absolute top-3 left-3 text-5xl font-bold text-teal-400/20">1</div>
-  <div class="text-xl leading-relaxed">
-    <strong>These tools work for real-time.</strong>
-    <div class="mt-2 text-lg opacity-80">Games, IoT, embedded systems—anything real-time. Not just web apps.</div>
+<div class="flex flex-col gap-4">
+  <div class="px-5 py-4 bg-gray-800/50 rounded-lg border border-gray-700">
+    <div class="text-lg leading-relaxed">These tools work for real-time.</div>
+  </div>
+  <div class="px-5 py-4 bg-gray-800/50 rounded-lg border border-gray-700">
+    <div class="text-lg leading-relaxed">But they're optimized for web apps.</div>
+  </div>
+  <div class="px-5 py-4 bg-gray-800/50 rounded-lg border border-gray-700">
+    <div class="text-lg leading-relaxed">With tuning, you can get subsecond observability on an $80 computer.</div>
+  </div>
+  <div class="px-5 py-4 bg-gray-800/50 rounded-lg border border-gray-700">
+    <div class="text-lg leading-relaxed">What's missing is the documented path.</div>
   </div>
 </div>
 
-<div class="h-42 pl-14 pr-6 py-6 bg-gray-800/50 rounded-lg border border-gray-700 relative">
-  <div class="absolute top-3 left-3 text-5xl font-bold text-teal-400/20">2</div>
-  <div class="text-xl leading-relaxed">
-    <strong>But they're optimized for web apps.</strong>
-    <div class="mt-2 text-lg opacity-80">Default configs assume 15-second scrapes, not 60Hz game loops.</div>
+<div class="flex flex-col justify-center gap-6">
+  <div class="text-lg leading-relaxed">
+    There are great observability examples for microservices. Where's the robotics? The game engines? The industrial IoT?
   </div>
-</div>
-
-<div class="h-42 pl-14 pr-6 py-6 bg-gray-800/50 rounded-lg border border-gray-700 relative">
-  <div class="absolute top-3 left-3 text-5xl font-bold text-teal-400/20">3</div>
-  <div class="text-xl leading-relaxed">
-    <strong>With tuning, you can get subsecond observability on an $80 computer.</strong>
-    <div class="mt-2 text-lg opacity-80">Intervals, push vs pull, storage backends.</div>
+  <div class="text-lg leading-relaxed">
+    <strong class="text-amber-300">Try these tools on real-time systems.</strong> Document what works. Contribute examples.
   </div>
-</div>
-
-<div class="h-42 pl-14 pr-6 py-6 bg-gray-800/50 rounded-lg border border-gray-700 relative">
-  <div class="absolute top-3 left-3 text-5xl font-bold text-teal-400/20">4</div>
-  <div class="text-xl leading-relaxed">
-    <strong>The tools exist. The patterns exist.</strong>
-    <div class="mt-2 text-lg opacity-80">What's missing is the documented path.</div>
-  </div>
-</div>
-
-</div>
-
-
----
-layout: default
----
-
-# Where's the Real-Time Systems Demo?
-
-<div class="grid grid-cols-2 gap-12 mt-8">
-
-<div class="flex flex-col justify-center">
-  <div class="text-xl leading-relaxed mb-8">
-    Great for microservices—but where's the robotics? The game engines? The industrial IoT?
-  </div>
-
-  <div class="text-xl leading-relaxed">
-    <strong class="text-amber-300">Try these tools on real-time systems.</strong> Document what works. Share tuning tricks. Contribute examples.
-  </div>
-</div>
-
-<div>
-  <div class="h-64">
-    <img src="./images/otel-demo-1.png" class="rounded-lg shadow-lg w-64" style="position: relative; top: -1rem; left: 0rem" />
-    <img src="./images/otel-demo-2.png" class="rounded-lg shadow-lg w-64" style="position: relative; top: -3rem; left: 4rem" />
-    <img src="./images/otel-demo-3.png" class="rounded-lg shadow-lg w-64" style="position: relative; top: -5rem; left: 8rem" />
+  <div class="pl-12">
+    <img src="./images/otel-demo-1.png" class="rounded-lg shadow-lg w-52" style="position: relative; top: 0rem; left: 0rem" />
+    <img src="./images/otel-demo-2.png" class="rounded-lg shadow-lg w-52" style="position: relative; top: -3.75rem; left: 5.5rem" />
   </div>
 </div>
 
