@@ -132,7 +132,7 @@ layout: section
 
 # The Journey: 6 Learnings
 
-What we discovered bringing CNCF tools to a real-time game
+6 key learnings from instrumentation to subsecond metrics
 
 ---
 layout: default
@@ -679,6 +679,8 @@ layout: section
 ---
 
 # Live Demo: Real-time observability in action
+
+Watch metrics respond in real-time as we change the game
 
 ---
 layout: default
