@@ -195,6 +195,7 @@ graph TD
 
 ---
 layout: default
+transition: fade
 ---
 
 # Learning 1: Microservices Unlocked the Stack
