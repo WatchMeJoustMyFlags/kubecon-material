@@ -678,7 +678,7 @@ layout: default
 layout: section
 ---
 
-# Live Demo: Real-time observability in action
+# Live Demo: _Real-Time_ Observability with CNCF Tools
 
 Watch metrics respond in real-time as we change the game
 
@@ -790,12 +790,6 @@ J. S. Joust · JoustMania · OTel / CNCF community
   <a href="https://github.com/WatchMeJoustMyFlags/JoustMania" class="text-blue-400">github.com/WatchMeJoustMyFlags/JoustMania</a>
 </div>
 
-
----
-layout: section
----
-
-# _Real-Time_ Observability with CNCF Tools
 
 ---
 layout: cover
