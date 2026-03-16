@@ -423,7 +423,10 @@ layout: default
 
 # Learning 4: Pull Scraping Is Too Slow
 
-<div class="mt-10 mb-18">
+- Controller Manager reads each accelerometer via Bluetooth every **33ms** (30Hz) — miss it → **poll drop**
+- Prometheus scrape interval: tuned to **10s**
+
+<div class="mt-6 mb-12">
 
 <div class="timeline-container">
 
@@ -459,7 +462,7 @@ layout: default
       </div>
       <div class="absolute top-10 left-6 font-semibold flex items-center gap-2" style="color: var(--slidev-theme-accents-yellow)">
         <span class="text-2xl">↑</span>
-        <span>Frame drop? Won't see it for 10 seconds!</span>
+        <span>Poll drop? Won't show up for 10 seconds!</span>
       </div>
     </div>
   </div>
@@ -487,9 +490,8 @@ layout: default
 
 </div>
 
-- **Pull interval:** 10 seconds (we tuned from 60s default)
-- **Game loop:** 60Hz (16ms per frame)
-- **Result:** 600 frames between each data point
+- **Game loop:** 60Hz — 600 ticks per 10s scrape interval
+- **Result:** a poll drop is invisible until the next scrape
 
 <!--
 - Even if you scraped every second, you'd still miss 60 frames — the architecture is wrong, not just the config
