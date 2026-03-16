@@ -666,6 +666,28 @@ layout: default
 </div>
 
 ---
+layout: default
+---
+
+# The 7 Learnings
+
+<div class="mt-8 space-y-3 text-lg">
+
+<v-clicks>
+
+1. **Microservices unlocked auto-instrumentation** — gRPC gave us distributed tracing for free
+2. **The Raspberry Pi can run the full stack** — game + entire observability suite on $80 hardware
+3. **Cardinality is manageable, volume is the challenge** — two levels of batching tame the firehose
+4. **Pull scraping is too slow** — 600 game frames between each Prometheus data point
+5. **Push metrics: 500ms end-to-end** — one config change, 30× faster than pull
+6. **Labels are not free** — adding `game_id` turned 1,216 series into 18,000 and 4× read latency
+7. **These tools actually work** — for real-time, not just web apps
+
+</v-clicks>
+
+</div>
+
+---
 layout: section
 ---
 
