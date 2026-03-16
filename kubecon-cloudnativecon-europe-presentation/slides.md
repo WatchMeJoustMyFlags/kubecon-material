@@ -746,10 +746,6 @@ layout: default
   <div class="text-lg leading-relaxed">
     <strong class="text-amber-300">Try these tools on real-time systems.</strong> Document what works. Contribute examples.
   </div>
-  <div class="pl-12">
-    <img src="./images/otel-demo-1.png" class="rounded-lg shadow-lg w-52" style="position: relative; top: 0rem; left: 0rem" />
-    <img src="./images/otel-demo-2.png" class="rounded-lg shadow-lg w-52" style="position: relative; top: -3.75rem; left: 5.5rem" />
-  </div>
 </div>
 
 </div>
