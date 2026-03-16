@@ -85,6 +85,17 @@ layout: center
 
 # What if we added feature flags too?
 
+<div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700 text-left mt-4">
+
+That's the experiment<br>
+**CNCF tools on a real-time party game**
+
+- What breaks at real-time speeds?
+- What actually works out of the box?
+- What needs tuning, and how much?
+
+</div>
+
 </v-clicks>
 
 <style>
@@ -151,7 +162,7 @@ layout: default
 <div>
 
 - Process-based (multiprocessing)
-- 30 Hz game loop (33ms frames)
+- 60 Hz game loop (16ms frames)
 - IPC via queues/shared memory
 - 4 Python processes
 
@@ -423,7 +434,7 @@ layout: default
 
 # Learning 4: Pull Scraping Is Too Slow
 
-- Controller Manager reads each accelerometer via Bluetooth every **33ms** (30Hz) — miss it → **poll drop**
+- Controller Manager reads each accelerometer via Bluetooth every **16ms** (60Hz) — miss it → **poll drop**
 - Prometheus scrape interval: tuned to **10s**
 
 <div class="mt-6 mb-12">
@@ -490,8 +501,11 @@ layout: default
 
 </div>
 
-- **Game loop:** 60Hz — 600 ticks per 10s scrape interval
-- **Result:** a poll drop is invisible until the next scrape
+**The gap is enormous**
+
+Default Prometheus scrape interval: **60 seconds**<br>
+Our game loop: **16 milliseconds**<br>
+That's a **3,750× gap** in timing assumptions.
 
 <!--
 - Even if you scraped every second, you'd still miss 60 frames — the architecture is wrong, not just the config
@@ -756,7 +770,7 @@ layout: default
 
 <div class="flex flex-col justify-center gap-6">
   <div class="text-lg leading-relaxed">
-    There are great observability examples for microservices. Where's the robotics? The game engines? The industrial IoT?
+    <strong>Real-time systems are everywhere</strong> — games, robotics, IoT sensors, industrial controllers. But CNCF tooling docs show web app examples almost exclusively.
   </div>
   <div class="text-lg leading-relaxed">
     <strong class="text-amber-300">Try these tools on real-time systems.</strong> Document what works. Contribute examples.
