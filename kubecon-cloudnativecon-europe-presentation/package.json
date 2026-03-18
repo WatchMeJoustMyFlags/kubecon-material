@@ -5,7 +5,7 @@
   "scripts": {
     "build": "slidev build",
     "dev": "slidev --open",
-    "export": "slidev export"
+    "export": "slidev export --output \"18 Bluetooth Controllers Walk into a Bar - Observability and Runtime Configuration with CNCF Tools - Simon Schrottner, Dynatrace - Manuel Timelthaler, Tractive.pdf\""
   },
   "dependencies": {
     "@slidev/cli": "^52.11.3",
