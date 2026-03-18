@@ -839,3 +839,25 @@ or find us on [CNCF’s Slack Channel](https://slack.cncf.io/)
 <div class="text-4xl mt-12 font-bold">
 Questions? 🎮
 </div>
+
+
+
+---
+layout: center
+class: text-center
+---
+
+# We need your feedback 🙏
+
+<QRCode
+  :width="260"
+  :height="260"
+  type="svg"
+  data="https://sched.co/2CW7W"
+  :margin="8"
+  :dotsOptions="{ type: 'square', color: '#fff' }"
+/>
+
+<div class="text-sm">
+  <a href="https://sched.co/2CW7W" class="text-blue-400">sched.co/2CW7W</a>
+</div>
