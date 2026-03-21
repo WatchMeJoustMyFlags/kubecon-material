@@ -19,14 +19,14 @@ class: text-center
 
 <div class="grid grid-cols-2 px-4 mx-auto mt-12 text-left">
 <div class="flex items-center gap-2">
-  <img src="./images/simon.jpg" alt="Simon Schrottner" class="h-20 w-20 rounded-full flex-shrink-0" />
+  <img src="/simon.jpg" alt="Simon Schrottner" class="h-20 w-20 rounded-full flex-shrink-0" />
   <div class="leading-tight">
     <p class="!text-xl font-bold !mt-0 !mb-0">Simon Schrottner</p>
     <p class="!text-lg !mt-0 !mb-0">Dynatrace</p>
   </div>
 </div>
 <div class="flex items-center gap-2">
-  <img src="./images/manuel.jpg" alt="Manuel Timelthaler" class="h-20 w-20 rounded-full flex-shrink-0" />
+  <img src="/manuel.jpg" alt="Manuel Timelthaler" class="h-20 w-20 rounded-full flex-shrink-0" />
   <div class="leading-tight">
     <p class="!text-xl font-bold !mt-0 !mb-0">Manuel Timelthaler</p>
     <p class="!text-lg !mt-0 !mb-0">Tractive</p>
@@ -310,7 +310,7 @@ layout: full
 class: p-0
 hide: false
 ---
-<img class="-mt-4" src="./images/2026-03-13_11-16-28_jaeger.png"></img>
+<img class="-mt-4" src="/2026-03-13_11-16-28_jaeger.png"></img>
 
 ---
 layout: default
@@ -323,7 +323,7 @@ layout: default
 - 8GB LPDDR4X RAM
 - ~$80 USD (before global memory shortage)
 
-<img class="mt-8 mb-12" src="./images/grafana-host-metrics-small.png"/>
+<img class="mt-8 mb-12" src="/grafana-host-metrics-small.png"/>
 
 ---
 layout: default
@@ -513,7 +513,7 @@ hide: true
 
 ---
 layout: image
-image: ./images/2026-03-13_11-13-49_pull_metrics.png
+image: /2026-03-13_11-13-49_pull_metrics.png
 backgroundSize: contain
 hide: false
 ---
@@ -595,14 +595,14 @@ hide: true
 
 ---
 layout: image
-image: ./images/2026-03-13_11-14-03_push_metrics.png
+image: /2026-03-13_11-14-03_push_metrics.png
 backgroundSize: contain
 hide: false
 ---
 
 ---
 layout: image
-image: ./images/2026-03-13_11-14-45_metris_comparison.png
+image: /2026-03-13_11-14-45_metris_comparison.png
 backgroundSize: contain
 hide: false
 ---
@@ -716,7 +716,7 @@ class: p-0
 hide: false
 ---
 <SlidevVideo autoplay autoreset="slide" controls>
-  <source src="./videos/2026-03-21_demo_01_led_flicker.mp4" type="video/mp4">
+  <source src="/2026-03-21_demo_01_led_flicker.mp4" type="video/mp4">
 </SlidevVideo>
 
 ---
@@ -725,7 +725,7 @@ class: p-0
 hide: false
 ---
 <SlidevVideo autoplay autoreset="slide" controls>
-  <source src="./videos/2026-03-21_demo_02_poll_drop.mp4" type="video/mp4">
+  <source src="/2026-03-21_demo_02_poll_drop.mp4" type="video/mp4">
 </SlidevVideo>
 
 ---
@@ -734,7 +734,7 @@ class: p-0
 hide: false
 ---
 <SlidevVideo autoplay autoreset="slide" controls>
-  <source src="./videos/2026-03-21_demo_03_disconnect.mp4" type="video/mp4">
+  <source src="/2026-03-21_demo_03_disconnect.mp4" type="video/mp4">
 </SlidevVideo>
 
 ---
@@ -743,7 +743,7 @@ class: p-0
 hide: false
 ---
 <SlidevVideo autoplay autoreset="slide" controls>
-  <source src="./videos/2026-03-21_demo_04_acceleration_spike.mp4" type="video/mp4">
+  <source src="/2026-03-21_demo_04_acceleration_spike.mp4" type="video/mp4">
 </SlidevVideo>
 
 ---
