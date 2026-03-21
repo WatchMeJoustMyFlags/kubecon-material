@@ -716,7 +716,34 @@ class: p-0
 hide: false
 ---
 <video controls>
-  <source src="./images/2026-03-13_10-45-41_poll_drops.mp4" type="video/mp4">
+  <source src="./videos/2026-03-21_demo_01_led_flicker.mp4" type="video/mp4">
+</video>
+
+---
+layout: full
+class: p-0
+hide: false
+---
+<video controls>
+  <source src="./videos/2026-03-21_demo_02_poll_drop.mp4" type="video/mp4">
+</video>
+
+---
+layout: full
+class: p-0
+hide: false
+---
+<video controls>
+  <source src="./videos/2026-03-21_demo_03_disconnect.mp4" type="video/mp4">
+</video>
+
+---
+layout: full
+class: p-0
+hide: false
+---
+<video controls>
+  <source src="./videos/2026-03-21_demo_04_acceleration_spike.mp4" type="video/mp4">
 </video>
 
 ---
