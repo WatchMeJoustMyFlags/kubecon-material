@@ -298,7 +298,11 @@ graph LR
 layout: full
 class: p-0
 ---
-<img class="-mt-4" src="/2026-03-13_11-16-28_jaeger.png"></img>
+<JaegerFirstTrace
+  :host="$slidev.configs.demo_host"
+  service="game-coordinator-service"
+  class="w-full h-full"
+/>
 
 ---
 layout: default
@@ -490,10 +494,13 @@ That's a **3,750× gap** in timing assumptions.
 -->
 
 ---
-layout: image
-image: /2026-03-13_11-13-49_pull_metrics.png
-backgroundSize: contain
+layout: full
+class: p-0
 ---
+<iframe
+  :src="`http://${$slidev.configs.demo_host}/grafana/d/presentation-pipeline/presentation3a-pipeline-comparison?orgId=1&from=1772568636686&to=1772568702462&viewPanel=1&kiosk`"
+  class="w-full h-full border-none"
+/>
 
 ---
 layout: default
@@ -551,16 +558,22 @@ graph LR
 -->
 
 ---
-layout: image
-image: /2026-03-13_11-14-03_push_metrics.png
-backgroundSize: contain
+layout: full
+class: p-0
 ---
+<iframe
+  :src="`http://${$slidev.configs.demo_host}/grafana/d/presentation-pipeline/presentation3a-pipeline-comparison?orgId=1&from=1772309362553&to=1772309419883&viewPanel=2&kiosk`"
+  class="w-full h-full border-none"
+/>
 
 ---
-layout: image
-image: /2026-03-13_11-14-45_metris_comparison.png
-backgroundSize: contain
+layout: full
+class: p-0
 ---
+<iframe
+  :src="`http://${$slidev.configs.demo_host}/grafana/d/presentation-pipeline/presentation3a-pipeline-comparison?orgId=1&from=1772309362553&to=1772309419883&viewPanel=3&kiosk`"
+  class="w-full h-full border-none"
+/>
 
 ---
 layout: default
@@ -639,36 +652,29 @@ layout: section
 Watch metrics respond in real-time as we change the game
 
 ---
-layout: full
-class: p-0
+layout: default
 ---
-<SlidevVideo autoplay autoreset="slide" controls>
-  <source src="/2026-03-21_demo_01_led_flicker.mp4" type="video/mp4">
-</SlidevVideo>
+
+<ChaosDashboard />
 
 ---
 layout: full
 class: p-0
 ---
-<SlidevVideo autoplay autoreset="slide" controls>
-  <source src="/2026-03-21_demo_02_poll_drop.mp4" type="video/mp4">
-</SlidevVideo>
+<iframe
+  :src="`http://${$slidev.configs.demo_host}/grafana/d/presentation-chaos/presentation3a-chaos-demo?orgId=1&from=now-15m&to=now&refresh=5s&kiosk`"
+  class="w-full h-full border-none"
+/>
 
 ---
 layout: full
 class: p-0
 ---
-<SlidevVideo autoplay autoreset="slide" controls>
-  <source src="/2026-03-21_demo_03_disconnect.mp4" type="video/mp4">
-</SlidevVideo>
-
----
-layout: full
-class: p-0
----
-<SlidevVideo autoplay autoreset="slide" controls>
-  <source src="/2026-03-21_demo_04_acceleration_spike.mp4" type="video/mp4">
-</SlidevVideo>
+<JaegerFirstTrace
+  :host="$slidev.configs.demo_host"
+  service="game-coordinator-service"
+  class="w-full h-full"
+/>
 
 ---
 layout: section
