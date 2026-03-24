@@ -132,7 +132,7 @@ layout: section
 
 # The Journey: 6 Learnings
 
-6 key learnings from instrumentation to subsecond metrics
+6 key learnings from instrumentation to sub-second metrics
 
 ---
 layout: default
@@ -148,7 +148,12 @@ layout: default
 - IPC via queues/shared memory
 - 4 Python processes
 
-**Problem:** IPC (pipes/queues) needs manual instrumentation
+<v-click at="1">
+  <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700 text-left mt-4 -mr-4"> 
+    <p class="font-semibold !m-0">Problem</p>
+    <p class="!mt-1 !mb-0 whitespace-nowrap">IPC (pipes/queues) needs manual instrumentation</p>
+  </div>
+</v-click>
 
 </div>
 <div class="-mt-8">
@@ -195,19 +200,11 @@ graph TD
 
 ---
 layout: default
-transition: fade
 ---
 
-# Learning 1: Microservices Unlocked the Stack
+# Learning 1: Refactoring to Microservices
 
-<v-click at="1">
-  <div class="mt-4 text-center text-lg">
-  <strong>Auto-instrumentation came for free with gRPC</strong><br>
-  </div>
-</v-click>
-
-
-```mermaid {scale:0.75}
+```mermaid {scale:0.85}
 %%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
 graph LR
 
@@ -218,7 +215,7 @@ graph LR
         CM[Controller Manager<br/>:50052]
         Audio[Audio<br/>:50056]
     end
-    
+
     Controllers[Controllers]
 
     Menu -->|gRPC| GC
@@ -238,8 +235,9 @@ graph LR
 ```
 
 <v-click at="1">
-  <div class="mt-7 text-center">
-  <span class="text-sm text-gray-400">W3C trace context propagates automatically, enabling distributed tracing out of the box</span>
+  <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700 text-left mt-4"> 
+    <p class="font-semibold !m-0">Auto-instrumentation came for free with gRPC</p>
+    <p class="!mt-1 !mb-0">W3C trace context propagates automatically, enabling distributed tracing out of the box</p>
   </div>
 </v-click>
 
@@ -247,7 +245,7 @@ graph LR
 layout: default
 ---
 
-# Learning 1: Microservices - the full picture
+# Learning 1: Microservices + Observability Stack
 
 ```mermaid {scale:0.75}
 %%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
@@ -261,13 +259,13 @@ graph LR
         Audio[Audio<br/>:50056]
     end
 
-    subgraph Infrastructure["Infrastructure"]
+    subgraph Infrastructure["Observability Stack"]
         direction LR
         Flagd[flagd<br/>:8015]
         OTel[OTel Collector<br/>:4317]
-        Observability[Grafana<br/>Jaeger<br/>Prometheus<br/>Loki<br/>other backends]
+        Observability[Grafana<br/>Jaeger<br/>Prometheus<br/>Loki<br/>and other backends]
     end
-    
+
     Controllers[Controllers]
 
     Menu -->|gRPC| GC
@@ -319,7 +317,7 @@ layout: default
 
 # Learning 2: The Raspberry Pi Can Handle It
 
-**The Pi runs both the game AND the full observability stack.**<br>
+<p class="!m-0">The Pi runs both the game <strong>and</strong> the full observability stack!</p>
 
 ```mermaid {scale:0.75}
 %%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
@@ -334,7 +332,7 @@ graph LR
     
         Flagd[flagd<br/>:8015]
         OTel[OTel Collector<br/>:4317]
-        Observability[Grafana<br/>Jaeger<br/>Prometheus<br/>Loki<br/>other backends]
+        Observability[Grafana<br/>Jaeger<br/>Prometheus<br/>Loki<br/>and other backends]
     end
     
     Controllers[Controllers]
@@ -676,7 +674,7 @@ layout: section
 
 # The Path Forward
 
-What's missing and how you can help
+What's missing and how you can help!
 
 ---
 layout: default
@@ -694,7 +692,7 @@ layout: default
     <div class="text-lg leading-relaxed">But they're optimized for web apps.</div>
   </div>
   <div class="px-5 py-4 bg-gray-800/50 rounded-lg border border-gray-700">
-    <div class="text-lg leading-relaxed">With tuning, you can get subsecond observability on an $80 computer.</div>
+    <div class="text-lg leading-relaxed">With tuning, you can get sub-second observability on an $80 computer.</div>
   </div>
   <div class="px-5 py-4 bg-gray-800/50 rounded-lg border border-gray-700">
     <div class="text-lg leading-relaxed">What's missing is the documented path.</div>
