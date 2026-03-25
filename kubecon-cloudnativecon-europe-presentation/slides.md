@@ -376,10 +376,11 @@ layout: default
 
 # Learning 3: Pull Scraping Is Too Slow
 
-- Controller Manager reads each accelerometer via Bluetooth every **16ms** (60Hz) — miss it → **poll drop**
-- Prometheus scrape interval: tuned to **10s**
+- Controller Manager reads each accelerometer via Bluetooth every **16ms** (60Hz) 
+- A **poll drop** happens when you miss reading during that interval
+- Prometheus scrape interval tuned to **10s**
 
-<div class="mt-6 mb-12">
+<div class="mt-12 mb-12">
 
 <div class="timeline-container">
 
@@ -442,12 +443,6 @@ layout: default
 </style>
 
 </div>
-
-**The gap is enormous**
-
-Default Prometheus scrape interval: **60 seconds**<br>
-Our game loop: **16 milliseconds**<br>
-That's a **3,750× gap** in timing assumptions.
 
 <!--
 - Even if you scraped every second, you'd still miss 60 frames — the architecture is wrong, not just the config
