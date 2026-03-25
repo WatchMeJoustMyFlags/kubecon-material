@@ -672,9 +672,9 @@ layout: default
 </div>
 
 <v-click>
-<div class="mt-6 text-center">
-  <span class="text-lg font-semibold">Poll Drops</span>
-  <p class="text-sm opacity-70 mt-1">Invisible — no visual artifact, inputs are silently lost</p>
+<div class="mt-8 bg-gray-800/50 rounded-lg p-6 border border-gray-700 text-left">
+  <p class="font-semibold !m-0">Poll Drops</p>
+  <p class="!mt-1 !mb-0 opacity-80">No visual feedback, inputs are silently discarded. Only visible through observability.</p>
 </div>
 </v-click>
 
