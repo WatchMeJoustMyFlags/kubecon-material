@@ -532,17 +532,17 @@ layout: default
 # Learning 5: Low Cardinality, High Density
 
 ## Export rate is the real challenge
-- **Cardinality:** Hundreds of time series, not millions — manageable
-- **Volume:** 18 controllers @ 60Hz ≈ 1,080 messages/second
+- **Cardinality:** Hundreds of time series, not millions
+- **Density:** 18 controllers @ 60Hz ≈ 1,080 messages/second
 
 <v-click>
 
 ## Solution
 
 - **Two levels of batching**
-    - SDK buffers and exports on a 100ms schedule (not every event)
+    - SDK buffers and exports on a pre-defined schedule
     - Collector batches again before forwarding to backends
-- **Result:** backends see smooth, regular pushes — not a firehose
+- **Result:** backends see smooth, regular pushes
 
 </v-click>
 
