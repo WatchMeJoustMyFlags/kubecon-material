@@ -637,36 +637,46 @@ layout: section
 Watch metrics respond in real-time as we change the game
 
 ---
-layout: full
-class: p-0
+layout: default
 ---
-<SlidevVideo autoplay autoreset="slide" controls>
-  <source src="/2026-03-21_demo_01_led_flicker.mp4" type="video/mp4">
-</SlidevVideo>
+
+<ChaosDashboard />
 
 ---
-layout: full
-class: p-0
+layout: default
 ---
-<SlidevVideo autoplay autoreset="slide" controls>
-  <source src="/2026-03-21_demo_02_poll_drop.mp4" type="video/mp4">
-</SlidevVideo>
 
----
-layout: full
-class: p-0
----
-<SlidevVideo autoplay autoreset="slide" controls>
-  <source src="/2026-03-21_demo_03_disconnect.mp4" type="video/mp4">
-</SlidevVideo>
+<div class="grid grid-cols-3 gap-8 items-start pt-4">
 
----
-layout: full
-class: p-0
----
-<SlidevVideo autoplay autoreset="slide" controls>
-  <source src="/2026-03-21_demo_04_acceleration_spike.mp4" type="video/mp4">
-</SlidevVideo>
+<v-click>
+<div class="flex flex-col items-center gap-3">
+  <video src="/controllers_01_led_flicker.mp4" autoplay loop muted playsinline class="w-full rounded-lg shadow-lg" />
+  <span class="text-lg font-semibold">LED Flicker</span>
+</div>
+</v-click>
+
+<v-click>
+<div class="flex flex-col items-center gap-3">
+  <video src="/controllers_02_disconnects.mp4" autoplay loop muted playsinline class="w-full rounded-lg shadow-lg" />
+  <span class="text-lg font-semibold">Disconnects</span>
+</div>
+</v-click>
+
+<v-click>
+<div class="flex flex-col items-center gap-3">
+  <video src="/controllers_03_acceleration_spike.mp4" autoplay loop muted playsinline class="w-full rounded-lg shadow-lg" />
+  <span class="text-lg font-semibold">Acceleration Spikes</span>
+</div>
+</v-click>
+
+</div>
+
+<v-click>
+<div class="mt-6 text-center">
+  <span class="text-lg font-semibold">Poll Drops</span>
+  <p class="text-sm opacity-70 mt-1">Invisible — no visual artifact, inputs are silently lost</p>
+</div>
+</v-click>
 
 ---
 layout: section
