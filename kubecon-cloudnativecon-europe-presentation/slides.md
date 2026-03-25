@@ -374,34 +374,7 @@ false assumption that the Pi can't handle everything, but that was not the only 
 layout: default
 ---
 
-# Learning 3: Cardinality Low, Volume High
-
-## Export rate is the real challenge
-- **Cardinality:** Hundreds of time series, not millions — manageable
-- **Volume:** 18 controllers @ 60Hz ≈ 1,080 messages/second
-
-<v-click>
-
-## Solution
-
-- **Two levels of batching**
-    - SDK buffers and exports on a 100ms schedule (not every event)
-    - Collector batches again before forwarding to backends
-- **Result:** backends see smooth, regular pushes — not a firehose
-
-</v-click>
-
-<!--
-* the reality is more like 140+ metric definitions across all services,
-* but if you count what's actually visible on dashboards (grouped by metric name, not label combinations), 20-30 is plausible.
-* bounded label sets: 18 controller serials, a handful of game modes, a few button types.
--->
-
----
-layout: default
----
-
-# Learning 4: Pull Scraping Is Too Slow
+# Learning 3: Pull Scraping Is Too Slow
 
 - Controller Manager reads each accelerometer via Bluetooth every **16ms** (60Hz) — miss it → **poll drop**
 - Prometheus scrape interval: tuned to **10s**
@@ -497,7 +470,7 @@ backgroundSize: contain
 layout: default
 ---
 
-# Learning 5: Push Metrics with Prometheus
+# Learning 4: Push Metrics with Prometheus
 
 **OTLP Push via PeriodicExportingMetricReader**
 
@@ -559,6 +532,33 @@ layout: image
 image: /2026-03-13_11-14-45_metris_comparison.png
 backgroundSize: contain
 ---
+
+---
+layout: default
+---
+
+# Learning 5: Low Cardinality, High Density
+
+## Export rate is the real challenge
+- **Cardinality:** Hundreds of time series, not millions — manageable
+- **Volume:** 18 controllers @ 60Hz ≈ 1,080 messages/second
+
+<v-click>
+
+## Solution
+
+- **Two levels of batching**
+    - SDK buffers and exports on a 100ms schedule (not every event)
+    - Collector batches again before forwarding to backends
+- **Result:** backends see smooth, regular pushes — not a firehose
+
+</v-click>
+
+<!--
+* the reality is more like 140+ metric definitions across all services,
+* but if you count what's actually visible on dashboards (grouped by metric name, not label combinations), 20-30 is plausible.
+* bounded label sets: 18 controller serials, a handful of game modes, a few button types.
+-->
 
 ---
 layout: default
