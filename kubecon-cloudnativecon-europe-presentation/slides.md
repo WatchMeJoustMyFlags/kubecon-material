@@ -571,7 +571,7 @@ layout: default
 
 ### Add a `game_id` label
 <div class="text-5xl mt-4">🏷️</div>
-<div class="mt-4 text-gray-400">1,216 series → 18,000 series</div>
+<div class="mt-4 text-gray-400">1,200 series → 18,000 series</div>
 
 </div>
 <div class="text-center">
@@ -585,10 +585,6 @@ layout: default
 
 <div class="mt-10 text-center text-lg">
 Every label dimension multiplies your series count — cardinality is where Prometheus hurts
-</div>
-
-<div class="mt-6 text-center text-xs text-gray-500">
-Benchmark: 36 controllers at 100ms push intervals — 2× our setup, so real-world numbers are better
 </div>
 
 <!--
@@ -615,16 +611,12 @@ layout: default
 
 <div class="mt-8 space-y-3 text-lg">
 
-<v-clicks>
-
 1. **Microservices unlocked auto-instrumentation** — gRPC gave us distributed tracing for free
 2. **The Raspberry Pi can run the full stack** — game + entire observability suite on $80 hardware
 3. **Cardinality is manageable, volume is the challenge** — two levels of batching tame the firehose
 4. **Pull scraping is too slow** — 600 game frames between each Prometheus data point
 5. **Push metrics: 500ms end-to-end** — one config change, 30× faster than pull
 6. **Labels are not free** — adding `game_id` turned 1,216 series into 18,000 and 4× read latency
-
-</v-clicks>
 
 </div>
 
@@ -647,7 +639,7 @@ layout: default
 ---
 
 <div class="grid grid-cols-3 gap-8 items-start pt-4">
-
+ 
 <v-click>
 <div class="flex flex-col items-center gap-3">
   <video src="/controllers_01_led_flicker.mp4" autoplay loop muted playsinline class="w-full rounded-lg shadow-lg" />
