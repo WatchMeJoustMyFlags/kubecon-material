@@ -602,24 +602,6 @@ Full benchmark details in https://github.com/WatchMeJoustMyFlags/JoustMania/issu
 - If we only add game_id to counters (deaths, kills, near_death): ~5,400 series after 50 games — both TSDBs comfortable
 -->
 
-
----
-layout: default
----
-
-# The 6 Learnings
-
-<div class="mt-8 space-y-3 text-lg">
-
-1. **Microservices unlocked auto-instrumentation** — gRPC gave us distributed tracing for free
-2. **The Raspberry Pi can run the full stack** — game + entire observability suite on $80 hardware
-3. **Cardinality is manageable, volume is the challenge** — two levels of batching tame the firehose
-4. **Pull scraping is too slow** — 600 game frames between each Prometheus data point
-5. **Push metrics: 500ms end-to-end** — one config change, 30× faster than pull
-6. **Labels are not free** — adding `game_id` turned 1,216 series into 18,000 and 4× read latency
-
-</div>
-
 ---
 layout: section
 ---
