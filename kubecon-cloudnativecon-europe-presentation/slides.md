@@ -467,16 +467,8 @@ layout: default
 
 # Learning 4: Push Metrics with Prometheus
 
-**OTLP Push via PeriodicExportingMetricReader**
-
-```python
-# OpenTelemetry SDK Configuration
-metric_reader = PeriodicExportingMetricReader(
-    exporter=OTLPMetricExporter(endpoint="http://otel-collector:4318"),
-    export_interval_millis=flagd.get_int("metrics_export_interval_ms")
-    # controller-manager: 100ms (realtime) | other services: 1000ms
-)
-```
+* Push via OpenTelemetry's `PeriodicExportingMetricReader`
+* **100ms** for controller manager, **1,000ms** for other services
 
 <div class="my-4">
 
@@ -502,7 +494,12 @@ graph LR
 
 </div>
 
-**500ms end-to-end reliably** — one config change, 30× faster than pull.<br>For true sub-100ms, the TSDB itself becomes the next bottleneck.
+<v-click at="1">
+  <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700 text-left"> 
+    <p class="font-semibold !m-0">Metrics every 500ms end-to-end reliably</p>
+    <p class="!mt-1 !mb-0">For true sub-100ms, the time-series database itself becomes the next bottleneck.</p>
+  </div>
+</v-click>
 
 <!--
 - 100ms (SDK wait) + up to 200ms (batch hold) + overhead → ~200–500ms end-to-end depending on timing alignment.
