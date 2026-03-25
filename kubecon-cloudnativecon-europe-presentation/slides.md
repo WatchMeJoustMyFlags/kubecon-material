@@ -674,7 +674,7 @@ layout: default
 <v-click>
 <div class="mt-8 bg-gray-800/50 rounded-lg p-6 border border-gray-700 text-left">
   <p class="font-semibold !m-0">Poll Drops</p>
-  <p class="!mt-1 !mb-0 opacity-80">No visual feedback, inputs are silently discarded. Only visible through observability.</p>
+  <p class="!mt-1 !mb-0 opacity-80">No visual feedback — inputs are silently discarded. Only visible through observability.</p>
 </div>
 </v-click>
 
@@ -695,18 +695,12 @@ layout: default
 <div class="grid grid-cols-2 gap-10">
 
 <div class="flex flex-col gap-4">
-  <div class="px-5 py-4 bg-gray-800/50 rounded-lg border border-gray-700">
-    <div class="text-lg leading-relaxed">These tools work for real-time.</div>
-  </div>
-  <div class="px-5 py-4 bg-gray-800/50 rounded-lg border border-gray-700">
-    <div class="text-lg leading-relaxed">But they're optimized for web apps.</div>
-  </div>
-  <div class="px-5 py-4 bg-gray-800/50 rounded-lg border border-gray-700">
-    <div class="text-lg leading-relaxed">With tuning, you can get sub-second observability on an $80 computer.</div>
-  </div>
-  <div class="px-5 py-4 bg-gray-800/50 rounded-lg border border-gray-700">
-    <div class="text-lg leading-relaxed">What's missing is the documented path.</div>
-  </div>
+
+* These tools work for real-time.
+* But they're optimized for web apps.
+* With tuning, you can get sub-second observability on an $80 computer.
+* What's missing is the documented path.
+
 </div>
 
 <div class="flex flex-col justify-center gap-6">
@@ -719,6 +713,14 @@ layout: default
 </div>
 
 </div>
+
+<v-clicks>
+
+<div class="mt-6 px-5 py-4 bg-gray-800/50 rounded-lg border border-gray-700">
+  <div class="text-lg leading-relaxed">AI moves faster than humans — agentic workloads will demand faster observability. <br><strong>Are CNCF tools ready for that?</strong></div>
+</div>
+
+</v-clicks>
 
 ---
 layout: center
