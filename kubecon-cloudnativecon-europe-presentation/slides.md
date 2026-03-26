@@ -299,6 +299,15 @@ class: p-0
 <img class="-mt-4" src="/2026-03-13_11-16-28_jaeger.png"></img>
 
 ---
+layout: image
+class: p-0
+---
+<p class="!my-6">
+  <img class="mx-auto my-auto" src="/dynatrace.png"></img>
+</p>
+
+
+---
 layout: default
 ---
 
